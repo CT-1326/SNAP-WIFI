@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">SNAP WIFI</string>
+    <string name="banner_ad_unit_id">ca-app-pub-2725846173883391/4126233497</string>
+    <string name="ad_unit_id">ca-app-pub-2725846173883391/7793113749</string>
+
+    <string name="right1">He denied permission ... \n can be reset in [Settings]> [authority].</string>
+
+    <string name="load_time">WIFI connection is in the ... </string>
+
+    <string name="on_gps">To continue using, you must turn on the GPS.</string>
+
+    <string name="setting">Set</string>
+
+    <string name="exit">End</string>
+
+    <string name="awar">Recognition of ...</string>
+
+    <string name="result">Character recognition results</string>
+
+    <string name="ok">OK</string>
+
+    <string name="can">CANCEL</string>
+    <string name="title_activity_ocr__load">OCR_Load</string>
+</resources>

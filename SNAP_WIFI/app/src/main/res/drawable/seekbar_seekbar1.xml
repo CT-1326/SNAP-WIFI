@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--시크바 배경-->
+    <item android:id="@android:id/background">
+        <shape android:shape="line">    <!--선 : 길이6dp -->
+            <stroke android:width="6dp" android:color="#D5D5D5" />
+        </shape>
+    </item>
+
+    <!-- 시크바 배경2 -->
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape android:shape="line">
+                <stroke android:width="6dp" android:color="#B2CCFF" />
+            </shape>
+        </clip>
+    </item>
+
+    <!-- 시크바 프로그래스 -->
+    <item android:id="@android:id/progress" >
+        <clip>
+            <shape android:shape="line">
+                <stroke android:width="6dp" android:color="#6799FF" />
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>
+
