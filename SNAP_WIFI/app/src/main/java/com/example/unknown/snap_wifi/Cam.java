@@ -39,7 +39,16 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
+/*
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"></com.google.android.gms.ads.AdView>
+ */
 
 public class Cam extends AppCompatActivity implements SurfaceHolder.Callback {
 
@@ -69,11 +78,10 @@ public class Cam extends AppCompatActivity implements SurfaceHolder.Callback {
                 this);
 
         //AdMob
-        MobileAds.initialize(this, "ca-app-pub-2725846173883391~7749234994");
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        //AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+       /* AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        //AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);*/
 
         //Check GPS ON/OFF (OS 6.0 UP)
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {

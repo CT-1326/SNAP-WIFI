@@ -26,6 +26,28 @@ import java.util.List;
 
 import static com.example.unknown.snap_wifi.Cam.aa;
 
+/*
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/lv"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"></com.google.android.gms.ads.AdView>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/llv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        ads:layout_constraintBottom_toBottomOf="parent"></com.google.android.gms.ads.AdView>
+ */
+
 public class Load extends AppCompatActivity {
 
     // Setup WIFI
@@ -41,15 +63,14 @@ public class Load extends AppCompatActivity {
         setContentView(R.layout.load);
 
         //Admob
-        MobileAds.initialize(this, "ca-app-pub-2725846173883391~7749234994");
-        AdView mAdView = (AdView) findViewById(R.id.lv);
-        //AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        AdRequest adRequest = new AdRequest.Builder().build();
+       /* AdView mAdView = (AdView) findViewById(R.id.lv);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        //AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         AdView mmAdView = (AdView) findViewById(R.id.llv);
-        //AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        AdRequest aadRequest = new AdRequest.Builder().build();
-        mmAdView.loadAd(aadRequest);
+        AdRequest aadRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        //AdRequest aadRequest = new AdRequest.Builder().build();
+        mmAdView.loadAd(aadRequest);*/
 
         wifimanager= (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
 

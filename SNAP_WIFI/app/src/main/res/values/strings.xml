@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SNAP WIFI</string>
-    <string name="banner_ad_unit_id">ca-app-pub-2725846173883391/4126233497</string>
-    <string name="ad_unit_id">ca-app-pub-2725846173883391/7793113749</string>
+    <string name="banner_ad_unit_id"></string>
+    <string name="ad_unit_id"></string>
 
     <string name="right1">He denied permission ... \n can be reset in [Settings]> [authority].</string>
 

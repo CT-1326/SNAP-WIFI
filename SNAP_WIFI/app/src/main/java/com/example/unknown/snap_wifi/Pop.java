@@ -21,7 +21,7 @@ import static com.example.unknown.snap_wifi.Cam.aa;
 
 public class Pop extends AppCompatActivity {
 
-    private InterstitialAd interstitialAd;
+    //private InterstitialAd interstitialAd;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +35,7 @@ public class Pop extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //Admob
-        interstitialAd = new InterstitialAd(this);
+       /* interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.ad_unit_id));
         AdRequest adRequest1 = new AdRequest.Builder().build();
         interstitialAd.loadAd(adRequest1);
@@ -47,7 +47,7 @@ public class Pop extends AppCompatActivity {
                 startActivity(new Intent(Pop.this,Cam.class));
 
             }
-        });
+        });*/
 
         //Get OCR result value
         EditText txtText = (EditText) findViewById(R.id.txtText);
@@ -64,7 +64,7 @@ public class Pop extends AppCompatActivity {
         imm.hideSoftInputFromWindow(tt.getWindowToken(),0);
 
         //View Interstitial (when WIFI or LTE turn on)
-        ConnectivityManager manager =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        /*ConnectivityManager manager =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo LTE = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if(LTE.isConnected() || WIFI.isConnected()){
@@ -75,8 +75,9 @@ public class Pop extends AppCompatActivity {
         else{
             finish();
             startActivity(new Intent(Pop.this,Cam.class));
-        }
-
+        }*/
+        finish();
+        startActivity(new Intent(Pop.this,Cam.class));
 
     }
 
