@@ -1,6 +1,7 @@
 package com.abbyy.mobile.sample;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,9 +16,7 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+
 
 /*import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -134,44 +133,7 @@ public class Load extends Activity {
             asyncDialog.dismiss();
             super.onPostExecute(result);
 
-            //AlertDialog.Builder builder = new AlertDialog.Builder(Load.this);
-
-            //If WIFI connected right
-            if(ck==1) {
-                Toast.makeText(getApplicationContext(),"연결 성공!",Toast.LENGTH_LONG).show();
-               /* builder.setTitle("WIFI connection successful!");
-                builder.setPositiveButton("END",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        });
-                builder.setNegativeButton("Go First",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                startActivity(new Intent(Load.this,Cam.class));
-                            }
-                        });
-                builder.show();*/
-            }
-            //Not connected wifi
-            else{
-                Toast.makeText(getApplicationContext(),"연결 실패...",Toast.LENGTH_LONG).show();
-                /*builder.setTitle("WIFI connection failed...\n(Temporary connection fail or password error!)");
-                builder.setPositiveButton("END",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        });
-                builder.setNegativeButton("Go First",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                startActivity(new Intent(Load.this,Cam.class));
-                            }
-                        });
-                builder.show();*/
-            }
+            show();
         }
     }
 
@@ -257,6 +219,48 @@ public class Load extends Activity {
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         registerReceiver(mReceiver, filter);
         wifimanager.startScan();
+    }
+
+    private void show(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        //If WIFI connected right
+        if(ck==1) {
+            //Toast.makeText(getApplicationContext(),"연결 성공!",Toast.LENGTH_LONG).show();
+                builder.setTitle("WIFI connection successful!");
+                builder.setPositiveButton("END",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.finishAffinity(Load.this);
+                            }
+                        });
+                builder.setNegativeButton("Go First",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+                builder.show();
+        }
+        //Not connected wifi
+        else{
+           // Toast.makeText(getApplicationContext(),"연결 실패...",Toast.LENGTH_LONG).show();
+                builder.setTitle("WIFI connection failed...\n(Temporary connection fail or password error!)");
+                builder.setPositiveButton("END",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.finishAffinity(Load.this);
+                            }
+                        });
+                builder.setNegativeButton("Go First",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+                builder.show();
+        }
     }
 
     //Stop Backpress

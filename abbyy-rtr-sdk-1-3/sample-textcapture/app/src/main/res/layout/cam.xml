@@ -6,6 +6,53 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
+    <RelativeLayout
+        android:layout_width="337dp"
+        android:layout_height="37dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="68dp">
+
+        <TextView
+            android:id="@+id/low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="35dp"
+            android:layout_marginBottom="95dp"
+            android:text="-"
+            android:textColor="#ffffff"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="280dp"
+            android:layout_marginBottom="95dp"
+            android:text="+"
+            android:textColor="#ffffff"
+            android:textSize="25dp" />
+
+
+        <SeekBar
+            android:id="@+id/seekBar1"
+            android:layout_width="216dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="95dp"
+            android:max="90"
+            android:progress="0"
+            android:progressDrawable="@drawable/seekbar_seekbar1"
+            android:thumb="@drawable/seekbar_seekbar1_thumb" />
+
+    </RelativeLayout>
+
+
+
+
     <TextView
         android:id="@+id/warningText"
         android:layout_width="wrap_content"

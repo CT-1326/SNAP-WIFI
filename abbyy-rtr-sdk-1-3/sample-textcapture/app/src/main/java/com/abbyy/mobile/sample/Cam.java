@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -30,6 +29,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.abbyy.mobile.rtr.Engine;
@@ -39,6 +39,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cam extends Activity {
+
+
+	private TextView low,more;
 
 	// Licensing
 	private static final String licenseFileName = "AbbyyRtrSdk.license";
@@ -656,6 +659,39 @@ public class Cam extends Activity {
 		}
 
 		layout.setOnClickListener( clickListener );
+
+		//Camera Zoom
+		SeekBar seekBar=(SeekBar)findViewById(R.id.seekBar1);
+		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				if(camera.getParameters().isZoomSupported()) {
+					//Zoom + Auto Focus
+					Camera.Parameters params = camera.getParameters();
+					seekBar.setMax(params.getMaxZoom());
+					params.setZoom(progress);
+					camera.setParameters(params);
+				}
+			}
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				//Touching the SeekBar, can see +,- icon
+				low.setVisibility(View.VISIBLE);
+				more.setVisibility(View.VISIBLE);
+			}
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				//Not touching the SeekBar
+				low.setVisibility(View.INVISIBLE);
+				more.setVisibility(View.INVISIBLE);
+			}
+		});
+
+		//Setup +,- icon setting
+		low = (TextView)findViewById(R.id.low);
+		more = (TextView)findViewById(R.id.more);
+		low.setVisibility(View.INVISIBLE);
+		more.setVisibility(View.INVISIBLE);
 	}
 
 	@Override
@@ -894,7 +930,7 @@ public class Cam extends Activity {
 		}
 	}
 
-	void show()
+	private void show()
 	{
 		final EditText edittext = new EditText(this);
 		edittext.setText(RT);
@@ -902,7 +938,7 @@ public class Cam extends Activity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 		builder.setTitle("Result Text");
-		builder.setMessage("You can fix Text yourself");
+		builder.setMessage("You can fix Text by yourself");
 		builder.setView(edittext);
 		builder.setCancelable(false);
 		builder.setPositiveButton("OK",
@@ -921,7 +957,7 @@ public class Cam extends Activity {
 		builder.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						finish();
+						//finish();
 						startActivity(new Intent(Cam.this,Cam.class));
 					}
 				});

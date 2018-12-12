@@ -3,7 +3,7 @@
     package="com.abbyy.mobile.sample">
 
     <application
-        android:icon="@drawable/icon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
