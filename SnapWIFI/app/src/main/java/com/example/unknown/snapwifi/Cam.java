@@ -36,6 +36,9 @@ import android.widget.TextView;
 
 import com.abbyy.mobile.rtr.Engine;
 import com.abbyy.mobile.rtr.ITextCaptureService;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -628,6 +631,12 @@ public class Cam extends AppCompatActivity {
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.cam);
 
+		MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+		AdView mAdView = (AdView) findViewById(R.id.adView);
+		//AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+		AdRequest adRequest = new AdRequest.Builder().build();
+		mAdView.loadAd(adRequest);
+
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		//Clear the status bar
@@ -996,8 +1005,9 @@ public class Cam extends AppCompatActivity {
 		builder.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
 						//finish();
-						startActivity(new Intent(Cam.this,Cam.class));
+						//startActivity(new Intent(Cam.this,Cam.class));
 					}
 				});
 		builder.show();

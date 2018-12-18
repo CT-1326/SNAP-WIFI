@@ -1,8 +1,6 @@
 package com.example.unknown.snapwifi;
 
 
-
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,53 +10,37 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.unknown.snapwifi.Cam.RT;
 
-/*import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;*/
-
-
-
-/*
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/lv"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"></com.google.android.gms.ads.AdView>
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/llv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"
-        ads:layout_constraintBottom_toBottomOf="parent"></com.google.android.gms.ads.AdView>
- */
-
 public class Load extends AppCompatActivity {
 
     // Setup WIFI
     WifiManager wifimanager;
-    private IntentFilter mFilter;
+    //private IntentFilter mFilter;
 
-    private int ck=0;
+    String RS;
+
+    ProgressBar probar;
+    TextView text;
+    Handler handler;
 
 
     @Override
@@ -67,14 +49,14 @@ public class Load extends AppCompatActivity {
         setContentView(R.layout.load);
 
         //Admob
-       /* AdView mAdView = (AdView) findViewById(R.id.lv);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        //AdRequest adRequest = new AdRequest.Builder().build();
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        //AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-        AdView mmAdView = (AdView) findViewById(R.id.llv);
-        AdRequest aadRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        //AdRequest aadRequest = new AdRequest.Builder().build();
-        mmAdView.loadAd(aadRequest);*/
+        AdView mmAdView = (AdView) findViewById(R.id.addView);
+        //AdRequest aadRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        AdRequest aadRequest = new AdRequest.Builder().build();
+        mmAdView.loadAd(aadRequest);
 
         wifimanager= (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
 
@@ -83,17 +65,53 @@ public class Load extends AppCompatActivity {
             wifimanager.setWifiEnabled(true);
 
         //Setup check real-time WiFi status
-        mFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        /*mFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
         mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         mFilter.addAction(WifiManager.RSSI_CHANGED_ACTION);
-        registerReceiver(mReceiver, mFilter);
+        registerReceiver(mReceiver, mFilter);*/
+
+        probar=(ProgressBar)findViewById(R.id.pb);
+        text=(TextView)findViewById(R.id.tv);
+
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                text.setText("WIFI is connecting now");
+                if(msg.arg1 == 100){
+                    show();
+                }
+            }
+        };
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0;i<=100;i+=10){
+                    //Log.d("asdf", String.valueOf(i));
+                    probar.setProgress(i);
+                    Message msg = handler.obtainMessage();
+                    msg.arg1=i;
+                    handler.sendMessage(msg);
+                    try{
+                        Thread.sleep(1000);
+                        initWIFIScan();
+                    }catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        t.start();
 
         //Loading Window
-        CheckTypesTask task = new CheckTypesTask();
-        task.execute();
+       /* CheckTypesTask task = new CheckTypesTask();
+        task.execute();*/
     }
 
-    private class CheckTypesTask extends AsyncTask<Void, Void, Void> {
+
+
+    /*private class CheckTypesTask extends AsyncTask<Void, Void, Void> {
 
         ProgressDialog asyncDialog = new ProgressDialog(
                 Load.this);
@@ -136,7 +154,7 @@ public class Load extends AppCompatActivity {
 
             show();
         }
-    }
+    }*/
 
     //Surrounding area wifi scan
     private List<ScanResult> mScanResult; // ScanResult List
@@ -158,13 +176,14 @@ public class Load extends AppCompatActivity {
                 nifo = (NetworkInfo)intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                 //Wifi is on
                 if (nifo.getState().equals(NetworkInfo.State.CONNECTED)) {
-                    ck=1;
                     unregisterReceiver(mReceiver);
                 }
             }
         }
     };
-    ArrayList<String> li = new ArrayList<String>();
+
+    ArrayList list = new ArrayList<String>();
+
     public void getWIFIScanResult() {
         mScanResult = wifimanager.getScanResults(); // ScanResult
         // Scan count
@@ -172,9 +191,6 @@ public class Load extends AppCompatActivity {
             ScanResult result = mScanResult.get(i);
             String Capabilities =  result.capabilities;
 
-            /*if(result.SSID.toString().matches(".*KT.*") || result.SSID.toString().matches(".*olleh.*") || result.SSID.toString().matches(".*U+.*")
-                    || result.SSID.toString().matches(".*SK.*") || result.SSID.toString().matches("T"))
-                    continue;*/
 
             //Blocking Free carrier WIFI
             if(Capabilities.contains("EAP")) {
@@ -182,18 +198,20 @@ public class Load extends AppCompatActivity {
             }
             //Automatic connection
             else {
-                li.add(result.SSID.toString());
+                Log.d("asdf",result.BSSID);
+                list.add(result.BSSID);
                 WifiConfiguration wificonfig = new WifiConfiguration();
-                wificonfig.SSID = String.format("\"%s\"", result.SSID.toString());
+                wificonfig.BSSID = result.BSSID;
+                //wificonfig.SSID = String.format("\"%s\"", result.SSID);
                 wificonfig.preSharedKey = String.format("\"%s\"", RT);
                 int netId = wifimanager.addNetwork(wificonfig);
                 wifimanager.disconnect();
                 wifimanager.enableNetwork(netId,false);
                 wifimanager.reconnect();
 
-                //One ap give 10sec
-                try{
-                    Thread.sleep(10000);
+                //give 5sec
+              /*  try{
+                    Thread.sleep(5000);
                 }catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -207,8 +225,43 @@ public class Load extends AppCompatActivity {
                 else{
                     wifimanager.removeNetwork(netId);
                     wifimanager.saveConfiguration();
-                }
+                }*/
             }
+        }
+
+        //give 7sec
+        try{
+            Thread.sleep(7000);
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        WifiManager manager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInfo = manager.getConnectionInfo();
+        String ssid = new String(wifiInfo.getBSSID());
+
+
+        for (int i=0;i<list.size();i++) {
+            Log.d("asdfg", ssid);
+            String ss = new String(String.valueOf(list.get(i)));
+                WifiConfiguration wificonfig = new WifiConfiguration();
+                wificonfig.BSSID = String.valueOf(list.get(i));
+                //wificonfig.BSSID = String.format("\"%s\"", list.get(i));
+                wificonfig.preSharedKey = String.format("\"%s\"", RT);
+                int netId = wifimanager.addNetwork(wificonfig);
+
+            Log.d("asdfgh", String.valueOf(list.get(i)));
+
+
+                if(ssid.equals(list.get(i))){
+                    Log.d("asdfghj","좆같네");
+                    continue;
+                }
+                else{
+                    wifimanager.removeNetwork(netId);
+                    wifimanager.saveConfiguration();
+                }
+
         }
         unregisterReceiver(mReceiver); // stop WIFISCan
     }
@@ -226,8 +279,10 @@ public class Load extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        ConnectivityManager manager =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         //If WIFI connected right
-        if(ck==1) {
+        if(WIFI.isConnected()) {
             //Toast.makeText(getApplicationContext(),"연결 성공!",Toast.LENGTH_LONG).show();
                 builder.setTitle("WIFI connection successful!");
                 builder.setCancelable(false);
@@ -248,7 +303,7 @@ public class Load extends AppCompatActivity {
         //Not connected wifi
         else{
            // Toast.makeText(getApplicationContext(),"연결 실패...",Toast.LENGTH_LONG).show();
-                builder.setTitle("WIFI connection failed...\n(Temporary connection fail or password error!)");
+                builder.setTitle("WIFI connection failed...\n(Temporary connection fail?)");
                 builder.setCancelable(false);
                 builder.setPositiveButton("END",
                         new DialogInterface.OnClickListener() {

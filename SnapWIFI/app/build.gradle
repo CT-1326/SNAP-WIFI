@@ -28,4 +28,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation 'gun0912.ted:tedpermission:2.1.1'
+    implementation 'com.google.android.gms:play-services-ads:17.1.1'
 }

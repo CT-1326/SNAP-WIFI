@@ -1,87 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="337dp"
-        android:layout_height="37dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="68dp">
+        android:layout_width="match_parent"
+        android:layout_height="83dp">
 
-        <TextView
-            android:id="@+id/low"
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="35dp"
-            android:layout_marginBottom="95dp"
-            android:text="-"
-            android:textColor="#ffffff"
-            android:textSize="25dp" />
-
-        <TextView
-            android:id="@+id/more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="280dp"
-            android:layout_marginBottom="95dp"
-            android:text="+"
-            android:textColor="#ffffff"
-            android:textSize="25dp" />
-
-
-        <SeekBar
-            android:id="@+id/seekBar1"
-            android:layout_width="216dp"
-            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="95dp"
-            android:max="90"
-            android:progress="0"
-            android:progressDrawable="@drawable/seekbar_seekbar1"
-            android:thumb="@drawable/seekbar_seekbar1_thumb" />
+            android:layout_marginBottom="19dp"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/test"></com.google.android.gms.ads.AdView>
 
     </RelativeLayout>
 
 
+        <RelativeLayout
+            android:layout_width="337dp"
+            android:layout_height="37dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="68dp">
+
+            <TextView
+                android:id="@+id/low"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="35dp"
+                android:layout_marginBottom="95dp"
+                android:text="-"
+                android:textColor="#ffffff"
+                android:textSize="25dp" />
+
+            <TextView
+                android:id="@+id/more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="280dp"
+                android:layout_marginBottom="95dp"
+                android:text="+"
+                android:textColor="#ffffff"
+                android:textSize="25dp" />
+
+            <SeekBar
+                android:id="@+id/seekBar1"
+                android:layout_width="216dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="95dp"
+                android:max="90"
+                android:progress="0"
+                android:progressDrawable="@drawable/seekbar_seekbar1"
+                android:thumb="@drawable/seekbar_seekbar1_thumb" />
+
+        </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/warningText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:textColor="#FFFF0000"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:text=""/>
-    <TextView
-        android:id="@+id/errorText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:textColor="#FFFF0000"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_below="@id/warningText"
-        android:text=""/>
-    <Button
-        android:layout_width="245dp"
-        android:layout_height="wrap_content"
-        android:text="Start"
-        android:id="@+id/startButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="15dp"
-        android:textColor="#ffffff"
-        android:background="#7d010000"
-        android:layout_marginBottom="5dp"
-        android:onClick="onStartButtonClick" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/warningText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="90dp"
+            android:gravity="left"
+            android:text=""
+            android:textColor="#FFFF0000" />
+
+        <TextView
+            android:id="@+id/errorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/warningText"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:gravity="left"
+            android:text=""
+            android:textColor="#FFFF0000" />
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="245dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:background="#7d010000"
+            android:onClick="onStartButtonClick"
+            android:text="Start"
+            android:textColor="#ffffff"
+            android:textSize="15dp" />
+    </RelativeLayout>
