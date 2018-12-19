@@ -198,11 +198,11 @@ public class Load extends AppCompatActivity {
             }
             //Automatic connection
             else {
-                Log.d("asdf",result.BSSID);
-                list.add(result.BSSID);
+                Log.d("asdf",result.SSID);
+                list.add(result.SSID);
                 WifiConfiguration wificonfig = new WifiConfiguration();
-                wificonfig.BSSID = result.BSSID;
-                //wificonfig.SSID = String.format("\"%s\"", result.SSID);
+                //wificonfig.BSSID = result.BSSID;
+                wificonfig.SSID = String.format("\"%s\"", result.SSID);
                 wificonfig.preSharedKey = String.format("\"%s\"", RT);
                 int netId = wifimanager.addNetwork(wificonfig);
                 wifimanager.disconnect();
@@ -238,15 +238,15 @@ public class Load extends AppCompatActivity {
 
         WifiManager manager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = manager.getConnectionInfo();
-        String ssid = new String(wifiInfo.getBSSID());
-
+        String ssid = new String(wifiInfo.getSSID());
+        ssid = ssid.substring(1, ssid.length()-1);
 
         for (int i=0;i<list.size();i++) {
             Log.d("asdfg", ssid);
             String ss = new String(String.valueOf(list.get(i)));
                 WifiConfiguration wificonfig = new WifiConfiguration();
-                wificonfig.BSSID = String.valueOf(list.get(i));
-                //wificonfig.BSSID = String.format("\"%s\"", list.get(i));
+                //wificonfig.BSSID = String.valueOf(list.get(i));
+                wificonfig.SSID = String.format("\"%s\"", list.get(i));
                 wificonfig.preSharedKey = String.format("\"%s\"", RT);
                 int netId = wifimanager.addNetwork(wificonfig);
 
