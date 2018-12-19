@@ -594,7 +594,7 @@ public class Cam extends AppCompatActivity {
 		surfaceViewWithOverlay.setScaleY( surfaceViewWithOverlay.getHeight(), height );
 		// Area of interest
 		int marginWidth = ( areaOfInterestMargin_PercentOfWidth * width ) / 100;
-		int marginHeight = ( areaOfInterestMargin_PercentOfHeight * height ) / 100;
+		int marginHeight = ( areaOfInterestMargin_PercentOfHeight * height ) / 60;
 		surfaceViewWithOverlay.setAreaOfInterest(
 			new Rect( marginWidth, marginHeight, width - marginWidth,
 				height - marginHeight ) );
