@@ -540,7 +540,7 @@ public class Cam extends AppCompatActivity {
 		// consider using higher resolution (small text, complex background) or lower resolution (better performance, less noise)
 		cameraPreviewSize = null;
 		for( Camera.Size size : parameters.getSupportedPreviewSizes() ) {
-			if( size.height <= 720 || size.width <= 720 ) {
+			if( size.height <= 1080 || size.width <= 720 ) {
 				if( cameraPreviewSize == null ) {
 					cameraPreviewSize = size;
 				} else {
