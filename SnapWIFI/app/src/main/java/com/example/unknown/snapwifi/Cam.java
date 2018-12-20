@@ -631,7 +631,7 @@ public class Cam extends AppCompatActivity {
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.cam);
 
-		MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+		MobileAds.initialize(this, "ca-app-pub-2725846173883391~1238196375");
 		AdView mAdView = (AdView) findViewById(R.id.adView);
 		//AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
 		AdRequest adRequest = new AdRequest.Builder().build();
@@ -985,8 +985,8 @@ public class Cam extends AppCompatActivity {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-		builder.setTitle("Result Text");
-		builder.setMessage("You can fix Text by yourself");
+		builder.setTitle("Scan Result");
+		builder.setMessage("You can edit the text yourself");
 		builder.setView(edittext);
 		builder.setCancelable(false);
 		builder.setPositiveButton("OK",
