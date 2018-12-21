@@ -631,6 +631,7 @@ public class Cam extends AppCompatActivity {
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.cam);
 
+
 		MobileAds.initialize(this, "ca-app-pub-2725846173883391~1238196375");
 		AdView mAdView = (AdView) findViewById(R.id.adView);
 		//AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();

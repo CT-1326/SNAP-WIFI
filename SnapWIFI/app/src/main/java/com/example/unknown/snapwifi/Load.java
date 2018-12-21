@@ -35,6 +35,7 @@ public class Load extends AppCompatActivity {
 
     // Setup WIFI
     WifiManager wifimanager;
+
     //private IntentFilter mFilter;
 
     ProgressBar probar;
@@ -179,34 +180,18 @@ public class Load extends AppCompatActivity {
             }
         }
 
-        //text.setText("Checking the WIFI connection status");
-
-        /*Thread tt = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //give 7sec
-                text.setText("Check");
-                /*try{
-                    Thread.sleep(7000);
-                }catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        });
-        tt.start();*/
-
-
         /*try{
-            Thread.sleep(3000);
+            Thread.sleep(7000);
         }catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }
 
         WifiManager manager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         WifiInfo wifiInfo = manager.getConnectionInfo();
         String ssid = new String(wifiInfo.getSSID());
         ssid = ssid.substring(1, ssid.length()-1);
+
+       //String ssid = new String("dd");
 
         for (int i=0;i<list.size();i++) {
             Log.d("asdfg", ssid);
@@ -220,14 +205,16 @@ public class Load extends AppCompatActivity {
 
 
                 if(ssid.equals(list.get(i))){
+                    Log.d("asdfghj","앙 기모띠");
                     continue;
                 }
                 else{
+                    Log.d("asdfghj","반갈죽");
                     wifimanager.removeNetwork(netId);
                     wifimanager.saveConfiguration();
                 }
 
-        }
+        }*/
         unregisterReceiver(mReceiver); // stop WIFISCan
     }
 
