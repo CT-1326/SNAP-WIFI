@@ -58,47 +58,70 @@ public class Load extends AppCompatActivity {
         AdRequest aadRequest = new AdRequest.Builder().build();
         mmAdView.loadAd(aadRequest);
 
-        wifimanager= (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        wifimanager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
 
         // WIFI ON
         if (wifimanager.isWifiEnabled() == false)
             wifimanager.setWifiEnabled(true);
 
-        probar=(ProgressBar)findViewById(R.id.pb);
-        text=(TextView)findViewById(R.id.tv);
+        probar = (ProgressBar) findViewById(R.id.pb);
+        text = (TextView) findViewById(R.id.tv);
 
-        text.setText("Connecting WiFi...(10 SEC)");
+        AlertDialog.Builder builder = new AlertDialog.Builder(Load.this);
 
-        handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                if(msg.arg1 == 100){
-                    show();
-                }
-            }
-        };
+        ConnectivityManager manager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        //If WIFI connected right
+        if (WIFI.isConnected()) {
+            builder.setTitle("Already WIFI use");
+            builder.setCancelable(false);
+            builder.setPositiveButton("END",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.finishAffinity(Load.this);
+                        }
+                    });
+            builder.setNegativeButton("Go First",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+            builder.show();
+        } else {
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for(int i=0;i<=100;i+=10){
-                    //Log.d("asdf", String.valueOf(i));
-                    probar.setProgress(i);
-                    Message msg = handler.obtainMessage();
-                    msg.arg1=i;
-                    handler.sendMessage(msg);
-                    try{
-                        Thread.sleep(1000);
-                        initWIFIScan();
-                    }catch (InterruptedException e){
-                        e.printStackTrace();
+            text.setText("Connecting WiFi...");
+
+            handler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    if (msg.arg1 == 100) {
+                        show();
                     }
                 }
+            };
 
-            }
-        });
-        t.start();
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i <= 100; i += 10) {
+                        probar.setProgress(i);
+                        Message msg = handler.obtainMessage();
+                        msg.arg1 = i;
+                        handler.sendMessage(msg);
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
+                }
+            });
+            t.start();
+            initWIFIScan();
+
+        }
     }
 
 
@@ -158,15 +181,29 @@ public class Load extends AppCompatActivity {
 
         //text.setText("Checking the WIFI connection status");
 
-        //give 7sec
-        try{
-            Thread.sleep(7000);
+        /*Thread tt = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //give 7sec
+                text.setText("Check");
+                /*try{
+                    Thread.sleep(7000);
+                }catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+        tt.start();*/
+
+
+        /*try{
+            Thread.sleep(3000);
         }catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
-
-        WifiManager manager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiManager manager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         WifiInfo wifiInfo = manager.getConnectionInfo();
         String ssid = new String(wifiInfo.getSSID());
         ssid = ssid.substring(1, ssid.length()-1);
