@@ -43,12 +43,13 @@ public class Load extends AppCompatActivity {
     Handler handler;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load);
 
-        MobileAds.initialize(this, "ca-app-pub-2725846173883391~1238196375");
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
         //Admob
         AdView mAdView = (AdView) findViewById(R.id.adView);
         //AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
@@ -70,11 +71,12 @@ public class Load extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Load.this);
 
-        ConnectivityManager manager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final ConnectivityManager manager =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
         //If WIFI connected right
         if (WIFI.isConnected()) {
-            builder.setTitle("Already WIFI use");
+            builder.setTitle("Already use WIFI");
             builder.setCancelable(false);
             builder.setPositiveButton("END",
                     new DialogInterface.OnClickListener() {
@@ -111,12 +113,11 @@ public class Load extends AppCompatActivity {
                         msg.arg1 = i;
                         handler.sendMessage(msg);
                         try {
-                            Thread.sleep(1000);
+                            Thread.sleep(2000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
-
                 }
             });
             t.start();
@@ -157,7 +158,7 @@ public class Load extends AppCompatActivity {
     public void getWIFIScanResult() {
         mScanResult = wifimanager.getScanResults(); // ScanResult
         // Scan count
-        for (int i = 0; i < mScanResult.size(); i++) {
+        for (int i = 0; i < 5; i++) {
             ScanResult result = mScanResult.get(i);
             String Capabilities =  result.capabilities;
 
@@ -174,19 +175,19 @@ public class Load extends AppCompatActivity {
                 wificonfig.SSID = String.format("\"%s\"", result.SSID);
                 wificonfig.preSharedKey = String.format("\"%s\"", RT);
                 int netId = wifimanager.addNetwork(wificonfig);
-                wifimanager.disconnect();
+                //wifimanager.disconnect();
                 wifimanager.enableNetwork(netId,false);
-                wifimanager.reconnect();
+                //wifimanager.reconnect();
             }
         }
 
-        /*try{
+       /* try{
             Thread.sleep(7000);
         }catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
-        WifiManager manager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
+        /*WifiManager manager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         WifiInfo wifiInfo = manager.getConnectionInfo();
         String ssid = new String(wifiInfo.getSSID());
         ssid = ssid.substring(1, ssid.length()-1);
@@ -205,11 +206,11 @@ public class Load extends AppCompatActivity {
 
 
                 if(ssid.equals(list.get(i))){
-                    Log.d("asdfghj","앙 기모띠");
+                    Log.d("asdfghj","Yes");
                     continue;
                 }
                 else{
-                    Log.d("asdfghj","반갈죽");
+                    Log.d("asdfghj","No");
                     wifimanager.removeNetwork(netId);
                     wifimanager.saveConfiguration();
                 }
@@ -253,7 +254,7 @@ public class Load extends AppCompatActivity {
         }
         //Not connected wifi
         else{
-                builder.setTitle("WIFI connection failed...\n(May Be temporary error)");
+                builder.setTitle("WIFI connection failed...\n(May be temporary error)");
                 builder.setCancelable(false);
                 builder.setPositiveButton("END",
                         new DialogInterface.OnClickListener() {
