@@ -49,12 +49,13 @@ public class Load extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load);
 
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        MobileAds.initialize(this, "ca-app-pub-2725846173883391~6423458884");
         //Admob
         AdView mAdView = (AdView) findViewById(R.id.adView);
         //AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
         AdView mmAdView = (AdView) findViewById(R.id.addView);
         //AdRequest aadRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         AdRequest aadRequest = new AdRequest.Builder().build();
@@ -71,8 +72,8 @@ public class Load extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Load.this);
 
-        final ConnectivityManager manager =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        ConnectivityManager manager =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
         //If WIFI connected right
         if (WIFI.isConnected()) {
@@ -98,7 +99,7 @@ public class Load extends AppCompatActivity {
             handler = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    if (msg.arg1 == 100) {
+                    if (msg.arg1 == 200) {
                         show();
                     }
                 }
@@ -107,13 +108,13 @@ public class Load extends AppCompatActivity {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = 0; i <= 100; i += 10) {
+                    for (int i = 0; i <= 200; i += 10) {
                         probar.setProgress(i);
                         Message msg = handler.obtainMessage();
                         msg.arg1 = i;
                         handler.sendMessage(msg);
                         try {
-                            Thread.sleep(2000);
+                            Thread.sleep(1000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -122,7 +123,6 @@ public class Load extends AppCompatActivity {
             });
             t.start();
             initWIFIScan();
-
         }
     }
 
@@ -229,6 +229,36 @@ public class Load extends AppCompatActivity {
     }
 
     private void show(){
+
+        WifiManager wmanager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
+        WifiInfo wifiInfo = wmanager.getConnectionInfo();
+        String ssid = new String(wifiInfo.getSSID());
+        ssid = ssid.substring(1, ssid.length()-1);
+
+        //String ssid = new String("dd");
+
+        for (int i=0;i<list.size();i++) {
+            Log.d("asdfg", ssid);
+            String ss = new String(String.valueOf(list.get(i)));
+            WifiConfiguration wificonfig = new WifiConfiguration();
+            wificonfig.SSID = String.format("\"%s\"", list.get(i));
+            wificonfig.preSharedKey = String.format("\"%s\"", RT);
+            int netId = wifimanager.addNetwork(wificonfig);
+
+            Log.d("asdfgh", String.valueOf(list.get(i)));
+
+
+            if(ssid.equals(list.get(i))){
+                Log.d("asdfghj","Yes");
+                continue;
+            }
+            else{
+                Log.d("asdfghj","No");
+                wifimanager.removeNetwork(netId);
+                wifimanager.saveConfiguration();
+            }
+
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 

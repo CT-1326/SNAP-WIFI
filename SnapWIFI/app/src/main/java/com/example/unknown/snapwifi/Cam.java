@@ -38,6 +38,7 @@ import com.abbyy.mobile.rtr.Engine;
 import com.abbyy.mobile.rtr.ITextCaptureService;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
@@ -624,15 +625,13 @@ public class Cam extends AppCompatActivity {
 			}
 		}
 	}
-
 	@Override
 	public void onCreate( Bundle savedInstanceState )
 	{
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.cam);
 
-
-		MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+		MobileAds.initialize(this, "ca-app-pub-2725846173883391~6423458884");
 		AdView mAdView = (AdView) findViewById(R.id.adView);
 		//AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
 		AdRequest adRequest = new AdRequest.Builder().build();
