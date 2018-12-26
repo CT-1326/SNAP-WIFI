@@ -73,7 +73,7 @@ public class Load extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(Load.this);
 
         ConnectivityManager manager =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        final NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
         //If WIFI connected right
         if (WIFI.isConnected()) {
@@ -99,7 +99,7 @@ public class Load extends AppCompatActivity {
             handler = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    if (msg.arg1 == 200) {
+                    if (msg.arg1 == 600) {
                         show();
                     }
                 }
@@ -108,11 +108,18 @@ public class Load extends AppCompatActivity {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = 0; i <= 200; i += 10) {
+                    for (int i = 0; i <= 600; i+=10) {
+                        ConnectivityManager cm =(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo wf = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
                         probar.setProgress(i);
                         Message msg = handler.obtainMessage();
                         msg.arg1 = i;
                         handler.sendMessage(msg);
+                        if(wf.isConnected()) {
+                            msg.arg1=600;
+                            break;
+                        }
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
@@ -177,7 +184,7 @@ public class Load extends AppCompatActivity {
                 int netId = wifimanager.addNetwork(wificonfig);
                 //wifimanager.disconnect();
                 wifimanager.enableNetwork(netId,false);
-                //wifimanager.reconnect();
+                wifimanager.reconnect();
             }
         }
 
