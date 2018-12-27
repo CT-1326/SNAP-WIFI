@@ -38,7 +38,6 @@ import com.abbyy.mobile.rtr.Engine;
 import com.abbyy.mobile.rtr.ITextCaptureService;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
@@ -47,7 +46,11 @@ import java.util.List;
 public class Cam extends AppCompatActivity {
 
 
+	//Setup camera zoom status
 	private TextView low,more;
+
+	//Setup OCR result text
+	public static String RT;
 
 	// Licensing
 	private static final String licenseFileName = "AbbyyRtrSdk.license";
@@ -98,8 +101,6 @@ public class Cam extends AppCompatActivity {
 	private static final String BUTTON_TEXT_STARTING = "Starting...";
 
 
-	public static String RT;
-
 	// To communicate with the Text Capture Service we will need this callback:
 	private ITextCaptureService.Callback textCaptureCallback = new ITextCaptureService.Callback() {
 
@@ -143,6 +144,7 @@ public class Cam extends AppCompatActivity {
 					// the same sound that is used for pressing buttons
 					surfaceViewWithOverlay.setFillBackground( true );
 					startButton.playSoundEffect( android.view.SoundEffectConstants.CLICK );
+					//when OCR is over
 					show();
 				}
 			}
@@ -631,13 +633,14 @@ public class Cam extends AppCompatActivity {
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.cam);
 
-		MobileAds.initialize(this, "ca-app-pub-2725846173883391~6423458884");
+
+		//Admob banner
+		MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+		//MobileAds.initialize(this, "ca-app-pub-2725846173883391~6423458884");
 		AdView mAdView = (AdView) findViewById(R.id.adView);
 		//AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
 		AdRequest adRequest = new AdRequest.Builder().build();
 		mAdView.loadAd(adRequest);
-
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 		//Clear the status bar
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -646,6 +649,7 @@ public class Cam extends AppCompatActivity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		//Check GPS ON/OFF (OS 6.0 UP)
 		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
 			LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -851,10 +855,10 @@ public class Cam extends AppCompatActivity {
 						);
 					}
 					this.lines[i] = line.Text;
+					//get to ocr result as text
 					RT = new String(line.Text);
 					RT = RT.replaceAll("\\p{Z}", "");//Remove spaces
-					//Go to next Activities
-					Log.d("결과 : ",RT);
+					Log.d("Result : ",RT);
 				}
 				switch( resultStatus ) {
 					case NotReady:
@@ -996,18 +1000,14 @@ public class Cam extends AppCompatActivity {
 						imm.hideSoftInputFromWindow(edittext.getWindowToken(),0);
 
 						RT=edittext.getText().toString();//String modified by keyboard
-						Log.d("결과 : ",RT);
+						Log.d("Result edit : ",RT);
 						startActivity(new Intent(Cam.this,Load.class));
-
-
 					}
 				});
 		builder.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
-						//finish();
-						//startActivity(new Intent(Cam.this,Cam.class));
 					}
 				});
 		builder.show();

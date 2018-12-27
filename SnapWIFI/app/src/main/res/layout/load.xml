@@ -15,7 +15,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/rly"></com.google.android.gms.ads.AdView>
+        ads:adUnitId="@string/test"></com.google.android.gms.ads.AdView>
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/addView"
@@ -26,7 +26,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/rly"></com.google.android.gms.ads.AdView>
+        ads:adUnitId="@string/test"></com.google.android.gms.ads.AdView>
 
     <ProgressBar
         android:id="@+id/pb"

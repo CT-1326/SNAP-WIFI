@@ -36,12 +36,12 @@ public class Load extends AppCompatActivity {
     // Setup WIFI
     WifiManager wifimanager;
 
-    //private IntentFilter mFilter;
-
+    //Setup Progressbar
     ProgressBar probar;
     TextView text;
     Handler handler;
 
+    ArrayList list = new ArrayList<String>();
 
 
     @Override
@@ -49,8 +49,9 @@ public class Load extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load);
 
-        MobileAds.initialize(this, "ca-app-pub-2725846173883391~6423458884");
-        //Admob
+        //Admob banner
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        //MobileAds.initialize(this, "ca-app-pub-2725846173883391~6423458884");
         AdView mAdView = (AdView) findViewById(R.id.adView);
         //AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -63,19 +64,18 @@ public class Load extends AppCompatActivity {
 
         wifimanager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
 
-        // WIFI ON
+        // Turn WIFI ON
         if (wifimanager.isWifiEnabled() == false)
             wifimanager.setWifiEnabled(true);
 
         probar = (ProgressBar) findViewById(R.id.pb);
         text = (TextView) findViewById(R.id.tv);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Load.this);
-
         ConnectivityManager manager =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-        //If WIFI connected right
+        AlertDialog.Builder builder = new AlertDialog.Builder(Load.this);
+        //If already WIFI connected
         if (WIFI.isConnected()) {
             builder.setTitle("Already use WIFI");
             builder.setCancelable(false);
@@ -92,13 +92,13 @@ public class Load extends AppCompatActivity {
                         }
                     });
             builder.show();
-        } else {
-
+        }
+        else {
             text.setText("Connecting WiFi...");
-
             handler = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
+                    //If progressbar is max
                     if (msg.arg1 == 600) {
                         show();
                     }
@@ -109,6 +109,7 @@ public class Load extends AppCompatActivity {
                 @Override
                 public void run() {
                     for (int i = 0; i <= 600; i+=10) {
+                        //Check real-time WIFI status
                         ConnectivityManager cm =(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
                         NetworkInfo wf = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
@@ -116,6 +117,7 @@ public class Load extends AppCompatActivity {
                         Message msg = handler.obtainMessage();
                         msg.arg1 = i;
                         handler.sendMessage(msg);
+                        //If the WIFI connection is successful
                         if(wf.isConnected()) {
                             msg.arg1=600;
                             break;
@@ -137,8 +139,8 @@ public class Load extends AppCompatActivity {
     //Surrounding area wifi scan
     private List<ScanResult> mScanResult; // ScanResult List
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        NetworkInfo nifo;
-        //Get wifi lists.
+        //NetworkInfo nifo;
+        //Start WIFI scan
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
@@ -148,27 +150,15 @@ public class Load extends AppCompatActivity {
             } else if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
                 sendBroadcast(new Intent("wifi.ON_NETWORK_STATE_CHANGED"));
             }
-
-            //Check real-time WiFi status
-            if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
-                nifo = (NetworkInfo)intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
-                //Wifi is on
-                if (nifo.getState().equals(NetworkInfo.State.CONNECTED)) {
-                    unregisterReceiver(mReceiver);
-                }
-            }
         }
     };
 
-    ArrayList list = new ArrayList<String>();
-
     public void getWIFIScanResult() {
         mScanResult = wifimanager.getScanResults(); // ScanResult
-        // Scan count
+        // Scan count 5
         for (int i = 0; i < 5; i++) {
             ScanResult result = mScanResult.get(i);
             String Capabilities =  result.capabilities;
-
 
             //Blocking Free carrier WIFI
             if(Capabilities.contains("EAP")) {
@@ -187,42 +177,6 @@ public class Load extends AppCompatActivity {
                 wifimanager.reconnect();
             }
         }
-
-       /* try{
-            Thread.sleep(7000);
-        }catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
-
-        /*WifiManager manager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
-        WifiInfo wifiInfo = manager.getConnectionInfo();
-        String ssid = new String(wifiInfo.getSSID());
-        ssid = ssid.substring(1, ssid.length()-1);
-
-       //String ssid = new String("dd");
-
-        for (int i=0;i<list.size();i++) {
-            Log.d("asdfg", ssid);
-            String ss = new String(String.valueOf(list.get(i)));
-                WifiConfiguration wificonfig = new WifiConfiguration();
-                wificonfig.SSID = String.format("\"%s\"", list.get(i));
-                wificonfig.preSharedKey = String.format("\"%s\"", RT);
-                int netId = wifimanager.addNetwork(wificonfig);
-
-            Log.d("asdfgh", String.valueOf(list.get(i)));
-
-
-                if(ssid.equals(list.get(i))){
-                    Log.d("asdfghj","Yes");
-                    continue;
-                }
-                else{
-                    Log.d("asdfghj","No");
-                    wifimanager.removeNetwork(netId);
-                    wifimanager.saveConfiguration();
-                }
-
-        }*/
         unregisterReceiver(mReceiver); // stop WIFISCan
     }
 
@@ -237,15 +191,14 @@ public class Load extends AppCompatActivity {
 
     private void show(){
 
+        //Remove all ap but connected ap
         WifiManager wmanager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         WifiInfo wifiInfo = wmanager.getConnectionInfo();
         String ssid = new String(wifiInfo.getSSID());
         ssid = ssid.substring(1, ssid.length()-1);
-
-        //String ssid = new String("dd");
+        Log.d("asdfg", ssid);
 
         for (int i=0;i<list.size();i++) {
-            Log.d("asdfg", ssid);
             String ss = new String(String.valueOf(list.get(i)));
             WifiConfiguration wificonfig = new WifiConfiguration();
             wificonfig.SSID = String.format("\"%s\"", list.get(i));
@@ -271,7 +224,6 @@ public class Load extends AppCompatActivity {
 
         ConnectivityManager manager =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        //If WIFI connected right
         if(WIFI.isConnected()) {
                 builder.setTitle("WIFI connection successful!");
                 builder.setCancelable(false);
@@ -289,7 +241,6 @@ public class Load extends AppCompatActivity {
                         });
                 builder.show();
         }
-        //Not connected wifi
         else{
                 builder.setTitle("WIFI connection failed...\n(May be temporary error)");
                 builder.setCancelable(false);
