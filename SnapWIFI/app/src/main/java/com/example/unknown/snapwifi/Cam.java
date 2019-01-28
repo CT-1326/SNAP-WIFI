@@ -36,15 +36,15 @@ import android.widget.TextView;
 
 import com.abbyy.mobile.rtr.Engine;
 import com.abbyy.mobile.rtr.ITextCaptureService;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
+import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cam extends AppCompatActivity {
 
+
+	private BannerAdView adView;
 
 	//Setup camera zoom status
 	private TextView low,more;
@@ -634,13 +634,11 @@ public class Cam extends AppCompatActivity {
 		setContentView( R.layout.cam);
 
 
-		//Admob banner
-		MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
-		//MobileAds.initialize(this, "ca-app-pub-2725846173883391~6423458884");
-		AdView mAdView = (AdView) findViewById(R.id.adView);
-		//AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-		AdRequest adRequest = new AdRequest.Builder().build();
-		mAdView.loadAd(adRequest);
+		adView = findViewById(R.id.adView);  // 배너 광고 뷰
+		adView.setClientId("DAN-qdspi88vxdf6");  // 할당 받은 광고 단위(clientId) 설정
+		adView.loadAd();  // 광고 요청
+
+
 
 		//Clear the status bar
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

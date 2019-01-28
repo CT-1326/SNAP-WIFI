@@ -6,27 +6,11 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_dark">
 
-    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <com.kakao.adfit.ads.ba.BannerAdView
         android:id="@+id/adView"
-        android:layout_width="match_parent"
-        android:layout_height="79dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/test"></com.google.android.gms.ads.AdView>
-
-    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/addView"
-        android:layout_width="match_parent"
-        android:layout_height="88dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/test"></com.google.android.gms.ads.AdView>
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <ProgressBar
         android:id="@+id/pb"
@@ -48,4 +32,12 @@
         android:textColor="@android:color/background_light"
         android:textSize="25dp"
         android:textStyle="bold" />
+
+    <com.kakao.adfit.ads.ba.BannerAdView
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/addView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

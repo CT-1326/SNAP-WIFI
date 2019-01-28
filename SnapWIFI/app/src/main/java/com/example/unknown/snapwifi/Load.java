@@ -21,10 +21,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
+
+import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,12 @@ import static com.example.unknown.snapwifi.Cam.RT;
 
 public class Load extends AppCompatActivity {
 
+
+    private final long FINISH_INTERVAL_TIME = 2000;
+    private long   backPressedTime = 0;
+
+    private BannerAdView adView;
+    private BannerAdView addView;
     // Setup WIFI
     WifiManager wifimanager;
 
@@ -49,18 +55,14 @@ public class Load extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load);
 
-        //Admob banner
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
-        //MobileAds.initialize(this, "ca-app-pub-2725846173883391~6423458884");
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        //AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        adView = findViewById(R.id.adView);  // 배너 광고 뷰
+        adView.setClientId("DAN-1hr5wkw0xrbjp");  // 할당 받은 광고 단위(clientId) 설정
+        adView.loadAd();  // 광고 요청
 
-        AdView mmAdView = (AdView) findViewById(R.id.addView);
-        //AdRequest aadRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        AdRequest aadRequest = new AdRequest.Builder().build();
-        mmAdView.loadAd(aadRequest);
+        addView = findViewById(R.id.addView);  // 배너 광고 뷰
+        addView.setClientId("DAN-1hr5wkw0xrbjp");  // 할당 받은 광고 단위(clientId) 설정
+        addView.loadAd();  // 광고 요청
+
 
         wifimanager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
 
@@ -78,7 +80,7 @@ public class Load extends AppCompatActivity {
         //If already WIFI connected
         if (WIFI.isConnected()) {
             builder.setTitle("Already use WIFI");
-            builder.setCancelable(false);
+            //builder.setCancelable(false);
             builder.setPositiveButton("END",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -226,7 +228,7 @@ public class Load extends AppCompatActivity {
         NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if(WIFI.isConnected()) {
                 builder.setTitle("WIFI connection successful!");
-                builder.setCancelable(false);
+                //builder.setCancelable(false);
                 builder.setPositiveButton("END",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -243,7 +245,7 @@ public class Load extends AppCompatActivity {
         }
         else{
                 builder.setTitle("WIFI connection failed...\n(May be temporary error)");
-                builder.setCancelable(false);
+                //builder.setCancelable(false);
                 builder.setPositiveButton("END",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -263,7 +265,19 @@ public class Load extends AppCompatActivity {
     //Stop Backpress
     @Override
     public void onBackPressed() {
-        return;
+
+        long a = System.currentTimeMillis();
+        long b = a-backPressedTime;
+
+        if (0 <= b && FINISH_INTERVAL_TIME >= b)
+        {
+            ActivityCompat.finishAffinity(this);
+        }
+        else
+        {
+            backPressedTime = a;
+            Toast.makeText(getApplicationContext(), "Press the Back button again to exit", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
