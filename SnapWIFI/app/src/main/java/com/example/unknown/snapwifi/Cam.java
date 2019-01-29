@@ -43,7 +43,7 @@ import java.util.List;
 
 public class Cam extends AppCompatActivity {
 
-
+	//Adfit
 	private BannerAdView adView;
 
 	//Setup camera zoom status
@@ -633,22 +633,19 @@ public class Cam extends AppCompatActivity {
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.cam);
 
-
-		adView = findViewById(R.id.adView);  // 배너 광고 뷰
-		adView.setClientId("DAN-qdspi88vxdf6");  // 할당 받은 광고 단위(clientId) 설정
-		adView.loadAd();  // 광고 요청
-
-
+		//Load adfit
+		adView = findViewById(R.id.adView);
+		adView.setClientId("DAN-qdspi88vxdf6");
+		adView.loadAd();
 
 		//Clear the status bar
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		//Check GPS ON/OFF (OS 6.0 UP)
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
 			LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -980,6 +977,7 @@ public class Cam extends AppCompatActivity {
 		}
 	}
 
+	//Show OCR result
 	private void show()
 	{
 		final EditText edittext = new EditText(this);

@@ -33,12 +33,13 @@ import static com.example.unknown.snapwifi.Cam.RT;
 
 public class Load extends AppCompatActivity {
 
-
     private final long FINISH_INTERVAL_TIME = 2000;
-    private long   backPressedTime = 0;
+    private long backPressedTime = 0;
 
+    //Adfit
     private BannerAdView adView;
     private BannerAdView addView;
+
     // Setup WIFI
     WifiManager wifimanager;
 
@@ -47,6 +48,7 @@ public class Load extends AppCompatActivity {
     TextView text;
     Handler handler;
 
+    //Save WIFI AP list
     ArrayList list = new ArrayList<String>();
 
 
@@ -55,13 +57,14 @@ public class Load extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load);
 
-        adView = findViewById(R.id.adView);  // 배너 광고 뷰
-        adView.setClientId("DAN-1hr5wkw0xrbjp");  // 할당 받은 광고 단위(clientId) 설정
-        adView.loadAd();  // 광고 요청
+        //Load adfit
+        adView = findViewById(R.id.adView);
+        adView.setClientId("DAN-1hr5wkw0xrbjp");
+        adView.loadAd();
 
-        addView = findViewById(R.id.addView);  // 배너 광고 뷰
-        addView.setClientId("DAN-1hr5wkw0xrbjp");  // 할당 받은 광고 단위(clientId) 설정
-        addView.loadAd();  // 광고 요청
+        addView = findViewById(R.id.addView);
+        addView.setClientId("DAN-1hr5wkw0xrbjp");
+        addView.loadAd();
 
 
         wifimanager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
@@ -75,8 +78,8 @@ public class Load extends AppCompatActivity {
 
         ConnectivityManager manager =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(Load.this);
+
         //If already WIFI connected
         if (WIFI.isConnected()) {
             builder.setTitle("Already use WIFI");
@@ -137,7 +140,6 @@ public class Load extends AppCompatActivity {
         }
     }
 
-
     //Surrounding area wifi scan
     private List<ScanResult> mScanResult; // ScanResult List
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -192,8 +194,7 @@ public class Load extends AppCompatActivity {
     }
 
     private void show(){
-
-        //Remove all ap but connected ap
+        //Remove all AP except connected AP
         WifiManager wmanager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         WifiInfo wifiInfo = wmanager.getConnectionInfo();
         String ssid = new String(wifiInfo.getSSID());
@@ -201,14 +202,12 @@ public class Load extends AppCompatActivity {
         Log.d("asdfg", ssid);
 
         for (int i=0;i<list.size();i++) {
-            String ss = new String(String.valueOf(list.get(i)));
             WifiConfiguration wificonfig = new WifiConfiguration();
             wificonfig.SSID = String.format("\"%s\"", list.get(i));
             wificonfig.preSharedKey = String.format("\"%s\"", RT);
             int netId = wifimanager.addNetwork(wificonfig);
 
             Log.d("asdfgh", String.valueOf(list.get(i)));
-
 
             if(ssid.equals(list.get(i))){
                 Log.d("asdfghj","Yes");
@@ -224,6 +223,7 @@ public class Load extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        //Show wifi connection result
         ConnectivityManager manager =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if(WIFI.isConnected()) {
@@ -262,7 +262,7 @@ public class Load extends AppCompatActivity {
         }
     }
 
-    //Stop Backpress
+    //When press back button twice app is end
     @Override
     public void onBackPressed() {
 
