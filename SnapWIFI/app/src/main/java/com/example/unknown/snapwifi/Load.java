@@ -40,16 +40,18 @@ public class Load extends AppCompatActivity {
     private BannerAdView adView;
     private BannerAdView addView;
 
-    // Setup WIFI
-    WifiManager wifimanager;
+    // WIFI & network
+    private WifiManager wifimanager;
+    private ConnectivityManager connectivityManager;
+    private NetworkInfo WIFI;
 
-    //Setup Progressbar
-    ProgressBar probar;
-    TextView text;
-    Handler handler;
+    //Progressbar
+    private ProgressBar probar;
+    private TextView text;
+    private Handler handler;
 
     //Save WIFI AP list
-    ArrayList list = new ArrayList<String>();
+    private ArrayList list = new ArrayList<String>();
 
 
     @Override
@@ -61,13 +63,13 @@ public class Load extends AppCompatActivity {
         adView = findViewById(R.id.adView);
         adView.setClientId("DAN-1hr5wkw0xrbjp");
         adView.loadAd();
-
         addView = findViewById(R.id.addView);
         addView.setClientId("DAN-1hr5wkw0xrbjp");
         addView.loadAd();
 
-
         wifimanager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        connectivityManager=(ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+        WIFI=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
         // Turn WIFI ON
         if (wifimanager.isWifiEnabled() == false)
@@ -76,21 +78,18 @@ public class Load extends AppCompatActivity {
         probar = (ProgressBar) findViewById(R.id.pb);
         text = (TextView) findViewById(R.id.tv);
 
-        ConnectivityManager manager =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         AlertDialog.Builder builder = new AlertDialog.Builder(Load.this);
-
         //If already WIFI connected
         if (WIFI.isConnected()) {
             builder.setTitle("Already use WIFI");
             //builder.setCancelable(false);
-            builder.setPositiveButton("END",
+            builder.setPositiveButton("EXIT",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.finishAffinity(Load.this);
                         }
                     });
-            builder.setNegativeButton("Go First",
+            builder.setNegativeButton("GO First",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             finish();
@@ -99,7 +98,7 @@ public class Load extends AppCompatActivity {
             builder.show();
         }
         else {
-            text.setText("Connecting WiFi...");
+            text.setText("Connecting WIFI...");
             handler = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
@@ -114,16 +113,14 @@ public class Load extends AppCompatActivity {
                 @Override
                 public void run() {
                     for (int i = 0; i <= 600; i+=10) {
-                        //Check real-time WIFI status
-                        ConnectivityManager cm =(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-                        NetworkInfo wf = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
+                        connectivityManager=(ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+                        WIFI=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
                         probar.setProgress(i);
                         Message msg = handler.obtainMessage();
                         msg.arg1 = i;
                         handler.sendMessage(msg);
                         //If the WIFI connection is successful
-                        if(wf.isConnected()) {
+                        if(WIFI.isConnected()) {
                             msg.arg1=600;
                             break;
                         }
@@ -143,7 +140,6 @@ public class Load extends AppCompatActivity {
     //Surrounding area wifi scan
     private List<ScanResult> mScanResult; // ScanResult List
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        //NetworkInfo nifo;
         //Start WIFI scan
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -170,7 +166,6 @@ public class Load extends AppCompatActivity {
             }
             //Automatic connection
             else {
-                Log.d("asdf",result.SSID);
                 list.add(result.SSID);
                 WifiConfiguration wificonfig = new WifiConfiguration();
                 wificonfig.SSID = String.format("\"%s\"", result.SSID);
@@ -195,11 +190,10 @@ public class Load extends AppCompatActivity {
 
     private void show(){
         //Remove all AP except connected AP
-        WifiManager wmanager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
-        WifiInfo wifiInfo = wmanager.getConnectionInfo();
+        WifiInfo wifiInfo = wifimanager.getConnectionInfo();
         String ssid = new String(wifiInfo.getSSID());
         ssid = ssid.substring(1, ssid.length()-1);
-        Log.d("asdfg", ssid);
+        Log.d("WIFI AP", ssid);
 
         for (int i=0;i<list.size();i++) {
             WifiConfiguration wificonfig = new WifiConfiguration();
@@ -207,14 +201,11 @@ public class Load extends AppCompatActivity {
             wificonfig.preSharedKey = String.format("\"%s\"", RT);
             int netId = wifimanager.addNetwork(wificonfig);
 
-            Log.d("asdfgh", String.valueOf(list.get(i)));
-
             if(ssid.equals(list.get(i))){
-                Log.d("asdfghj","Yes");
                 continue;
             }
             else{
-                Log.d("asdfghj","No");
+                Log.d("WIFI AP?", (String) list.get(i));
                 wifimanager.removeNetwork(netId);
                 wifimanager.saveConfiguration();
             }
@@ -222,14 +213,13 @@ public class Load extends AppCompatActivity {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
+        connectivityManager=(ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+        WIFI=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         //Show wifi connection result
-        ConnectivityManager manager =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo WIFI = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if(WIFI.isConnected()) {
                 builder.setTitle("WIFI connection successful!");
                 //builder.setCancelable(false);
-                builder.setPositiveButton("END",
+                builder.setPositiveButton("EXIT",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 ActivityCompat.finishAffinity(Load.this);
@@ -244,9 +234,9 @@ public class Load extends AppCompatActivity {
                 builder.show();
         }
         else{
-                builder.setTitle("WIFI connection failed...\n(May be temporary error)");
+                builder.setTitle("WIFI connection failed......\n(May be temporary WIFI error)");
                 //builder.setCancelable(false);
-                builder.setPositiveButton("END",
+                builder.setPositiveButton("EXIT",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 ActivityCompat.finishAffinity(Load.this);
@@ -262,7 +252,7 @@ public class Load extends AppCompatActivity {
         }
     }
 
-    //When press back button twice app is end
+    //When touch BackPress twice, app closes
     @Override
     public void onBackPressed() {
 
@@ -276,7 +266,7 @@ public class Load extends AppCompatActivity {
         else
         {
             backPressedTime = a;
-            Toast.makeText(getApplicationContext(), "Press the Back button again to exit", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
         }
     }
 

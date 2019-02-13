@@ -46,11 +46,14 @@ public class Cam extends AppCompatActivity {
 	//Adfit
 	private BannerAdView adView;
 
-	//Setup camera zoom status
+	//camera zoom bar
+	private SeekBar seekBar;
+
+	//camera zoom icon
 	private TextView low,more;
 
-	//Setup OCR result text
-	public static String RT;
+	//OCR result text
+	static String RT;
 
 	// Licensing
 	private static final String licenseFileName = "AbbyyRtrSdk.license";
@@ -144,6 +147,7 @@ public class Cam extends AppCompatActivity {
 					// the same sound that is used for pressing buttons
 					surfaceViewWithOverlay.setFillBackground( true );
 					startButton.playSoundEffect( android.view.SoundEffectConstants.CLICK );
+
 					//when OCR is over
 					show();
 				}
@@ -633,16 +637,16 @@ public class Cam extends AppCompatActivity {
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.cam);
 
-		//Load adfit
-		adView = findViewById(R.id.adView);
-		adView.setClientId("DAN-qdspi88vxdf6");
-		adView.loadAd();
-
 		//Clear the status bar
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+		//Load adfit
+		adView = findViewById(R.id.adView);
+		adView.setClientId("DAN-qdspi88vxdf6");
+		adView.loadAd();
 
 		//Check GPS ON/OFF (OS 6.0 UP)
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -650,7 +654,7 @@ public class Cam extends AppCompatActivity {
 			LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 				alertDialogBuilder
-						.setMessage("You must turn on GPS to continue using it")
+						.setMessage("You must turn on GPS to continue using")
 						.setCancelable(false)
 						.setPositiveButton("Setting",
 								new DialogInterface.OnClickListener() {
@@ -660,10 +664,9 @@ public class Cam extends AppCompatActivity {
 										Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 										intent.addCategory(Intent.CATEGORY_DEFAULT);
 										startActivity(intent);
-										//dialog.cancel();
 									}
 								})
-						.setNegativeButton("END",
+						.setNegativeButton("EXIT",
 								new DialogInterface.OnClickListener() {
 									//Exit
 									public void onClick(
@@ -704,13 +707,12 @@ public class Cam extends AppCompatActivity {
 
 		layout.setOnClickListener( clickListener );
 
-		//Camera Zoom
-		SeekBar seekBar=(SeekBar)findViewById(R.id.seekBar1);
+		seekBar=(SeekBar)findViewById(R.id.seekBar1);
 		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				if(camera.getParameters().isZoomSupported()) {
-					//Zoom + Auto Focus
+					//Zoom & Auto Focus
 					Camera.Parameters params = camera.getParameters();
 					seekBar.setMax(params.getMaxZoom());
 					params.setZoom(progress);
@@ -725,13 +727,11 @@ public class Cam extends AppCompatActivity {
 			}
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				//Not touching the SeekBar
 				low.setVisibility(View.INVISIBLE);
 				more.setVisibility(View.INVISIBLE);
 			}
 		});
 
-		//Setup +,- icon setting
 		low = (TextView)findViewById(R.id.low);
 		more = (TextView)findViewById(R.id.more);
 		low.setVisibility(View.INVISIBLE);
@@ -755,7 +755,6 @@ public class Cam extends AppCompatActivity {
 	@Override
 	public void onPause()
 	{
-		SeekBar seekBar=(SeekBar)findViewById(R.id.seekBar1);
 		seekBar.setMax(0);
 
 		// Clear all pending actions
@@ -850,8 +849,8 @@ public class Cam extends AppCompatActivity {
 						);
 					}
 					this.lines[i] = line.Text;
-					//get to ocr result as text
-					RT = new String(line.Text);
+
+					RT = new String(line.Text);//Get ocr result as text
 					RT = RT.replaceAll("\\p{Z}", "");//Remove spaces
 					Log.d("Result : ",RT);
 				}
@@ -984,9 +983,8 @@ public class Cam extends AppCompatActivity {
 		edittext.setText(RT);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
 		builder.setTitle("Scan Result");
-		builder.setMessage("You can edit the text yourself");
+		builder.setMessage("You can modify the text directly");
 		builder.setView(edittext);
 		builder.setCancelable(false);
 		builder.setPositiveButton("OK",
@@ -1008,12 +1006,9 @@ public class Cam extends AppCompatActivity {
 				});
 		builder.show();
 	}
-
-	//When you touch BackPress, app closes
+	//When touch BackPress, app closes
 	public void onBackPressed(){
 		super.onBackPressed();
 		ActivityCompat.finishAffinity(this);
 	}
-
-
 }

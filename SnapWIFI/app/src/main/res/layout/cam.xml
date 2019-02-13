@@ -7,62 +7,10 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
-
         <com.kakao.adfit.ads.ba.BannerAdView
             android:id="@+id/adView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
-
-    </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="337dp"
-            android:layout_height="37dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="68dp">
-
-            <TextView
-                android:id="@+id/low"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginLeft="35dp"
-                android:layout_marginBottom="95dp"
-                android:text="-"
-                android:textColor="#ffffff"
-                android:textSize="25dp" />
-
-            <TextView
-                android:id="@+id/more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginLeft="280dp"
-                android:layout_marginBottom="95dp"
-                android:text="+"
-                android:textColor="#ffffff"
-                android:textSize="25dp" />
-
-            <SeekBar
-                android:id="@+id/seekBar1"
-                android:layout_width="216dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="95dp"
-                android:max="90"
-                android:progress="0"
-                android:progressDrawable="@drawable/seekbar_seekbar1"
-                android:thumb="@drawable/seekbar_seekbar1_thumb" />
-
-        </RelativeLayout>
-
 
         <TextView
             android:id="@+id/warningText"
@@ -85,7 +33,41 @@
             android:text=""
             android:textColor="#FFFF0000" />
 
-        <Button
+    <SeekBar
+        android:id="@+id/seekBar1"
+        android:max="90"
+        android:progress="0"
+        android:progressDrawable="@drawable/seekbar_seekbar1"
+        android:thumb="@drawable/seekbar_seekbar1_thumb"
+        android:layout_width="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/startButton"
+        android:layout_marginBottom="23dp" />
+
+    <TextView
+        android:id="@+id/low"
+        android:layout_alignBottom="@+id/seekBar1"
+        android:layout_toLeftOf="@+id/seekBar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        />
+    <TextView
+        android:id="@+id/more"
+        android:gravity="bottom"
+        android:layout_alignBottom="@+id/seekBar1"
+        android:layout_toRightOf="@+id/seekBar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        />
+
+    <Button
             android:id="@+id/startButton"
             android:layout_width="245dp"
             android:layout_height="wrap_content"
