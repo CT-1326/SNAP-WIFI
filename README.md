@@ -1,7 +1,9 @@
 # SNAP_WIFI
 Using OCR technology to scan WIFI password and automatically connect WIFI
 
-[<img src="">](https://play.google.com/store/apps/details?id=com.fastaccess.github)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+      alt="Download from Google Play"
+      height="80">]()
 # Prerequisites
 Android API Lv. 19 ~ 27
 # Open-source libraries & SDK
