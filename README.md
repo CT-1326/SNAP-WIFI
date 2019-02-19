@@ -1,4 +1,4 @@
-# SNAP_WIFI
+# SNAP WIFI
 Using OCR technology to scan WIFI password and automatically connect WIFI
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
