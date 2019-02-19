@@ -5,6 +5,8 @@ Using OCR technology to scan WIFI password and automatically connect WIFI
       alt="Download from Google Play"
       height="80">]()
 # Prerequisites
+Android studio 3.3.1
+
 Android API Lv. 19 ~ 27
 # Open-source libraries & SDK
 https://github.com/abbyysdk/RTR-SDK.Android
