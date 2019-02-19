@@ -1,4 +1,4 @@
-package com.example.unknown.snapwifi;
+package com.Dev.unknown.snapwifi;
 
 
 import android.content.BroadcastReceiver;
@@ -24,12 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.Dev.unknown.snapwifi.R;
 import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.unknown.snapwifi.Cam.RT;
+import static com.Dev.unknown.snapwifi.Cam.RT;
 
 public class Load extends AppCompatActivity {
 

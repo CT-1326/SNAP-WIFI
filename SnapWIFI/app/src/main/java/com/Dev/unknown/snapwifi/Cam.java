@@ -1,4 +1,4 @@
-package com.example.unknown.snapwifi;
+package com.Dev.unknown.snapwifi;
 
 
 import android.content.Context;
@@ -36,6 +36,7 @@ import android.widget.TextView;
 
 import com.abbyy.mobile.rtr.Engine;
 import com.abbyy.mobile.rtr.ITextCaptureService;
+import com.Dev.unknown.snapwifi.R;
 import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;

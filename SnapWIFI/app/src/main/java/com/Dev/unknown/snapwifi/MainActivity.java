@@ -1,4 +1,4 @@
-package com.example.unknown.snapwifi;
+package com.Dev.unknown.snapwifi;
 
 import android.Manifest;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.Dev.unknown.snapwifi.R;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 

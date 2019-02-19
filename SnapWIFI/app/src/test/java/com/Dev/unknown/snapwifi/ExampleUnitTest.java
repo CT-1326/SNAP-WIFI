@@ -1,4 +1,4 @@
-package com.example.unknown.snapwifi;
+package com.Dev.unknown.snapwifi;
 
 import org.junit.Test;
 

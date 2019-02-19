@@ -1,4 +1,4 @@
-package com.example.unknown.snapwifi;
+package com.Dev.unknown.snapwifi;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

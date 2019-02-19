@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.unknown.snapwifi">
+    package="com.Dev.unknown.snapwifi">
 
     <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name="com.Dev.unknown.snapwifi.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,11 +28,11 @@
         </activity>
 
         <activity
-            android:name=".Cam"
+            android:name="com.Dev.unknown.snapwifi.Cam"
             android:configChanges="keyboardHidden|screenSize">
         </activity>
 
-        <activity android:name=".Load">
+        <activity android:name="com.Dev.unknown.snapwifi.Load">
         </activity>
 
     </application>
