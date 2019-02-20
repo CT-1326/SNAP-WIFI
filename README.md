@@ -3,7 +3,7 @@ Using OCR technology to scan WIFI password and automatically connect WIFI
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
       alt="Download from Google Play"
-      height="80">]()
+      height="80">](https://play.google.com/store/apps/details?id=com.Dev.unknown.snapwifi)
 # Prerequisites
 Android studio 3.3.1
 
