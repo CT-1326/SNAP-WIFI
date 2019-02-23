@@ -646,7 +646,7 @@ public class Cam extends AppCompatActivity {
 
 		//Load adfit
 		adView = findViewById(R.id.adView);
-		adView.setClientId("DAN-qdspi88vxdf6");
+		adView.setClientId("DAN-sof3sp44hw6s");
 		adView.loadAd();
 
 		//Check GPS ON/OFF (OS 6.0 UP)

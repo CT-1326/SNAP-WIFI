@@ -62,10 +62,10 @@ public class Load extends AppCompatActivity {
 
         //Load adfit
         adView = findViewById(R.id.adView);
-        adView.setClientId("DAN-1hr5wkw0xrbjp");
+        adView.setClientId("DAN-t4yy5bfqsj8i");
         adView.loadAd();
         addView = findViewById(R.id.addView);
-        addView.setClientId("DAN-1hr5wkw0xrbjp");
+        addView.setClientId("DAN-t4yy5bfqsj8i");
         addView.loadAd();
 
         wifimanager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
