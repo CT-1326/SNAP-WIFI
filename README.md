@@ -29,4 +29,4 @@ Thanks for again great help!
 | ![Third](https://user-images.githubusercontent.com/33346331/53023922-780ce200-34a1-11e9-8961-fcdd25e1c413.jpg) | ![Fourth](https://user-images.githubusercontent.com/33346331/53023921-780ce200-34a1-11e9-9642-115b0fea2d9d.jpg) |
 
 # License
-      This project is licensed under the Apache 2.0 License - see the [SNAP_WIFI/LICENSE](LICENSE)
+This project is licensed under the Apache 2.0 License - see the [SNAP_WIFI/LICENSE](LICENSE)
