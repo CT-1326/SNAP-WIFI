@@ -17,7 +17,7 @@ https://github.com/ParkSangGwon/TedPermission
 
       about Permission librarie
 
-Thanks for again great help!
+<b>Thanks for again great help!</b>
 
 # Screenshots
 | Scan | Check |
