@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SNAP_WIFI.iml" filepath="$PROJECT_DIR$/.idea/SNAP_WIFI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SNAP-WIFI.iml" filepath="$PROJECT_DIR$/.idea/modules/SNAP-WIFI.iml" group="SNAP-WIFI" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="SNAP-WIFI/app" />
     </modules>
   </component>
 </project>
