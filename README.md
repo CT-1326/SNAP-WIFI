@@ -15,7 +15,7 @@ https://github.com/abbyysdk/RTR-SDK.Android
 
 https://github.com/ParkSangGwon/TedPermission
 
-      about Permission librarie
+      about Permission library
 
 <b>Thanks for again great help!</b>
 
