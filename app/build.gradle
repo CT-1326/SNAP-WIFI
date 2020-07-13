@@ -20,16 +20,15 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation (name:'abbyy-rtr-sdk-1.0', ext:'aar')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     implementation 'gun0912.ted:tedpermission:2.1.1'
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.11"
     implementation "com.google.android.gms:play-services-ads-identifier:16.0.0"
     implementation "com.kakao.adfit:ads-base:3.0.7"
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
