@@ -6,6 +6,4 @@
     android:background="@android:color/background_dark"
     tools:context="com.Dev.unknown.snapwifi.MainActivity">
 
-
-
 </android.support.constraint.ConstraintLayout>

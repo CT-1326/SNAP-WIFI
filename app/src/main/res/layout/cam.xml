@@ -7,31 +7,30 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 
-        <com.kakao.adfit.ads.ba.BannerAdView
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <com.kakao.adfit.ads.ba.BannerAdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/warningText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="90dp"
-            android:gravity="left"
-            android:text=""
-            android:textColor="#FFFF0000" />
-
-        <TextView
-            android:id="@+id/errorText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/warningText"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:gravity="left"
-            android:text=""
-            android:textColor="#FFFF0000" />
+    <TextView
+        android:id="@+id/warningText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="90dp"
+        android:gravity="left"
+        android:text=""
+        android:textColor="#FFFF0000"/>
+    <TextView
+        android:id="@+id/errorText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/warningText"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="left"
+        android:text=""
+        android:textColor="#FFFF0000"/>
 
     <SeekBar
         android:id="@+id/seekBar1"
@@ -43,8 +42,7 @@
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_above="@+id/startButton"
-        android:layout_marginBottom="23dp" />
-
+        android:layout_marginBottom="23dp"/>
     <TextView
         android:id="@+id/low"
         android:layout_alignBottom="@+id/seekBar1"
@@ -53,8 +51,7 @@
         android:layout_height="wrap_content"
         android:text="-"
         android:textColor="#ffffff"
-        android:textSize="25dp"
-        />
+        android:textSize="25dp"/>
     <TextView
         android:id="@+id/more"
         android:gravity="bottom"
@@ -64,19 +61,17 @@
         android:layout_height="wrap_content"
         android:text="+"
         android:textColor="#ffffff"
-        android:textSize="25dp"
-        />
-
+        android:textSize="25dp"/>
     <Button
-            android:id="@+id/startButton"
-            android:layout_width="245dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
-            android:background="#7d010000"
-            android:onClick="onStartButtonClick"
-            android:text="Start"
-            android:textColor="#ffffff"
-            android:textSize="15dp" />
-    </RelativeLayout>
+        android:id="@+id/startButton"
+        android:layout_width="245dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:background="#7d010000"
+        android:onClick="onStartButtonClick"
+        android:text="Start"
+        android:textColor="#ffffff"
+        android:textSize="15dp"/>
+</RelativeLayout>

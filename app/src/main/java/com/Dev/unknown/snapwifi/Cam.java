@@ -1,6 +1,5 @@
 package com.Dev.unknown.snapwifi;
 
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,26 +35,20 @@ import android.widget.TextView;
 
 import com.abbyy.mobile.rtr.Engine;
 import com.abbyy.mobile.rtr.ITextCaptureService;
-import com.Dev.unknown.snapwifi.R;
 import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cam extends AppCompatActivity {
-
 	//Adfit
 	private BannerAdView adView;
-
 	//camera zoom bar
 	private SeekBar seekBar;
-
 	//camera zoom icon
-	private TextView low,more;
-
+	private TextView low, more;
 	//OCR result text
 	static String RT;
-
 	// Licensing
 	private static final String licenseFileName = "AbbyyRtrSdk.license";
 
@@ -78,36 +71,29 @@ public class Cam extends AppCompatActivity {
 	// The 'Abbyy RTR SDK Engine' and 'Text Capture Service' to be used in this sample application
 	private Engine engine;
 	private ITextCaptureService textCaptureService;
-
 	// The camera and the preview surface
 	private Camera camera;
 	private SurfaceViewWithOverlay surfaceViewWithOverlay;
 	private SurfaceHolder previewSurfaceHolder;
-
 	// Actual preview size and orientation
 	private Camera.Size cameraPreviewSize;
 	private int orientation;
-
 	// Auxiliary variables
 	private boolean inPreview = false; // Camera preview is started
 	private boolean stableResultHasBeenReached; // Stable result has been reached
 	private boolean startRecognitionWhenReady; // Start recognition next time when ready (and reset this flag)
 	private Handler handler = new Handler(); // Posting some delayed actions;
-
 	// UI components
 	private Button startButton; // The start button
 	private TextView warningTextView; // Show warnings from recognizer
 	private TextView errorTextView; // Show errors from recognizer
-
 	// Text displayed on start button
 	private static final String BUTTON_TEXT_START = "Start";
 	private static final String BUTTON_TEXT_STOP = "Stop";
 	private static final String BUTTON_TEXT_STARTING = "Starting...";
 
-
 	// To communicate with the Text Capture Service we will need this callback:
 	private ITextCaptureService.Callback textCaptureCallback = new ITextCaptureService.Callback() {
-
 		@Override
 		public void onRequestLatestFrame( byte[] buffer )
 		{
@@ -116,7 +102,6 @@ public class Cam extends AppCompatActivity {
 			// Camera.PreviewCallback.onPreviewFrame (see below)
 			camera.addCallbackBuffer( buffer );
 		}
-
 		@Override
 		public void onFrameProcessed(ITextCaptureService.TextLine[] lines,
                                      ITextCaptureService.ResultStabilityStatus resultStatus, ITextCaptureService.Warning warning )
@@ -154,7 +139,6 @@ public class Cam extends AppCompatActivity {
 				}
 			}
 		}
-
 		@Override
 		public void onError( Exception e )
 		{
@@ -193,7 +177,6 @@ public class Cam extends AppCompatActivity {
 
 	// This callback is used to configure preview surface for the camera
 	SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
-
 		@Override
 		public void surfaceCreated( SurfaceHolder holder )
 		{
@@ -685,7 +668,6 @@ public class Cam extends AppCompatActivity {
 		errorTextView = (TextView) findViewById( R.id.errorText );
 		startButton = (Button) findViewById( R.id.startButton );
 
-
 		// Manually create preview surface. The only reason for this is to
 		// avoid making it public top level class
 		RelativeLayout layout = (RelativeLayout) startButton.getParent();
@@ -853,7 +835,7 @@ public class Cam extends AppCompatActivity {
 
 					RT = new String(line.Text);//Get ocr result as text
 					RT = RT.replaceAll("\\p{Z}", "");//Remove spaces
-					Log.d("Result : ",RT);
+					Log.d("Result : ", RT);
 				}
 				switch( resultStatus ) {
 					case NotReady:
@@ -976,13 +958,13 @@ public class Cam extends AppCompatActivity {
 			}
 		}
 	}
-
 	//Show OCR result
 	private void show()
 	{
+		// Setup editText as OCR result
 		final EditText edittext = new EditText(this);
 		edittext.setText(RT);
-
+		// View on success alertDialog
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Scan Result");
 		builder.setMessage("You can modify the text directly");

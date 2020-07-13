@@ -33,33 +33,26 @@ import java.util.List;
 import static com.Dev.unknown.snapwifi.Cam.RT;
 
 public class Load extends AppCompatActivity {
-
     private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
-
     //Adfit
     private BannerAdView adView;
     private BannerAdView addView;
-
     // WIFI & network
     private WifiManager wifimanager;
     private ConnectivityManager connectivityManager;
     private NetworkInfo WIFI;
-
     //Progressbar
     private ProgressBar probar;
     private TextView text;
     private Handler handler;
-
     //Save WIFI AP list
     private ArrayList list = new ArrayList<String>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load);
-
         //Load adfit
         adView = findViewById(R.id.adView);
         adView.setClientId("DAN-t4yy5bfqsj8i");
@@ -71,7 +64,6 @@ public class Load extends AppCompatActivity {
         wifimanager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         connectivityManager=(ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
         WIFI=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
         // Turn WIFI ON
         if (wifimanager.isWifiEnabled() == false)
             wifimanager.setWifiEnabled(true);
@@ -252,11 +244,9 @@ public class Load extends AppCompatActivity {
                 builder.show();
         }
     }
-
     //When touch BackPress twice, app closes
     @Override
     public void onBackPressed() {
-
         long a = System.currentTimeMillis();
         long b = a-backPressedTime;
 
