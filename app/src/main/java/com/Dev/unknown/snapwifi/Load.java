@@ -1,6 +1,5 @@
 package com.Dev.unknown.snapwifi;
 
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,8 +22,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.Dev.unknown.snapwifi.R;
 import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
@@ -53,6 +50,7 @@ public class Load extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load);
+
         //Load adfit
         adView = findViewById(R.id.adView);
         adView.setClientId("DAN-t4yy5bfqsj8i");
@@ -73,7 +71,8 @@ public class Load extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Load.this);
         //If already WIFI connected
-        if (WIFI.isConnected()) {
+        if (WIFI.isConnected())
+        {
             builder.setTitle("Already use WIFI");
             //builder.setCancelable(false);
             builder.setPositiveButton("EXIT",
@@ -90,36 +89,42 @@ public class Load extends AppCompatActivity {
                     });
             builder.show();
         }
-        else {
+        else
+        {
             text.setText("Connecting WIFI...");
             handler = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
                     //If progressbar is max
-                    if (msg.arg1 == 600) {
+                    if (msg.arg1 == 600)
+                    {
                         show();
                     }
                 }
             };
-
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = 0; i <= 600; i+=10) {
-                        connectivityManager=(ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-                        WIFI=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                    for (int i = 0; i <= 600; i+=10)
+                    {
+                        connectivityManager = (ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+                        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
                         probar.setProgress(i);
                         Message msg = handler.obtainMessage();
                         msg.arg1 = i;
                         handler.sendMessage(msg);
                         //If the WIFI connection is successful
-                        if(WIFI.isConnected()) {
-                            msg.arg1=600;
+                        if(WIFI.isConnected())
+                        {
+                            msg.arg1 = 600;
                             break;
                         }
-                        try {
+                        try
+                        {
                             Thread.sleep(1000);
-                        } catch (InterruptedException e) {
+                        }
+                        catch (InterruptedException e)
+                        {
                             e.printStackTrace();
                         }
                     }
@@ -129,7 +134,6 @@ public class Load extends AppCompatActivity {
             initWIFIScan();
         }
     }
-
     //Surrounding area wifi scan
     private List<ScanResult> mScanResult; // ScanResult List
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -137,28 +141,33 @@ public class Load extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
-            if (action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
+            if (action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
+            {
                 getWIFIScanResult(); // get WIFISCanResult
                 wifimanager.startScan(); // for refresh
-            } else if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
+            }
+            else if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION))
+            {
                 sendBroadcast(new Intent("wifi.ON_NETWORK_STATE_CHANGED"));
             }
         }
     };
-
+    //Successful wifi scan
     public void getWIFIScanResult() {
         mScanResult = wifimanager.getScanResults(); // ScanResult
         // Scan count 5
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++)
+        {
             ScanResult result = mScanResult.get(i);
             String Capabilities =  result.capabilities;
-
             //Blocking Free carrier WIFI
-            if(Capabilities.contains("EAP")) {
+            if(Capabilities.contains("EAP"))
+            {
                 continue;
             }
             //Automatic connection
-            else {
+            else
+            {
                 list.add(result.SSID);
                 WifiConfiguration wificonfig = new WifiConfiguration();
                 wificonfig.SSID = String.format("\"%s\"", result.SSID);
@@ -169,47 +178,50 @@ public class Load extends AppCompatActivity {
                 wifimanager.reconnect();
             }
         }
-        unregisterReceiver(mReceiver); // stop WIFISCan
+        unregisterReceiver(mReceiver); // stop WIFI SCan
     }
-
-    public void initWIFIScan() {
-        // init WIFISCAN
+    // init WIFI SCAN
+    public void initWIFIScan()
+    {
         final IntentFilter filter = new IntentFilter(
                 WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         registerReceiver(mReceiver, filter);
         wifimanager.startScan();
     }
-
-    private void show(){
-        //Remove all AP except connected AP
+    //Remove all AP except connected AP
+    private void show()
+    {
         WifiInfo wifiInfo = wifimanager.getConnectionInfo();
         String ssid = new String(wifiInfo.getSSID());
         ssid = ssid.substring(1, ssid.length()-1);
         Log.d("WIFI AP", ssid);
 
-        for (int i=0;i<list.size();i++) {
+        for (int i = 0; i < list.size(); i++)
+        {
             WifiConfiguration wificonfig = new WifiConfiguration();
             wificonfig.SSID = String.format("\"%s\"", list.get(i));
             wificonfig.preSharedKey = String.format("\"%s\"", RT);
             int netId = wifimanager.addNetwork(wificonfig);
 
-            if(ssid.equals(list.get(i))){
+            if(ssid.equals(list.get(i)))
+            {
                 continue;
             }
-            else{
+            else
+            {
                 Log.d("WIFI AP?", (String) list.get(i));
                 wifimanager.removeNetwork(netId);
                 wifimanager.saveConfiguration();
             }
-
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         connectivityManager=(ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
         WIFI=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         //Show wifi connection result
-        if(WIFI.isConnected()) {
+        if(WIFI.isConnected())
+        {
                 builder.setTitle("WIFI connection successful!");
                 //builder.setCancelable(false);
                 builder.setPositiveButton("EXIT",
@@ -226,27 +238,29 @@ public class Load extends AppCompatActivity {
                         });
                 builder.show();
         }
-        else{
-                builder.setTitle("WIFI connection failed......\n(May be temporary WIFI error)");
-                //builder.setCancelable(false);
-                builder.setPositiveButton("EXIT",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.finishAffinity(Load.this);
-                            }
-                        });
-                builder.setNegativeButton("Go First",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        });
-                builder.show();
+        else
+        {
+            builder.setTitle("WIFI connection failed......\n(May be temporary WIFI error)");
+            //builder.setCancelable(false);
+            builder.setPositiveButton("EXIT",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.finishAffinity(Load.this);
+                        }
+                    });
+            builder.setNegativeButton("Go First",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+            builder.show();
         }
     }
     //When touch BackPress twice, app closes
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         long a = System.currentTimeMillis();
         long b = a-backPressedTime;
 
@@ -260,5 +274,4 @@ public class Load extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

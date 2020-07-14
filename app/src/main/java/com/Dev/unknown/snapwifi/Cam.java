@@ -976,7 +976,7 @@ public class Cam extends AppCompatActivity {
 						InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 						imm.hideSoftInputFromWindow(edittext.getWindowToken(),0);
 
-						RT=edittext.getText().toString();//String modified by keyboard
+						RT = edittext.getText().toString();//String modified by keyboard
 						Log.d("Result edit : ",RT);
 						startActivity(new Intent(Cam.this,Load.class));
 					}
@@ -990,7 +990,8 @@ public class Cam extends AppCompatActivity {
 		builder.show();
 	}
 	//When touch BackPress, app closes
-	public void onBackPressed(){
+	public void onBackPressed()
+	{
 		super.onBackPressed();
 		ActivityCompat.finishAffinity(this);
 	}
