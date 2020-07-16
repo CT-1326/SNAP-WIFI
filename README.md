@@ -5,9 +5,9 @@
       alt="Download from Google Play"
       height="80">](https://play.google.com/store/apps/details?id=com.Dev.unknown.snapwifi)
 # Prerequisites
-      Android studio 3.6.1
+      Android studio 4.0.0
 
-      Android API Lv. 19 ~ 27
+      Android API Lv. 23 ~ 29
 # Open-source libraries & SDK
 https://github.com/abbyysdk/RTR-SDK.Android
       

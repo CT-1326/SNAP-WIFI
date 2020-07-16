@@ -12,27 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <ProgressBar
-        android:id="@+id/pb"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:max="600"
-        android:layout_width="363dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
-
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="316dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pb"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="19dp"
-        android:textColor="@android:color/background_light"
-        android:textSize="25dp"
-        android:textStyle="bold" />
-
     <com.kakao.adfit.ads.ba.BannerAdView
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
