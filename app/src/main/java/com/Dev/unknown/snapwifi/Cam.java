@@ -746,7 +746,7 @@ public class Cam extends AppCompatActivity {
 					//Zoom & Auto Focus
 					Camera.Parameters params = camera.getParameters();
 					//seekBar.setMax(params.getMaxZoom());
-					params.setZoom(progress*5);
+					params.setZoom(progress*10);
 					camera.setParameters(params);
 					low.setVisibility(View.VISIBLE);
 					more.setVisibility(View.VISIBLE);
