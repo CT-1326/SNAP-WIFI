@@ -1,9 +1,11 @@
 package com.Dev.unknown.snapwifi;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -16,6 +18,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.provider.Settings;
 
 import androidx.annotation.NonNull;
@@ -24,13 +27,17 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.renderscript.Sampler;
+import android.text.Layout;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -38,6 +45,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.abbyy.mobile.rtr.BuildConfig;
 import com.abbyy.mobile.rtr.Engine;
@@ -52,6 +60,7 @@ import java.util.List;
 import static java.security.AccessController.getContext;
 
 public class Cam extends AppCompatActivity {
+	private int progress=0;
 	//Adfit
 	private BannerAdView Adview;
 	//camera zoom bar
@@ -201,6 +210,7 @@ public class Cam extends AppCompatActivity {
 			// When surface is changed (or created), attach it to the camera, configure camera and start preview
 			if( camera != null ) {
 				setCameraPreviewDisplayAndStartPreview();
+				Log.d("isChange?", "change");
 			}
 		}
 
@@ -671,6 +681,7 @@ public class Cam extends AppCompatActivity {
 			}
 		}
 
+
 		// Retrieve some ui components
 		warningTextView = (TextView) findViewById( R.id.warningText );
 		errorTextView = (TextView) findViewById( R.id.errorText );
@@ -702,7 +713,7 @@ public class Cam extends AppCompatActivity {
 		seekBar.getConfigBuilder()
 				.min(0)
 				.max(5)
-				.progress(2)
+				.progress(0)
 				.sectionCount(5)
 				.trackColor(ContextCompat.getColor(getApplicationContext(), R.color.color_gray))
 				.secondTrackColor(ContextCompat.getColor(getApplicationContext(), R.color.color_blue))
@@ -741,14 +752,18 @@ public class Cam extends AppCompatActivity {
 			seekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
 			@Override
 			public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
-				if(camera.getParameters().isZoomSupported()) {
-					//Zoom & Auto Focus
-					Camera.Parameters params = camera.getParameters();
-					//seekBar.setMax(params.getMaxZoom());
-					params.setZoom(progress*10);
-					camera.setParameters(params);
-					low.setVisibility(View.VISIBLE);
-					more.setVisibility(View.VISIBLE);
+				try {
+					if (camera.getParameters().isZoomSupported()) {
+						//Zoom & Auto Focus
+						Camera.Parameters params = camera.getParameters();
+						//seekBar.setMax(params.getMaxZoom());
+						params.setZoom(progress * 10);
+						camera.setParameters(params);
+						low.setVisibility(View.VISIBLE);
+						more.setVisibility(View.VISIBLE);
+					}
+				}catch (NullPointerException e) {
+					Log.d("isRotate?", "rotate");
 				}
 			}
 
@@ -770,7 +785,9 @@ public class Cam extends AppCompatActivity {
 		more = (TextView)findViewById(R.id.more);
 		low.setVisibility(View.INVISIBLE);
 		more.setVisibility(View.INVISIBLE);
+
 	}
+
 
 	@Override
 	public void onResume()
@@ -790,7 +807,6 @@ public class Cam extends AppCompatActivity {
 	public void onPause()
 	{
 		//seekBar.setMax(0);
-
 		// Clear all pending actions
 		handler.removeCallbacksAndMessages( null );
 		// Stop the text capture service
@@ -1067,7 +1083,30 @@ public class Cam extends AppCompatActivity {
 	//When touch BackPress, app closes
 	public void onBackPressed()
 	{
-		super.onBackPressed();
-		ActivityCompat.finishAffinity(this);
+		/*super.onBackPressed();
+		ActivityCompat.finishAffinity(this);*/
+
+		KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.INPUT_TYPE);
+		pDialog.setTitleText("종료하시겠습니까?")
+				.setConfirmText("종료")
+				.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+					@Override
+					public void onClick(KAlertDialog kAlertDialog) {
+						ActivityCompat.finishAffinity(Cam.this);
+					}
+				})
+				.setCancelText("처음으로")
+				.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+					@Override
+					public void onClick(KAlertDialog kAlertDialog) {
+						finish();
+					}
+				});
+		EditText et = new EditText(this);
+		pDialog.getCurrentFocus();
+		et.requestFocus();
+		Log.d("Current focus ", String.valueOf(pDialog.getCurrentFocus()));
+		pDialog.setCustomView(et);
+		pDialog.show();
 	}
 }

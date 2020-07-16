@@ -28,7 +28,8 @@
 
         <activity
             android:name="com.Dev.unknown.snapwifi.Cam"
-            android:configChanges="keyboardHidden|screenSize">
+            android:configChanges="keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
 
         <activity android:name="com.Dev.unknown.snapwifi.Load">
