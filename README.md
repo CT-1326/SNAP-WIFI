@@ -7,7 +7,7 @@
 # Prerequisites
       Android studio 4.0.0
 
-      Android API Lv. 19 ~ 27
+      Android API Lv. 23 ~ 29
 # Open-source libraries & SDK
 https://github.com/abbyysdk/RTR-SDK.Android
       
