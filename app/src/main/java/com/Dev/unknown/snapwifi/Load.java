@@ -17,11 +17,14 @@ import android.os.Message;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import dmax.dialog.SpotsDialog;
+
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.developer.kalert.KAlertDialog;
 import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
@@ -60,79 +63,31 @@ public class Load extends AppCompatActivity {
         adView2.loadAd();
 
         WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        connectivityManager = (ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+        connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
         WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         // Turn WIFI ON
         if (WIFI_Manger.isWifiEnabled() == false)
             WIFI_Manger.setWifiEnabled(true);
 
-        probar = (ProgressBar) findViewById(R.id.pb);
-        text = (TextView) findViewById(R.id.tv);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(Load.this);
         //If already WIFI connected
         if (WIFI.isConnected())
         {
-            builder.setTitle("이미 WIFI가 연결돼있습니다");
-            //builder.setCancelable(false);
-            builder.setPositiveButton("종료",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
+            new KAlertDialog(this, KAlertDialog.WARNING_TYPE)
+                    .setTitleText("이미 WIFI가 사용중 입니다")
+                    .setConfirmText("종료")
+                    .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+                        @Override
+                        public void onClick(KAlertDialog sDialog) {
                             ActivityCompat.finishAffinity(Load.this);
                         }
-                    });
-            builder.setNegativeButton("처음으로",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    });
-            builder.show();
+                    })
+                    .setCancelText("처음으로")
+                    .show();
         }
-        else
-        {
-            text.setText("WIFI 연결중...");
-            handler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    //If progressbar is max
-                    if (msg.arg1 == 600)
-                    {
-                        Show_Result();
-                    }
-                }
-            };
-            Thread t = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (int i = 0; i <= 600; i+=10)
-                    {
-                        connectivityManager = (ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-                        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-                        probar.setProgress(i);
-                        Message msg = handler.obtainMessage();
-                        msg.arg1 = i;
-                        handler.sendMessage(msg);
-                        //If the WIFI connection is successful
-                        if(WIFI.isConnected())
-                        {
-                            msg.arg1 = 600;
-                            break;
-                        }
-                        try
-                        {
-                            Thread.sleep(1000);
-                        }
-                        catch (InterruptedException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
-            t.start();
-            initWIFIScan();
-        }
+//        else
+//        {
+//            initWIFIScan();
+//        }
     }
     //Surrounding area wifi scan
     private List<ScanResult> mScanResult; // ScanResult List
