@@ -721,6 +721,7 @@ public class Cam extends AppCompatActivity {
 				.seekBySection()
 				.autoAdjustSectionMark()
 				.sectionTextPosition(BubbleSeekBar.TextPosition.BELOW_SECTION_MARK)
+				.touchToSeek()
 				.build();
 
 		seekBar.setCustomSectionTextArray(new BubbleSeekBar.CustomSectionTextArray() {
