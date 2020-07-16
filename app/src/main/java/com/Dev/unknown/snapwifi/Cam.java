@@ -43,13 +43,13 @@ import java.util.List;
 
 public class Cam extends AppCompatActivity {
 	//Adfit
-	private BannerAdView adView;
+	private BannerAdView Adview;
 	//camera zoom bar
 	private SeekBar seekBar;
 	//camera zoom icon
 	private TextView low, more;
 	//OCR result text
-	static String RT;
+	static String Result_Text;
 	// Licensing
 	private static final String licenseFileName = "AbbyyRtrSdk.license";
 
@@ -136,7 +136,7 @@ public class Cam extends AppCompatActivity {
 					startButton.playSoundEffect( android.view.SoundEffectConstants.CLICK );
 
 					//when OCR is over
-					show();
+					Show_Result();
 				}
 			}
 		}
@@ -629,9 +629,9 @@ public class Cam extends AppCompatActivity {
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		//Load adfit
-		adView = findViewById(R.id.adView);
-		adView.setClientId("DAN-sof3sp44hw6s");
-		adView.loadAd();
+		Adview = findViewById(R.id.adView);
+		Adview.setClientId("DAN-sof3sp44hw6s");
+		Adview.loadAd();
 
 		//Check GPS ON/OFF (OS 6.0 UP)
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -834,9 +834,9 @@ public class Cam extends AppCompatActivity {
 					}
 					this.lines[i] = line.Text;
 
-					RT = new String(line.Text);//Get ocr result as text
-					RT = RT.replaceAll("\\p{Z}", "");//Remove spaces
-					Log.d("Result : ", RT);
+					Result_Text = new String(line.Text);//Get ocr result as text
+					Result_Text = Result_Text.replaceAll("\\p{Z}", "");//Remove spaces
+					Log.d("Result : ", Result_Text);
 				}
 				switch( resultStatus ) {
 					case NotReady:
@@ -960,25 +960,25 @@ public class Cam extends AppCompatActivity {
 		}
 	}
 	//Show OCR result
-	private void show()
+	private void Show_Result()
 	{
 		// Setup editText as OCR result
-		final EditText edittext = new EditText(this);
-		edittext.setText(RT);
+		final EditText EditText = new EditText(this);
+		EditText.setText(Result_Text);
 		// View on success alertDialog
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("인식 결과");
 		builder.setMessage("결과 내용은 직접 손으로도 수정 가능합니다");
-		builder.setView(edittext);
+		builder.setView(EditText);
 		builder.setCancelable(false);
 		builder.setPositiveButton("확인",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-						imm.hideSoftInputFromWindow(edittext.getWindowToken(),0);
+						InputMethodManager InputManger = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+						InputManger.hideSoftInputFromWindow(EditText.getWindowToken(),0);
 
-						RT = edittext.getText().toString();//String modified by keyboard
-						Log.d("Result edit : ",RT);
+						Result_Text = EditText.getText().toString();//String modified by keyboard
+						Log.d("Result edit : ", Result_Text);
 						startActivity(new Intent(Cam.this,Load.class));
 					}
 				});
