@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         };
         TedPermission.with(this)
                 .setPermissionListener(permissionlistener)
-                .setDeniedMessage("You have declined ... but you can grant permissions under Settings> Permissions")
+                .setDeniedMessage("권한이 거부되어 어플 이용이 불가능합니다...\n\n권한을 허용해주세요!\n[설정] > [권한]")
                 .setPermissions(Manifest.permission.CAMERA, Manifest.permission.ACCESS_COARSE_LOCATION)
                 .check();
     }

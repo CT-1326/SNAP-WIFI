@@ -73,15 +73,15 @@ public class Load extends AppCompatActivity {
         //If already WIFI connected
         if (WIFI.isConnected())
         {
-            builder.setTitle("Already use WIFI");
+            builder.setTitle("이미 WIFI가 연결돼있습니다");
             //builder.setCancelable(false);
-            builder.setPositiveButton("EXIT",
+            builder.setPositiveButton("종료",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.finishAffinity(Load.this);
                         }
                     });
-            builder.setNegativeButton("GO First",
+            builder.setNegativeButton("처음으로",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             finish();
@@ -91,7 +91,7 @@ public class Load extends AppCompatActivity {
         }
         else
         {
-            text.setText("Connecting WIFI...");
+            text.setText("WIFI 연결중...");
             handler = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
@@ -222,15 +222,15 @@ public class Load extends AppCompatActivity {
         //Show wifi connection result
         if(WIFI.isConnected())
         {
-                builder.setTitle("WIFI connection successful!");
+                builder.setTitle("WIFI 연결에 성공하였습니다!");
                 //builder.setCancelable(false);
-                builder.setPositiveButton("EXIT",
+                builder.setPositiveButton("종료",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 ActivityCompat.finishAffinity(Load.this);
                             }
                         });
-                builder.setNegativeButton("Go First",
+                builder.setNegativeButton("처음으로",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 finish();
@@ -240,15 +240,15 @@ public class Load extends AppCompatActivity {
         }
         else
         {
-            builder.setTitle("WIFI connection failed......\n(May be temporary WIFI error)");
+            builder.setTitle("WIFI 연결에 실패했습니다...\n(해당 WIFI 연결상태 문제일수도 있습니다)");
             //builder.setCancelable(false);
-            builder.setPositiveButton("EXIT",
+            builder.setPositiveButton("종료",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.finishAffinity(Load.this);
                         }
                     });
-            builder.setNegativeButton("Go First",
+            builder.setNegativeButton("처음으로",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             finish();

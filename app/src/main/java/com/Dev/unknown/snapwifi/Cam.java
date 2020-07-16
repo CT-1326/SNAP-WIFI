@@ -638,9 +638,9 @@ public class Cam extends AppCompatActivity {
 			LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 				alertDialogBuilder
-						.setMessage("You must turn on GPS to continue using")
+						.setMessage("GPS를 켜주셔야 해당 어플 이용이 가능해요!")
 						.setCancelable(false)
-						.setPositiveButton("Setting",
+						.setPositiveButton("설정",
 								new DialogInterface.OnClickListener() {
 									//Go Settings -> Location Settings
 									public void onClick(
@@ -650,7 +650,7 @@ public class Cam extends AppCompatActivity {
 										startActivity(intent);
 									}
 								})
-						.setNegativeButton("EXIT",
+						.setNegativeButton("나가기",
 								new DialogInterface.OnClickListener() {
 									//Exit
 									public void onClick(
@@ -966,11 +966,11 @@ public class Cam extends AppCompatActivity {
 		edittext.setText(RT);
 		// View on success alertDialog
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Scan Result");
-		builder.setMessage("You can modify the text directly");
+		builder.setTitle("인식 결과");
+		builder.setMessage("결과 내용은 직접 손으로도 수정 가능합니다");
 		builder.setView(edittext);
 		builder.setCancelable(false);
-		builder.setPositiveButton("OK",
+		builder.setPositiveButton("확인",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -981,7 +981,7 @@ public class Cam extends AppCompatActivity {
 						startActivity(new Intent(Cam.this,Load.class));
 					}
 				});
-		builder.setNegativeButton("Cancel",
+		builder.setNegativeButton("취소",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
