@@ -42,10 +42,6 @@ public class Load extends AppCompatActivity {
     private WifiManager WIFI_Manger;
     private ConnectivityManager connectivityManager;
     private NetworkInfo WIFI;
-    //Progressbar
-    private ProgressBar probar;
-    private TextView text;
-    private Handler handler;
     //Save WIFI AP list
     private ArrayList List = new ArrayList<String>();
 
@@ -65,11 +61,11 @@ public class Load extends AppCompatActivity {
         WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
         WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        // Turn WIFI ON
+        //IF WIFI is OFF
         if (WIFI_Manger.isWifiEnabled() == false)
-            WIFI_Manger.setWifiEnabled(true);
+            WIFI_Manger.setWifiEnabled(true); // Turn On WIFI
 
-        //If already WIFI connected
+        //IF already WIFI connected
         if (WIFI.isConnected())
         {
             new KAlertDialog(this, KAlertDialog.WARNING_TYPE)
@@ -82,14 +78,24 @@ public class Load extends AppCompatActivity {
                         }
                     })
                     .setCancelText("처음으로")
+                    .setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+                        @Override
+                        public void onClick(KAlertDialog kAlertDialog) {
+                            finish();
+                        }
+                    })
                     .show();
         }
 //        else
 //        {
+//            new SpotsDialog.Builder()
+//                    .setContext(this)
+//                    .build()
+//                    .show();
 //            initWIFIScan();
 //        }
     }
-    //Surrounding area wifi scan
+    //Surrounding area WIFI scan
     private List<ScanResult> mScanResult; // ScanResult List
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         //Start WIFI scan
@@ -107,13 +113,13 @@ public class Load extends AppCompatActivity {
             }
         }
     };
-    //Successful wifi scan
+    //Successful WIFI scan
     public void getWIFIScanResult() {
-        mScanResult = WIFI_Manger.getScanResults(); // ScanResult
-        // Scan count 5
-        for (int i = 0; i < 5; i++)
+        mScanResult = WIFI_Manger.getScanResults(); // ScanResult List
+        for (int i = 0; i < mScanResult.size(); i++)
         {
             ScanResult Result = mScanResult.get(i);
+            Log.d("ScanResult : ", String.valueOf(Result));
             String Capabilities =  Result.capabilities;
             //Blocking Free carrier WIFI
             if(Capabilities.contains("EAP"))
@@ -124,10 +130,10 @@ public class Load extends AppCompatActivity {
             else
             {
                 List.add(Result.SSID);
-                WifiConfiguration wificonfig = new WifiConfiguration();
-                wificonfig.SSID = String.format("\"%s\"", Result.SSID);
-                wificonfig.preSharedKey = String.format("\"%s\"", Result_Text);
-                int netId = WIFI_Manger.addNetwork(wificonfig);
+                WifiConfiguration WIFI_Config = new WifiConfiguration();
+                WIFI_Config.SSID = String.format("\"%s\"", Result.SSID);
+                WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
+                int netId = WIFI_Manger.addNetwork(WIFI_Config);
                 //wifimanager.disconnect();
                 WIFI_Manger.enableNetwork(netId,false);
                 WIFI_Manger.reconnect();
@@ -150,7 +156,7 @@ public class Load extends AppCompatActivity {
         WifiInfo wifiInfo = WIFI_Manger.getConnectionInfo();
         String SSID = new String(wifiInfo.getSSID());
         SSID = SSID.substring(1, SSID.length()-1);
-        Log.d("WIFI AP", SSID);
+        Log.d("List of SSID : ", SSID);
 
         for (int i = 0; i < List.size(); i++)
         {
@@ -171,45 +177,49 @@ public class Load extends AppCompatActivity {
             }
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        connectivityManager=(ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-        WIFI=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        connectivityManager = (ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         //Show wifi connection result
-        if(WIFI.isConnected())
+        if (WIFI.isConnected())
         {
-                builder.setTitle("WIFI 연결에 성공하였습니다!");
-                //builder.setCancelable(false);
-                builder.setPositiveButton("종료",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.finishAffinity(Load.this);
-                            }
-                        });
-                builder.setNegativeButton("처음으로",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        });
-                builder.show();
+            new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("WIFI 연결에 성공!")
+                    .setConfirmText("종료")
+                    .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+                        @Override
+                        public void onClick(KAlertDialog sDialog) {
+                            ActivityCompat.finishAffinity(Load.this);
+                        }
+                    })
+                    .setCancelText("처음으로")
+                    .setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+                        @Override
+                        public void onClick(KAlertDialog kAlertDialog) {
+                            finish();
+                        }
+                    })
+                    .show();
         }
         else
         {
-            builder.setTitle("WIFI 연결에 실패했습니다...\n(해당 WIFI 연결상태 문제일수도 있습니다)");
-            //builder.setCancelable(false);
-            builder.setPositiveButton("종료",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
+            new KAlertDialog(this, KAlertDialog.WARNING_TYPE)
+                    .setTitleText("WIFI 연결에 실패...")
+                    .setContentText("현재 이용하려는 WIFI 연결상태에 문제가 있을 수도 있습니다")
+                    .setConfirmText("종료")
+                    .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+                        @Override
+                        public void onClick(KAlertDialog sDialog) {
                             ActivityCompat.finishAffinity(Load.this);
                         }
-                    });
-            builder.setNegativeButton("처음으로",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
+                    })
+                    .setCancelText("처음으로")
+                    .setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+                        @Override
+                        public void onClick(KAlertDialog kAlertDialog) {
                             finish();
                         }
-                    });
-            builder.show();
+                    })
+                    .show();
         }
     }
     //When touch BackPress twice, app closes
@@ -226,7 +236,7 @@ public class Load extends AppCompatActivity {
         else
         {
             backPressedTime = One_Tab;
-            Toast.makeText(getApplicationContext(), "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "한번 더 뒤로가기를 누르면 어플이 종료됩니다", Toast.LENGTH_SHORT).show();
         }
     }
 }
