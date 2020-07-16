@@ -33,6 +33,7 @@ import java.util.List;
 import static com.Dev.unknown.snapwifi.Cam.Result_Text;
 
 public class Load extends AppCompatActivity {
+    private static final String TAG = "Scan";
     private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
     //Adfit
@@ -58,13 +59,15 @@ public class Load extends AppCompatActivity {
         adView2.setClientId("DAN-t4yy5bfqsj8i");
         adView2.loadAd();
 
-        WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        WIFI_Manger = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         //IF WIFI is OFF
         if (WIFI_Manger.isWifiEnabled() == false)
-            WIFI_Manger.setWifiEnabled(true); // Turn On WIFI
+        {
+            WIFI_Manger.setWifiEnabled(true);
+        }
 
+        connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         //IF already WIFI connected
         if (WIFI.isConnected())
         {
@@ -86,14 +89,15 @@ public class Load extends AppCompatActivity {
                     })
                     .show();
         }
-//        else
-//        {
-//            new SpotsDialog.Builder()
-//                    .setContext(this)
-//                    .build()
-//                    .show();
+        else
+        {
+            new SpotsDialog.Builder()
+                    .setContext(this)
+                    .setMessage("WIFI 스캔중...")
+                    .build()
+                    .show();
 //            initWIFIScan();
-//        }
+        }
     }
     //Surrounding area WIFI scan
     private List<ScanResult> mScanResult; // ScanResult List
@@ -115,11 +119,13 @@ public class Load extends AppCompatActivity {
     };
     //Successful WIFI scan
     public void getWIFIScanResult() {
-        mScanResult = WIFI_Manger.getScanResults(); // ScanResult List
+        mScanResult = WIFI_Manger.getScanResults(); //ScanResult List
+        Log.d("ScanResult : ", String.valueOf(mScanResult));
+        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         for (int i = 0; i < mScanResult.size(); i++)
         {
             ScanResult Result = mScanResult.get(i);
-            Log.d("ScanResult : ", String.valueOf(Result));
+//            Log.d("ScanResult : ", String.valueOf(Result));
             String Capabilities =  Result.capabilities;
             //Blocking Free carrier WIFI
             if(Capabilities.contains("EAP"))
@@ -137,13 +143,17 @@ public class Load extends AppCompatActivity {
                 //wifimanager.disconnect();
                 WIFI_Manger.enableNetwork(netId,false);
                 WIFI_Manger.reconnect();
+
+                if (WIFI.isConnected())
+                    Show_Result();
             }
         }
-        unregisterReceiver(mReceiver); // stop WIFI SCan
+        unregisterReceiver(mReceiver); //Stop WIFI SCan
     }
-    // init WIFI SCAN
+    //init WIFI SCAN
     public void initWIFIScan()
     {
+        Log.d(TAG,"Start");
         final IntentFilter filter = new IntentFilter(
                 WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
