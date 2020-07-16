@@ -1016,29 +1016,53 @@ public class Cam extends AppCompatActivity {
 		final EditText EditText = new EditText(this);
 		EditText.setText(Result_Text);
 		// View on success alertDialog
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("인식 결과");
-		builder.setMessage("결과 내용은 직접 손으로도 수정 가능합니다");
-		builder.setView(EditText);
-		builder.setCancelable(false);
-		builder.setPositiveButton("확인",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
+		KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
+		pDialog.setTitleText("인식 결과");
+		pDialog.setCustomView(EditText);
+		pDialog.setConfirmText("확인");
+		pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+			@Override
+			public void onClick(KAlertDialog sDialog) {
 						InputMethodManager InputManger = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 						InputManger.hideSoftInputFromWindow(EditText.getWindowToken(),0);
 
 						Result_Text = EditText.getText().toString();//String modified by keyboard
 						Log.d("Result edit : ", Result_Text);
 						startActivity(new Intent(Cam.this,Load.class));
-					}
-				});
-		builder.setNegativeButton("취소",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.cancel();
-					}
-				});
-		builder.show();
+			}
+		});
+		pDialog.setCancelText("취소");
+		pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+			@Override
+			public void onClick(KAlertDialog kAlertDialog) {
+				kAlertDialog.cancel();
+			}
+		});
+		pDialog.setCancelable(false);
+		pDialog.show();
+//		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//		builder.setTitle("인식 결과");
+//		builder.setMessage("결과 내용은 직접 손으로도 수정 가능합니다");
+//		builder.setView(EditText);
+//		builder.setCancelable(false);
+//		builder.setPositiveButton("확인",
+//				new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog, int which) {
+//						InputMethodManager InputManger = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//						InputManger.hideSoftInputFromWindow(EditText.getWindowToken(),0);
+//
+//						Result_Text = EditText.getText().toString();//String modified by keyboard
+//						Log.d("Result edit : ", Result_Text);
+//						startActivity(new Intent(Cam.this,Load.class));
+//					}
+//				});
+//		builder.setNegativeButton("취소",
+//				new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog, int which) {
+//						dialog.cancel();
+//					}
+//				});
+//		builder.show();
 	}
 	//When touch BackPress, app closes
 	public void onBackPressed()
