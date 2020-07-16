@@ -34,7 +34,7 @@ import java.util.List;
 import static com.Dev.unknown.snapwifi.Cam.Result_Text;
 
 public class Load extends AppCompatActivity {
-    private static final String TAG = "Scan";
+    private static final String TAG = "To WIFI";
     //BackPress values
     private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
@@ -63,45 +63,73 @@ public class Load extends AppCompatActivity {
 
         WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         //IF WIFI is OFF
-        if (WIFI_Manger.isWifiEnabled() == false)
+        if (WIFI_Manger.isWifiEnabled() == false && Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q)
         {
-            WIFI_Manger.setWifiEnabled(true);
-        }
-        connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        //IF already WIFI connected
-        if (WIFI.isConnected())
-        {
+            Log.d(TAG,"New OS");
             KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
-            pDialog.setTitleText("이미 WIFI가 사용중 입니다");
-            pDialog.setConfirmText("종료");
+            pDialog.setTitleText("WIFI를 켜야해요!");
+            pDialog.setConfirmText("확인");
             pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
-                        @Override
-                        public void onClick(KAlertDialog sDialog) {
-                            ActivityCompat.finishAffinity(Load.this);
-                        }
-                    });
-            pDialog.setCancelText("처음으로");
-            pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
-                        @Override
-                        public void onClick(KAlertDialog kAlertDialog) {
-                            finish();
-                            startActivity(new Intent(Load.this, Cam.class));
-                        }
-                    });
+                @Override
+                public void onClick(KAlertDialog kAlertDialog) {
+                    kAlertDialog.cancel();
+                    WIFI_conneted();
+                }
+            });
             pDialog.setCancelable(false);
             pDialog.show();
         }
-        else
+        else if (WIFI_Manger.isWifiEnabled() == false)
         {
-            new SpotsDialog.Builder()
-                    .setContext(this)
-                    .setMessage("WIFI 스캔중...")
-                    .setCancelable(false)
-                    .build()
-                    .show();
-//            initWIFIScan();
+            Log.d(TAG,"Old OS");
+            WIFI_Manger.setWifiEnabled(true);
+            WIFI_conneted();
         }
+        else
+            WIFI_conneted();
+    }
+
+    public void WIFI_conneted()
+    {
+        if (WIFI_Manger.isWifiEnabled() == true)
+        {
+            connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+            WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            //IF already WIFI connected
+            if (WIFI.isConnected())
+            {
+                KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
+                pDialog.setTitleText("이미 WIFI가 사용중 입니다");
+                pDialog.setConfirmText("종료");
+                pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+                    @Override
+                    public void onClick(KAlertDialog kAlertDialog) {
+                        ActivityCompat.finishAffinity(Load.this);
+                    }
+                });
+                pDialog.setCancelText("처음으로");
+                pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+                    @Override
+                    public void onClick(KAlertDialog kAlertDialog) {
+                        finish();
+                        startActivity(new Intent(Load.this, Cam.class));
+                    }
+                });
+                pDialog.setCancelable(false);
+                pDialog.show();
+            }
+            else
+            {
+                new SpotsDialog.Builder()
+                        .setContext(this)
+                        .setMessage("WIFI 스캔중...")
+                        .setCancelable(false)
+                        .build()
+                        .show();
+//            initWIFIScan();
+            }
+        }
+
     }
 //    //Surrounding area WIFI scan
 //    private List<ScanResult> mScanResult; // ScanResult List
@@ -201,7 +229,7 @@ public class Load extends AppCompatActivity {
 //            pDialog.setConfirmText("종료");
 //            pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
 //                        @Override
-//                        public void onClick(KAlertDialog sDialog) {
+//                        public void onClick(KAlertDialog kAlertDialog) {
 //                            ActivityCompat.finishAffinity(Load.this);
 //                        }
 //                    });
@@ -224,7 +252,7 @@ public class Load extends AppCompatActivity {
 //            pDialog.setConfirmText("종료");
 //            pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
 //                @Override
-//                public void onClick(KAlertDialog sDialog) {
+//                public void onClick(KAlertDialog kAlertDialog) {
 //                    ActivityCompat.finishAffinity(Load.this);
 //                }
 //            });

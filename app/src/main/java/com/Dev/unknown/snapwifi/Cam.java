@@ -652,11 +652,11 @@ public class Cam extends AppCompatActivity {
 				pDialog.setConfirmText("설정");
 				pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
 							@Override
-							public void onClick(KAlertDialog sDialog) {
+							public void onClick(KAlertDialog kAlertDialog) {
 								Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 								intent.addCategory(Intent.CATEGORY_DEFAULT);
 								startActivity(intent);
-								sDialog.cancel();
+								kAlertDialog.cancel();
 							}
 						});
 				pDialog.setCancelText("종료");
@@ -1022,7 +1022,7 @@ public class Cam extends AppCompatActivity {
 		pDialog.setConfirmText("확인");
 		pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
 			@Override
-			public void onClick(KAlertDialog sDialog) {
+			public void onClick(KAlertDialog kAlertDialog) {
 						InputMethodManager InputManger = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 						InputManger.hideSoftInputFromWindow(EditText.getWindowToken(),0);
 
