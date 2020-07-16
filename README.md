@@ -5,7 +5,7 @@
       alt="Download from Google Play"
       height="80">](https://play.google.com/store/apps/details?id=com.Dev.unknown.snapwifi)
 # Prerequisites
-      Android studio 3.3.1
+      Android studio 3.6.1
 
       Android API Lv. 19 ~ 27
 # Open-source libraries & SDK
