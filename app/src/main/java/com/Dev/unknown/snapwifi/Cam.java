@@ -42,6 +42,7 @@ import android.widget.TextView;
 import com.abbyy.mobile.rtr.BuildConfig;
 import com.abbyy.mobile.rtr.Engine;
 import com.abbyy.mobile.rtr.ITextCaptureService;
+import com.developer.kalert.KAlertDialog;
 import com.kakao.adfit.ads.ba.BannerAdView;
 import com.xw.repo.BubbleSeekBar;
 
@@ -643,33 +644,28 @@ public class Cam extends AppCompatActivity {
 		Adview.loadAd();
 
 		//Check GPS ON/OFF (OS 6.0 UP)
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
 			LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-				alertDialogBuilder
-						.setMessage("GPS를 켜주셔야 해당 어플 이용이 가능해요!")
-						.setCancelable(false)
-						.setPositiveButton("설정",
-								new DialogInterface.OnClickListener() {
-									//Go Settings -> Location Settings
-									public void onClick(
-											DialogInterface dialog, int id) {
-										Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-										intent.addCategory(Intent.CATEGORY_DEFAULT);
-										startActivity(intent);
-									}
-								})
-						.setNegativeButton("나가기",
-								new DialogInterface.OnClickListener() {
-									//Exit
-									public void onClick(
-											DialogInterface dialog, int id) {
-										ActivityCompat.finishAffinity(Cam.this);
-									}
-								});
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
+				new KAlertDialog(this, KAlertDialog.WARNING_TYPE)
+						.setTitleText("GPS를 켜야해요!")
+						.setConfirmText("설정")
+						.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+							@Override
+							public void onClick(KAlertDialog sDialog) {
+								Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+								intent.addCategory(Intent.CATEGORY_DEFAULT);
+								startActivity(intent);
+							}
+						})
+						.setCancelText("종료")
+						.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+							@Override
+							public void onClick(KAlertDialog kAlertDialog) {
+								ActivityCompat.finishAffinity(Cam.this);
+							}
+						})
+						.show();
 			}
 		}
 

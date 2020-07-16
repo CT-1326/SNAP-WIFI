@@ -11,6 +11,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,6 +35,7 @@ import static com.Dev.unknown.snapwifi.Cam.Result_Text;
 
 public class Load extends AppCompatActivity {
     private static final String TAG = "Scan";
+    //BackPress values
     private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
     //Adfit
@@ -59,13 +61,12 @@ public class Load extends AppCompatActivity {
         adView2.setClientId("DAN-t4yy5bfqsj8i");
         adView2.loadAd();
 
-        WIFI_Manger = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         //IF WIFI is OFF
         if (WIFI_Manger.isWifiEnabled() == false)
         {
             WIFI_Manger.setWifiEnabled(true);
         }
-
         connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
         WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         //IF already WIFI connected
