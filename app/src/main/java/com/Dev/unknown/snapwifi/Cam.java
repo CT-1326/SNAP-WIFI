@@ -647,25 +647,27 @@ public class Cam extends AppCompatActivity {
 		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
 			LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-				new KAlertDialog(this, KAlertDialog.WARNING_TYPE)
-						.setTitleText("GPS를 켜야해요!")
-						.setConfirmText("설정")
-						.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+				KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
+				pDialog.setTitleText("GPS를 켜야해요!");
+				pDialog.setConfirmText("설정");
+				pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
 							@Override
 							public void onClick(KAlertDialog sDialog) {
 								Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 								intent.addCategory(Intent.CATEGORY_DEFAULT);
 								startActivity(intent);
+								sDialog.cancel();
 							}
-						})
-						.setCancelText("종료")
-						.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+						});
+				pDialog.setCancelText("종료");
+				pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
 							@Override
 							public void onClick(KAlertDialog kAlertDialog) {
 								ActivityCompat.finishAffinity(Cam.this);
 							}
-						})
-						.show();
+						});
+				pDialog.setCancelable(false);
+				pDialog.show();
 			}
 		}
 

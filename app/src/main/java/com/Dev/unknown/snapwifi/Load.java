@@ -72,167 +72,171 @@ public class Load extends AppCompatActivity {
         //IF already WIFI connected
         if (WIFI.isConnected())
         {
-            new KAlertDialog(this, KAlertDialog.WARNING_TYPE)
-                    .setTitleText("이미 WIFI가 사용중 입니다")
-                    .setConfirmText("종료")
-                    .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+            KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
+            pDialog.setTitleText("이미 WIFI가 사용중 입니다");
+            pDialog.setConfirmText("종료");
+            pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
                         @Override
                         public void onClick(KAlertDialog sDialog) {
                             ActivityCompat.finishAffinity(Load.this);
                         }
-                    })
-                    .setCancelText("처음으로")
-                    .setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+                    });
+            pDialog.setCancelText("처음으로");
+            pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
                         @Override
                         public void onClick(KAlertDialog kAlertDialog) {
                             finish();
                         }
-                    })
-                    .show();
+                    });
+            pDialog.setCancelable(false);
+            pDialog.show();
         }
         else
         {
             new SpotsDialog.Builder()
                     .setContext(this)
                     .setMessage("WIFI 스캔중...")
+                    .setCancelable(false)
                     .build()
                     .show();
 //            initWIFIScan();
         }
     }
-    //Surrounding area WIFI scan
-    private List<ScanResult> mScanResult; // ScanResult List
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        //Start WIFI scan
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
-            if (action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
-            {
-                getWIFIScanResult(); // get WIFISCanResult
-                WIFI_Manger.startScan(); // for refresh
-            }
-            else if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION))
-            {
-                sendBroadcast(new Intent("wifi.ON_NETWORK_STATE_CHANGED"));
-            }
-        }
-    };
-    //Successful WIFI scan
-    public void getWIFIScanResult() {
-        mScanResult = WIFI_Manger.getScanResults(); //ScanResult List
-        Log.d("ScanResult : ", String.valueOf(mScanResult));
-        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        for (int i = 0; i < mScanResult.size(); i++)
-        {
-            ScanResult Result = mScanResult.get(i);
-//            Log.d("ScanResult : ", String.valueOf(Result));
-            String Capabilities =  Result.capabilities;
-            //Blocking Free carrier WIFI
-            if(Capabilities.contains("EAP"))
-            {
-                continue;
-            }
-            //Automatic connection
-            else
-            {
-                List.add(Result.SSID);
-                WifiConfiguration WIFI_Config = new WifiConfiguration();
-                WIFI_Config.SSID = String.format("\"%s\"", Result.SSID);
-                WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
-                int netId = WIFI_Manger.addNetwork(WIFI_Config);
-                //wifimanager.disconnect();
-                WIFI_Manger.enableNetwork(netId,false);
-                WIFI_Manger.reconnect();
-
-                if (WIFI.isConnected())
-                    Show_Result();
-            }
-        }
-        unregisterReceiver(mReceiver); //Stop WIFI SCan
-    }
-    //init WIFI SCAN
-    public void initWIFIScan()
-    {
-        Log.d(TAG,"Start");
-        final IntentFilter filter = new IntentFilter(
-                WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        registerReceiver(mReceiver, filter);
-        WIFI_Manger.startScan();
-    }
-    //Remove all AP except connected AP
-    private void Show_Result()
-    {
-        WifiInfo wifiInfo = WIFI_Manger.getConnectionInfo();
-        String SSID = new String(wifiInfo.getSSID());
-        SSID = SSID.substring(1, SSID.length()-1);
-        Log.d("List of SSID : ", SSID);
-
-        for (int i = 0; i < List.size(); i++)
-        {
-            WifiConfiguration WIFI_Config = new WifiConfiguration();
-            WIFI_Config.SSID = String.format("\"%s\"", List.get(i));
-            WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
-            int netId = WIFI_Manger.addNetwork(WIFI_Config);
-
-            if(SSID.equals(List.get(i)))
-            {
-                continue;
-            }
-            else
-            {
-                Log.d("WIFI AP?", (String) List.get(i));
-                WIFI_Manger.removeNetwork(netId);
-                WIFI_Manger.saveConfiguration();
-            }
-        }
-
-        connectivityManager = (ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        //Show wifi connection result
-        if (WIFI.isConnected())
-        {
-            new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE)
-                    .setTitleText("WIFI 연결에 성공!")
-                    .setConfirmText("종료")
-                    .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
-                        @Override
-                        public void onClick(KAlertDialog sDialog) {
-                            ActivityCompat.finishAffinity(Load.this);
-                        }
-                    })
-                    .setCancelText("처음으로")
-                    .setCancelClickListener(new KAlertDialog.KAlertClickListener() {
-                        @Override
-                        public void onClick(KAlertDialog kAlertDialog) {
-                            finish();
-                        }
-                    })
-                    .show();
-        }
-        else
-        {
-            new KAlertDialog(this, KAlertDialog.WARNING_TYPE)
-                    .setTitleText("WIFI 연결에 실패...")
-                    .setContentText("현재 이용하려는 WIFI 연결상태에 문제가 있을 수도 있습니다")
-                    .setConfirmText("종료")
-                    .setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
-                        @Override
-                        public void onClick(KAlertDialog sDialog) {
-                            ActivityCompat.finishAffinity(Load.this);
-                        }
-                    })
-                    .setCancelText("처음으로")
-                    .setCancelClickListener(new KAlertDialog.KAlertClickListener() {
-                        @Override
-                        public void onClick(KAlertDialog kAlertDialog) {
-                            finish();
-                        }
-                    })
-                    .show();
-        }
-    }
+//    //Surrounding area WIFI scan
+//    private List<ScanResult> mScanResult; // ScanResult List
+//    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+//        //Start WIFI scan
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            final String action = intent.getAction();
+//            if (action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
+//            {
+//                getWIFIScanResult(); // get WIFISCanResult
+//                WIFI_Manger.startScan(); // for refresh
+//            }
+//            else if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION))
+//            {
+//                sendBroadcast(new Intent("wifi.ON_NETWORK_STATE_CHANGED"));
+//            }
+//        }
+//    };
+//    //Successful WIFI scan
+//    public void getWIFIScanResult() {
+//        mScanResult = WIFI_Manger.getScanResults(); //ScanResult List
+//        Log.d("ScanResult : ", String.valueOf(mScanResult));
+//        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+//        for (int i = 0; i < mScanResult.size(); i++)
+//        {
+//            ScanResult Result = mScanResult.get(i);
+////            Log.d("ScanResult : ", String.valueOf(Result));
+//            String Capabilities =  Result.capabilities;
+//            //Blocking Free carrier WIFI
+//            if(Capabilities.contains("EAP"))
+//            {
+//                continue;
+//            }
+//            //Automatic connection
+//            else
+//            {
+//                List.add(Result.SSID);
+//                WifiConfiguration WIFI_Config = new WifiConfiguration();
+//                WIFI_Config.SSID = String.format("\"%s\"", Result.SSID);
+//                WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
+//                int netId = WIFI_Manger.addNetwork(WIFI_Config);
+//                //wifimanager.disconnect();
+//                WIFI_Manger.enableNetwork(netId,false);
+//                WIFI_Manger.reconnect();
+//
+//                if (WIFI.isConnected())
+//                    Show_Result();
+//            }
+//        }
+//        unregisterReceiver(mReceiver); //Stop WIFI SCan
+//    }
+//    //init WIFI SCAN
+//    public void initWIFIScan()
+//    {
+//        Log.d(TAG,"Start");
+//        final IntentFilter filter = new IntentFilter(
+//                WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+//        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+//        registerReceiver(mReceiver, filter);
+//        WIFI_Manger.startScan();
+//    }
+//    //Remove all AP except connected AP
+//    private void Show_Result()
+//    {
+//        WifiInfo wifiInfo = WIFI_Manger.getConnectionInfo();
+//        String SSID = new String(wifiInfo.getSSID());
+//        SSID = SSID.substring(1, SSID.length()-1);
+//        Log.d("List of SSID : ", SSID);
+//
+//        for (int i = 0; i < List.size(); i++)
+//        {
+//            WifiConfiguration WIFI_Config = new WifiConfiguration();
+//            WIFI_Config.SSID = String.format("\"%s\"", List.get(i));
+//            WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
+//            int netId = WIFI_Manger.addNetwork(WIFI_Config);
+//
+//            if(SSID.equals(List.get(i)))
+//            {
+//                continue;
+//            }
+//            else
+//            {
+//                Log.d("WIFI AP?", (String) List.get(i));
+//                WIFI_Manger.removeNetwork(netId);
+//                WIFI_Manger.saveConfiguration();
+//            }
+//        }
+//
+//        connectivityManager = (ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+//        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+//        //Show wifi connection result
+//        if (WIFI.isConnected())
+//        {
+//            KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
+//            pDialog.setTitleText("WIFI 연결에 성공!");
+//            pDialog.setConfirmText("종료");
+//            pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+//                        @Override
+//                        public void onClick(KAlertDialog sDialog) {
+//                            ActivityCompat.finishAffinity(Load.this);
+//                        }
+//                    });
+//            pDialog.setCancelText("처음으로");
+//            pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+//                        @Override
+//                        public void onClick(KAlertDialog kAlertDialog) {
+//                            finish();
+//                        }
+//                    });
+//            pDialog.setCancelable(false);
+//            pDialog.show();
+//        }
+//        else
+//        {
+//            KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
+//            pDialog.setTitleText("WIFI 연결에 실패...");
+//            pDialog.setContentText("현재 이용하려는 WIFI 연결상태 문제일 수도 있습니다");
+//            pDialog.setConfirmText("종료");
+//            pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+//                @Override
+//                public void onClick(KAlertDialog sDialog) {
+//                    ActivityCompat.finishAffinity(Load.this);
+//                }
+//            });
+//            pDialog.setCancelText("처음으로");
+//            pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+//                @Override
+//                public void onClick(KAlertDialog kAlertDialog) {
+//                    finish();
+//                }
+//            });
+//            pDialog.setCancelable(false);
+//            pDialog.show();
+//        }
+//    }
     //When touch BackPress twice, app closes
     @Override
     public void onBackPressed()
