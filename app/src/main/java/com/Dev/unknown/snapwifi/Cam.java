@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.hardware.Camera;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -16,10 +17,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Display;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -37,15 +43,18 @@ import com.abbyy.mobile.rtr.BuildConfig;
 import com.abbyy.mobile.rtr.Engine;
 import com.abbyy.mobile.rtr.ITextCaptureService;
 import com.kakao.adfit.ads.ba.BannerAdView;
+import com.xw.repo.BubbleSeekBar;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.security.AccessController.getContext;
 
 public class Cam extends AppCompatActivity {
 	//Adfit
 	private BannerAdView adView;
 	//camera zoom bar
-	private SeekBar seekBar;
+	private BubbleSeekBar seekBar;
 	//camera zoom icon
 	private TextView low, more;
 	//OCR result text
@@ -691,26 +700,68 @@ public class Cam extends AppCompatActivity {
 
 		layout.setOnClickListener( clickListener );
 
-		seekBar=(SeekBar)findViewById(R.id.seekBar1);
-		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+		seekBar=(BubbleSeekBar) findViewById(R.id.seekBar1);
+		seekBar.getConfigBuilder()
+				.min(0)
+				.max(5)
+				.progress(2)
+				.sectionCount(5)
+				.trackColor(ContextCompat.getColor(getApplicationContext(), R.color.color_gray))
+				.secondTrackColor(ContextCompat.getColor(getApplicationContext(), R.color.color_blue))
+				.thumbColor(ContextCompat.getColor(getApplicationContext(), R.color.color_blue))
+				.showSectionText()
+				.sectionTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary))
+				.sectionTextSize(18)
+				.showThumbText()
+				.thumbTextColor(ContextCompat.getColor(getApplicationContext(), R.color.color_red))
+				.thumbTextSize(18)
+				.bubbleColor(ContextCompat.getColor(getApplicationContext(), R.color.color_green))
+				.bubbleTextSize(18)
+				.showSectionMark()
+				.seekBySection()
+				.autoAdjustSectionMark()
+				.sectionTextPosition(BubbleSeekBar.TextPosition.BELOW_SECTION_MARK)
+				.build();
+
+		seekBar.setCustomSectionTextArray(new BubbleSeekBar.CustomSectionTextArray() {
+			@NonNull
 			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+			public SparseArray<String> onCustomize(int sectionCount, @NonNull SparseArray<String> array) {
+				array.clear();
+				array.put(0, "0x");
+				array.put(1, "1x");
+				array.put(2, "2x");
+				array.put(3, "3x");
+				array.put(4, "4x");
+				array.put(5, "5x");
+
+				return array;
+			}
+		});
+
+			seekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
+			@Override
+			public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
 				if(camera.getParameters().isZoomSupported()) {
 					//Zoom & Auto Focus
 					Camera.Parameters params = camera.getParameters();
-					seekBar.setMax(params.getMaxZoom());
-					params.setZoom(progress);
+					//seekBar.setMax(params.getMaxZoom());
+					params.setZoom(progress*5);
 					camera.setParameters(params);
+					low.setVisibility(View.VISIBLE);
+					more.setVisibility(View.VISIBLE);
 				}
 			}
+
 			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
+			public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
 				//Touching the SeekBar, can see +,- icon
 				low.setVisibility(View.VISIBLE);
 				more.setVisibility(View.VISIBLE);
 			}
+
 			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
+			public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
 				low.setVisibility(View.INVISIBLE);
 				more.setVisibility(View.INVISIBLE);
 			}
@@ -739,7 +790,7 @@ public class Cam extends AppCompatActivity {
 	@Override
 	public void onPause()
 	{
-		seekBar.setMax(0);
+		//seekBar.setMax(0);
 
 		// Clear all pending actions
 		handler.removeCallbacksAndMessages( null );

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/layout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical">
 
     <com.kakao.adfit.ads.ba.BannerAdView
         android:id="@+id/adView"
@@ -32,17 +33,27 @@
         android:text=""
         android:textColor="#FFFF0000"/>
 
-    <SeekBar
+    <com.xw.repo.BubbleSeekBar
         android:id="@+id/seekBar1"
-        android:max="90"
-        android:progress="0"
-        android:progressDrawable="@drawable/seekbar_seekbar1"
-        android:thumb="@drawable/seekbar_seekbar1_thumb"
-        android:layout_width="300dp"
-        android:layout_centerHorizontal="true"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
+        app:bsb_bubble_color="@color/color_red_light"
+        app:bsb_bubble_text_color="@color/colorPrimaryDark"
+        app:bsb_max="50.0"
+        app:bsb_min="-50"
+        app:bsb_progress="0"
+        app:bsb_second_track_color="@color/color_red"
+        app:bsb_section_count="5"
+        app:bsb_section_text_position="bottom_sides"
+        app:bsb_show_progress_in_float="true"
+        app:bsb_show_section_mark="true"
+        app:bsb_show_section_text="true"
+        app:bsb_show_thumb_text="true"
+        app:bsb_track_color="@color/color_red_light"
+        android:layout_centerHorizontal="true"
         android:layout_above="@+id/startButton"
-        android:layout_marginBottom="23dp"/>
+        android:layout_marginBottom="50dp"/>
+
     <TextView
         android:id="@+id/low"
         android:layout_alignBottom="@+id/seekBar1"
