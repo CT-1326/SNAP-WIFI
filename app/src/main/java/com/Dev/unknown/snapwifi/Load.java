@@ -86,6 +86,7 @@ public class Load extends AppCompatActivity {
                         @Override
                         public void onClick(KAlertDialog kAlertDialog) {
                             finish();
+                            startActivity(new Intent(Load.this, Cam.class));
                         }
                     });
             pDialog.setCancelable(false);
@@ -209,6 +210,7 @@ public class Load extends AppCompatActivity {
 //                        @Override
 //                        public void onClick(KAlertDialog kAlertDialog) {
 //                            finish();
+//                            startActivity(new Intent(Load.this, Cam.class));
 //                        }
 //                    });
 //            pDialog.setCancelable(false);
@@ -231,6 +233,7 @@ public class Load extends AppCompatActivity {
 //                @Override
 //                public void onClick(KAlertDialog kAlertDialog) {
 //                    finish();
+//                    startActivity(new Intent(Load.this, Cam.class));
 //                }
 //            });
 //            pDialog.setCancelable(false);
