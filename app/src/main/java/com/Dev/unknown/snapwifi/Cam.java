@@ -1083,30 +1083,30 @@ public class Cam extends AppCompatActivity {
 	//When touch BackPress, app closes
 	public void onBackPressed()
 	{
-		/*super.onBackPressed();
-		ActivityCompat.finishAffinity(this);*/
+		super.onBackPressed();
+		ActivityCompat.finishAffinity(this);
 
-		KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.INPUT_TYPE);
-		pDialog.setTitleText("종료하시겠습니까?")
-				.setConfirmText("종료")
-				.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
-					@Override
-					public void onClick(KAlertDialog kAlertDialog) {
-						ActivityCompat.finishAffinity(Cam.this);
-					}
-				})
-				.setCancelText("처음으로")
-				.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
-					@Override
-					public void onClick(KAlertDialog kAlertDialog) {
-						finish();
-					}
-				});
-		EditText et = new EditText(this);
-		pDialog.getCurrentFocus();
-		et.requestFocus();
-		Log.d("Current focus ", String.valueOf(pDialog.getCurrentFocus()));
-		pDialog.setCustomView(et);
-		pDialog.show();
+//		KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.INPUT_TYPE);
+//		pDialog.setTitleText("종료하시겠습니까?")
+//				.setConfirmText("종료")
+//				.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+//					@Override
+//					public void onClick(KAlertDialog kAlertDialog) {
+//						ActivityCompat.finishAffinity(Cam.this);
+//					}
+//				})
+//				.setCancelText("처음으로")
+//				.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+//					@Override
+//					public void onClick(KAlertDialog kAlertDialog) {
+//						finish();
+//					}
+//				});
+//		EditText et = new EditText(this);
+//		pDialog.getCurrentFocus();
+//		et.requestFocus();
+//		Log.d("Current focus ", String.valueOf(pDialog.getCurrentFocus()));
+//		pDialog.setCustomView(et);
+//		pDialog.show();
 	}
 }

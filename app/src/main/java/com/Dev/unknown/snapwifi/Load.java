@@ -72,8 +72,11 @@ public class Load extends AppCompatActivity {
             pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
                 @Override
                 public void onClick(KAlertDialog kAlertDialog) {
-                    kAlertDialog.cancel();
-                    WIFI_conneted();
+                    if (WIFI_Manger.isWifiEnabled() == true)
+                    {
+                        kAlertDialog.cancel();
+                        WIFI_conneted();
+                    }
                 }
             });
             pDialog.setCancelable(false);
