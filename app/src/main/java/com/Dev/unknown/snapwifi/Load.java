@@ -2,27 +2,20 @@ package com.Dev.unknown.snapwifi;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+
 import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import dmax.dialog.SpotsDialog;
 
 import android.util.Log;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.developer.kalert.KAlertDialog;
@@ -30,8 +23,6 @@ import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.Dev.unknown.snapwifi.Cam.Result_Text;
 
 public class Load extends AppCompatActivity {
     private static final String TAG = "To WIFI";
@@ -75,7 +66,7 @@ public class Load extends AppCompatActivity {
                     if (WIFI_Manger.isWifiEnabled() == true)
                     {
                         kAlertDialog.cancel();
-                        WIFI_conneted();
+                        WIFI_Conneted();
                     }
                 }
             });
@@ -86,13 +77,13 @@ public class Load extends AppCompatActivity {
         {
             Log.d(TAG,"Old OS");
             WIFI_Manger.setWifiEnabled(true);
-            WIFI_conneted();
+            WIFI_Conneted();
         }
         else
-            WIFI_conneted();
+            WIFI_Conneted();
     }
 
-    public void WIFI_conneted()
+    public void WIFI_Conneted()
     {
         if (WIFI_Manger.isWifiEnabled() == true)
         {
@@ -129,7 +120,7 @@ public class Load extends AppCompatActivity {
                         .setCancelable(false)
                         .build()
                         .show();
-//            initWIFIScan();
+                initWIFIScan();
             }
         }
 
@@ -185,16 +176,56 @@ public class Load extends AppCompatActivity {
 //        }
 //        unregisterReceiver(mReceiver); //Stop WIFI SCan
 //    }
-//    //init WIFI SCAN
-//    public void initWIFIScan()
-//    {
-//        Log.d(TAG,"Start");
-//        final IntentFilter filter = new IntentFilter(
-//                WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-//        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-//        registerReceiver(mReceiver, filter);
-//        WIFI_Manger.startScan();
-//    }
+    //init WIFI SCAN
+    public void initWIFIScan()
+    {
+        Log.d(TAG,"wwwwwwwwel come!");
+        WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+        BroadcastReceiver wifiScanReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context c, Intent intent) {
+                boolean success = intent.getBooleanExtra(
+                        WifiManager.EXTRA_RESULTS_UPDATED, false);
+                if (success) {
+                    Log.d(TAG,"wwwwwwwwel success!");
+                    scanSuccess();
+                } else {
+                    // scan failure handling
+                    Log.d(TAG,"wwwwwwwwel fail!");
+                    scanFailure();
+                }
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+        getApplicationContext().registerReceiver(wifiScanReceiver, intentFilter);
+
+        boolean success = WIFI_Manger.startScan();
+        if (!success) {
+            Log.d(TAG,"need too?");
+            // scan failure handling
+            scanFailure();
+        }
+    }
+
+    private void scanSuccess() {
+        Log.d(TAG,"start scan");
+        WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        List<ScanResult> results = WIFI_Manger.getScanResults();
+        Log.d("Result success : ", String.valueOf(results));
+    }
+
+    private void scanFailure() {
+        Log.d(TAG,"start scan?");
+        WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        // handle failure: new scan did NOT succeed
+        // consider using old scan results: these are the OLD results!
+        List<ScanResult> results = WIFI_Manger.getScanResults();
+        Log.d("Result fail : ", String.valueOf(results));
+    }
+
 //    //Remove all AP except connected AP
 //    private void Show_Result()
 //    {
