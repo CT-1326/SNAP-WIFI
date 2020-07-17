@@ -82,7 +82,7 @@ public class Load extends AppCompatActivity {
         else
             WIFI_Conneted();
     }
-
+    //Try to WIFI connect
     public void WIFI_Conneted()
     {
         if (WIFI_Manger.isWifiEnabled() == true)
@@ -123,26 +123,7 @@ public class Load extends AppCompatActivity {
                 initWIFIScan();
             }
         }
-
     }
-//    //Surrounding area WIFI scan
-//    private List<ScanResult> mScanResult; // ScanResult List
-//    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-//        //Start WIFI scan
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            final String action = intent.getAction();
-//            if (action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
-//            {
-//                getWIFIScanResult(); // get WIFISCanResult
-//                WIFI_Manger.startScan(); // for refresh
-//            }
-//            else if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION))
-//            {
-//                sendBroadcast(new Intent("wifi.ON_NETWORK_STATE_CHANGED"));
-//            }
-//        }
-//    };
 //    //Successful WIFI scan
 //    public void getWIFIScanResult() {
 //        mScanResult = WIFI_Manger.getScanResults(); //ScanResult List
@@ -179,18 +160,18 @@ public class Load extends AppCompatActivity {
     //init WIFI SCAN
     public void initWIFIScan()
     {
-        Log.d(TAG,"wwwwwwwwel come!");
+        Log.d(TAG,"start to scan");
         BroadcastReceiver wifiScanReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context c, Intent intent) {
                 boolean success = intent.getBooleanExtra(
                         WifiManager.EXTRA_RESULTS_UPDATED, false);
                 if (success) {
-                    Log.d(TAG,"wwwwwwwwel success!");
+                    Log.d(TAG,"success!");
                     scanSuccess();
                 } else {
                     // scan failure handling
-                    Log.d(TAG,"wwwwwwwwel fail!");
+                    Log.d(TAG,"fail...");
                     scanFailure();
                 }
             }
@@ -202,7 +183,7 @@ public class Load extends AppCompatActivity {
 
         boolean success = WIFI_Manger.startScan();
         if (!success) {
-            Log.d(TAG,"Fail to scan");
+            Log.d(TAG,"scan start failed... ");
             // scan failure handling
             scanFailure();
         }
