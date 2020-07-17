@@ -74,6 +74,7 @@
         android:text="+"
         android:textColor="#ffffff"
         android:textSize="25dp"/>
+
     <Button
         android:id="@+id/startButton"
         android:layout_width="245dp"
@@ -81,9 +82,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
-        android:background="#7d010000"
+        android:background="#19010000"
         android:onClick="onStartButtonClick"
-        android:text="Start"
+        android:text="Start Scan"
         android:textColor="#ffffff"
-        android:textSize="15dp"/>
+        android:textSize="15dp" />
 </RelativeLayout>

@@ -97,7 +97,7 @@ public class Cam extends AppCompatActivity {
 	private TextView warningTextView; // Show warnings from recognizer
 	private TextView errorTextView; // Show errors from recognizer
 	// Text displayed on start button
-	private static final String BUTTON_TEXT_START = "Start";
+	private static final String BUTTON_TEXT_START = "Start Scan";
 	private static final String BUTTON_TEXT_STOP = "Stop";
 	private static final String BUTTON_TEXT_STARTING = "Starting...";
 
