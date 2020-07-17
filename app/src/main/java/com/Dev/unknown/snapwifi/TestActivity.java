@@ -40,6 +40,7 @@ public class TestActivity extends AppCompatActivity {
                 Result_text = editText.getText().toString();
                 Toast.makeText(getApplicationContext(), "click", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(TestActivity.this, Load.class);
+                intent.putExtra("pass2", Result_text);
                 startActivity(intent);
                 finish();
             }

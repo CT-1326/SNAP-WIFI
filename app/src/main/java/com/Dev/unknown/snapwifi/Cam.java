@@ -1029,7 +1029,9 @@ public class Cam extends AppCompatActivity {
 			public void onClick(KAlertDialog kAlertDialog) {
 				Result_Text = EditText.getText().toString();//String modified by keyboard
 				Log.d("Result edit : ", Result_Text);
-				//startActivity(new Intent(Cam.this,Load.class));
+				Intent intent = new Intent(Cam.this, Load.class);
+				intent.putExtra("pass1", Result_Text);
+				startActivity(intent);
 			}
 		});
 		pDialog.setCancelText("취소");
