@@ -3,6 +3,7 @@ package com.Dev.unknown.snapwifi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,9 +33,15 @@ public class TestActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String password = intent.getExtras().getString("password");
+
         Button btn = (Button) findViewById(R.id.btn);
         EditText editText = (EditText) findViewById(R.id.edit_test);
         editText.setText(password);
+        editText.requestFocus();
+
+        InputMethodManager imm = (InputMethodManager)getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+
         btn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
