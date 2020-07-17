@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.Dev.unknown.snapwifi.Cam.Result_Text;
 
 public class Load extends AppCompatActivity {
     private static final String TAG = "To WIFI";
@@ -193,6 +196,39 @@ public class Load extends AppCompatActivity {
         Log.d(TAG,"success scan method");
         List<ScanResult> results = WIFI_Manger.getScanResults();
         Log.d("Result success : ", String.valueOf(results));
+
+        for (int i = 0; i < results.size(); i++)
+        {
+            ScanResult Result = results.get(i);
+            String Capabilities =  Result.capabilities;
+            Log.d("Index : ", String.valueOf(i));
+            //Blocking Free carrier WIFI
+            if(Capabilities.contains("EAP"))
+            {
+                continue;
+            }
+            //Automatic connection
+            else
+            {
+                List.add(Result.SSID);
+                Log.d("SSID : ", Result.SSID);
+//                WifiConfiguration WIFI_Config = new WifiConfiguration();
+//                WIFI_Config.SSID = String.format("\"%s\"", Result.SSID);
+//                WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
+//                int netId = WIFI_Manger.addNetwork(WIFI_Config);
+//                //wifimanager.disconnect();
+//                WIFI_Manger.enableNetwork(netId,false);
+//                WIFI_Manger.reconnect();
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+
+//                if (WIFI.isConnected())
+//                    Show_Result();
+            }
+        }
     }
 
     private void scanFailure() {
