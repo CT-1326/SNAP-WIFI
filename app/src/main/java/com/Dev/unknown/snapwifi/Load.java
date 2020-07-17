@@ -191,14 +191,12 @@ public class Load extends AppCompatActivity {
 
     private void scanSuccess() {
         Log.d(TAG,"success scan method");
-        WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> results = WIFI_Manger.getScanResults();
         Log.d("Result success : ", String.valueOf(results));
     }
 
     private void scanFailure() {
         Log.d(TAG,"fail scan method");
-        WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         // handle failure: new scan did NOT succeed
         // consider using old scan results: these are the OLD results!
         List<ScanResult> results = WIFI_Manger.getScanResults();
