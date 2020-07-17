@@ -33,9 +33,9 @@ public class Load extends AppCompatActivity {
     private BannerAdView adView;
     private BannerAdView adView2;
     // WIFI & network
-    private WifiManager WIFI_Manger;
-    private ConnectivityManager connectivityManager;
-    private NetworkInfo WIFI;
+    WifiManager WIFI_Manger;
+    ConnectivityManager connectivityManager;
+    NetworkInfo WIFI;
     //Save WIFI AP list
     private ArrayList List = new ArrayList<String>();
 
@@ -180,8 +180,6 @@ public class Load extends AppCompatActivity {
     public void initWIFIScan()
     {
         Log.d(TAG,"wwwwwwwwel come!");
-        WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-
         BroadcastReceiver wifiScanReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context c, Intent intent) {
@@ -204,21 +202,21 @@ public class Load extends AppCompatActivity {
 
         boolean success = WIFI_Manger.startScan();
         if (!success) {
-            Log.d(TAG,"need too?");
+            Log.d(TAG,"Fail to scan");
             // scan failure handling
             scanFailure();
         }
     }
 
     private void scanSuccess() {
-        Log.d(TAG,"start scan");
+        Log.d(TAG,"success scan method");
         WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> results = WIFI_Manger.getScanResults();
         Log.d("Result success : ", String.valueOf(results));
     }
 
     private void scanFailure() {
-        Log.d(TAG,"start scan?");
+        Log.d(TAG,"fail scan method");
         WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         // handle failure: new scan did NOT succeed
         // consider using old scan results: these are the OLD results!
