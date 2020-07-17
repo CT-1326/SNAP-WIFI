@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class TestActivity extends AppCompatActivity {
 
+    static String Result_text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,12 +37,10 @@ public class TestActivity extends AppCompatActivity {
         btn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = editText.getText().toString();
+                Result_text = editText.getText().toString();
                 Toast.makeText(getApplicationContext(), "click", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(TestActivity.this, Cam.class);
-                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
-                intent.putExtra("text", text);
-                setResult(RESULT_OK, intent);
+                Intent intent = new Intent(TestActivity.this, Load.class);
+                startActivity(intent);
                 finish();
             }
         });

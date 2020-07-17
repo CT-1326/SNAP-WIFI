@@ -7,17 +7,14 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import dmax.dialog.SpotsDialog;
-
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.developer.kalert.KAlertDialog;
 import com.kakao.adfit.ads.ba.BannerAdView;
@@ -25,7 +22,8 @@ import com.kakao.adfit.ads.ba.BannerAdView;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.Dev.unknown.snapwifi.Cam.Result_Text;
+import dmax.dialog.SpotsDialog;
+
 
 public class Load extends AppCompatActivity {
     private static final String TAG = "To WIFI";

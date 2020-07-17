@@ -24,7 +24,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -1028,12 +1027,9 @@ public class Cam extends AppCompatActivity {
 		pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
 			@Override
 			public void onClick(KAlertDialog kAlertDialog) {
-						InputMethodManager InputManger = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-						InputManger.hideSoftInputFromWindow(EditText.getWindowToken(),0);
-
-						Result_Text = EditText.getText().toString();//String modified by keyboard
-						Log.d("Result edit : ", Result_Text);
-						startActivity(new Intent(Cam.this,Load.class));
+				Result_Text = EditText.getText().toString();//String modified by keyboard
+				Log.d("Result edit : ", Result_Text);
+				//startActivity(new Intent(Cam.this,Load.class));
 			}
 		});
 		pDialog.setCancelText("취소");
@@ -1045,6 +1041,13 @@ public class Cam extends AppCompatActivity {
 		});
 		pDialog.setCancelable(false);
 		pDialog.show();
+		EditText.setOnClickListener(new EditText.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Cam.this, TestActivity.class);
+				startActivity(intent);
+			}
+		});
 //		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //		builder.setTitle("인식 결과");
 //		builder.setMessage("결과 내용은 직접 손으로도 수정 가능합니다");
@@ -1071,7 +1074,6 @@ public class Cam extends AppCompatActivity {
 	}
 	//When touch BackPress, app closes
 	int REQUEST_CODE = 1000;
-	String text;
 	public void onBackPressed()
 	{
 		/*super.onBackPressed();
@@ -1100,10 +1102,10 @@ public class Cam extends AppCompatActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(Cam.this, TestActivity.class);
 				startActivityForResult(intent, REQUEST_CODE);
-				pDialog.setTitleText(text);
+				pDialog.setTitleText(Result_Text);
 			}
 		});
-		et.setText(text);
+		et.setText(Result_Text);
 		pDialog.show();
 	}
 
@@ -1112,7 +1114,7 @@ public class Cam extends AppCompatActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if(data != null) {
-			text = data.getStringExtra("text");
+			Result_Text = data.getStringExtra("text");
 			Toast.makeText(getApplicationContext(), "run", Toast.LENGTH_SHORT).show();
 		}
 	}
