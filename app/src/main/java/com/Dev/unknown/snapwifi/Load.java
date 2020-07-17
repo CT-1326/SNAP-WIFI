@@ -24,6 +24,7 @@ import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 
+import static com.Dev.unknown.snapwifi.Cam.Result_Text;
 
 public class Load extends AppCompatActivity {
     private static final String TAG = "To WIFI";
@@ -125,39 +126,6 @@ public class Load extends AppCompatActivity {
             }
         }
     }
-//    //Successful WIFI scan
-//    public void getWIFIScanResult() {
-//        mScanResult = WIFI_Manger.getScanResults(); //ScanResult List
-//        Log.d("ScanResult : ", String.valueOf(mScanResult));
-//        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-//        for (int i = 0; i < mScanResult.size(); i++)
-//        {
-//            ScanResult Result = mScanResult.get(i);
-////            Log.d("ScanResult : ", String.valueOf(Result));
-//            String Capabilities =  Result.capabilities;
-//            //Blocking Free carrier WIFI
-//            if(Capabilities.contains("EAP"))
-//            {
-//                continue;
-//            }
-//            //Automatic connection
-//            else
-//            {
-//                List.add(Result.SSID);
-//                WifiConfiguration WIFI_Config = new WifiConfiguration();
-//                WIFI_Config.SSID = String.format("\"%s\"", Result.SSID);
-//                WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
-//                int netId = WIFI_Manger.addNetwork(WIFI_Config);
-//                //wifimanager.disconnect();
-//                WIFI_Manger.enableNetwork(netId,false);
-//                WIFI_Manger.reconnect();
-//
-//                if (WIFI.isConnected())
-//                    Show_Result();
-//            }
-//        }
-//        unregisterReceiver(mReceiver); //Stop WIFI SCan
-//    }
     //init WIFI SCAN
     public void initWIFIScan()
     {
@@ -189,7 +157,7 @@ public class Load extends AppCompatActivity {
             scanFailure();
         }
     }
-
+    //Success WIFI scan
     private void scanSuccess() {
         Log.d(TAG,"success scan method");
         List<ScanResult> results = WIFI_Manger.getScanResults();
@@ -228,7 +196,7 @@ public class Load extends AppCompatActivity {
             }
         }
     }
-
+    //Fail WIFI scan
     private void scanFailure() {
         Log.d(TAG,"fail scan method");
         // handle failure: new scan did NOT succeed
