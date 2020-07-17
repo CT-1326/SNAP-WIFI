@@ -1076,37 +1076,8 @@ public class Cam extends AppCompatActivity {
 	int REQUEST_CODE = 1000;
 	public void onBackPressed()
 	{
-		/*super.onBackPressed();
-		ActivityCompat.finishAffinity(this);*/
-
-		KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
-		pDialog.setTitleText("종료하시겠습니까?")
-				.setConfirmText("종료")
-				.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
-					@Override
-					public void onClick(KAlertDialog kAlertDialog) {
-						ActivityCompat.finishAffinity(Cam.this);
-					}
-				})
-				.setCancelText("처음으로")
-				.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
-					@Override
-					public void onClick(KAlertDialog kAlertDialog) {
-						finish();
-					}
-				});
-		final EditText et = new EditText(this);
-		pDialog.setCustomView(et);
-		et.setOnClickListener(new EditText.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(Cam.this, TestActivity.class);
-				startActivityForResult(intent, REQUEST_CODE);
-				pDialog.setTitleText(Result_Text);
-			}
-		});
-		et.setText(Result_Text);
-		pDialog.show();
+		super.onBackPressed();
+		ActivityCompat.finishAffinity(this);
 	}
 
 	@Override
