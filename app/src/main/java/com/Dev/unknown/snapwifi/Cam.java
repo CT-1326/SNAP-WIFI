@@ -1,51 +1,42 @@
 package com.Dev.unknown.snapwifi;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.hardware.Camera;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
 import android.provider.Settings;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import android.renderscript.Sampler;
-import android.text.Layout;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.abbyy.mobile.rtr.BuildConfig;
 import com.abbyy.mobile.rtr.Engine;
@@ -56,8 +47,6 @@ import com.xw.repo.BubbleSeekBar;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.security.AccessController.getContext;
 
 public class Cam extends AppCompatActivity {
 	private int progress=0;
@@ -1081,32 +1070,50 @@ public class Cam extends AppCompatActivity {
 //		builder.show();
 	}
 	//When touch BackPress, app closes
+	int REQUEST_CODE = 1000;
+	String text;
 	public void onBackPressed()
 	{
-		super.onBackPressed();
-		ActivityCompat.finishAffinity(this);
+		/*super.onBackPressed();
+		ActivityCompat.finishAffinity(this);*/
 
-//		KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.INPUT_TYPE);
-//		pDialog.setTitleText("종료하시겠습니까?")
-//				.setConfirmText("종료")
-//				.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
-//					@Override
-//					public void onClick(KAlertDialog kAlertDialog) {
-//						ActivityCompat.finishAffinity(Cam.this);
-//					}
-//				})
-//				.setCancelText("처음으로")
-//				.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
-//					@Override
-//					public void onClick(KAlertDialog kAlertDialog) {
-//						finish();
-//					}
-//				});
-//		EditText et = new EditText(this);
-//		pDialog.getCurrentFocus();
-//		et.requestFocus();
-//		Log.d("Current focus ", String.valueOf(pDialog.getCurrentFocus()));
-//		pDialog.setCustomView(et);
-//		pDialog.show();
+		KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
+		pDialog.setTitleText("종료하시겠습니까?")
+				.setConfirmText("종료")
+				.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+					@Override
+					public void onClick(KAlertDialog kAlertDialog) {
+						ActivityCompat.finishAffinity(Cam.this);
+					}
+				})
+				.setCancelText("처음으로")
+				.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+					@Override
+					public void onClick(KAlertDialog kAlertDialog) {
+						finish();
+					}
+				});
+		final EditText et = new EditText(this);
+		pDialog.setCustomView(et);
+		et.setOnClickListener(new EditText.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Cam.this, TestActivity.class);
+				startActivityForResult(intent, REQUEST_CODE);
+				pDialog.setTitleText(text);
+			}
+		});
+		et.setText(text);
+		pDialog.show();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if(data != null) {
+			text = data.getStringExtra("text");
+			Toast.makeText(getApplicationContext(), "run", Toast.LENGTH_SHORT).show();
+		}
 	}
 }
