@@ -48,7 +48,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cam extends AppCompatActivity {
-	private int progress=0;
 	//Adfit
 	private BannerAdView Adview;
 	//camera zoom bar
@@ -629,18 +628,15 @@ public class Cam extends AppCompatActivity {
 	{
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.cam);
-
 		//Clear the status bar
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
 		//Load adfit
 		Adview = findViewById(R.id.adView);
 		Adview.setClientId("DAN-sof3sp44hw6s");
 		Adview.loadAd();
-
 		//Check GPS ON/OFF (OS 6.0 UP)
 		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
 			LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -668,17 +664,13 @@ public class Cam extends AppCompatActivity {
 				pDialog.show();
 			}
 		}
-
-
 		// Retrieve some ui components
 		warningTextView = (TextView) findViewById( R.id.warningText );
 		errorTextView = (TextView) findViewById( R.id.errorText );
 		startButton = (Button) findViewById( R.id.startButton );
-
 		// Manually create preview surface. The only reason for this is to
 		// avoid making it public top level class
 		RelativeLayout layout = (RelativeLayout) startButton.getParent();
-
 		surfaceViewWithOverlay = new SurfaceViewWithOverlay( this );
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 			RelativeLayout.LayoutParams.MATCH_PARENT,
@@ -686,7 +678,6 @@ public class Cam extends AppCompatActivity {
 		surfaceViewWithOverlay.setLayoutParams( params );
 		// Add the surface to the layout as the bottom-most view filling the parent
 		layout.addView( surfaceViewWithOverlay, 0 );
-
 		// Create text capture service
 		if( createTextCaptureService() ) {
 			// Set the callback to be called when the preview surface is ready.
@@ -694,9 +685,8 @@ public class Cam extends AppCompatActivity {
 			// loading the engine the preview will never start and we will never attempt calling the service
 			surfaceViewWithOverlay.getHolder().addCallback( surfaceCallback );
 		}
-
 		layout.setOnClickListener( clickListener );
-
+		// Setup & View seekBar
 		seekBar=(BubbleSeekBar) findViewById(R.id.seekBar1);
 		seekBar.getConfigBuilder()
 				.min(0)
@@ -720,7 +710,6 @@ public class Cam extends AppCompatActivity {
 				.sectionTextPosition(BubbleSeekBar.TextPosition.BELOW_SECTION_MARK)
 				.touchToSeek()
 				.build();
-
 		seekBar.setCustomSectionTextArray(new BubbleSeekBar.CustomSectionTextArray() {
 			@NonNull
 			@Override
@@ -736,12 +725,12 @@ public class Cam extends AppCompatActivity {
 				return array;
 			}
 		});
-
-			seekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
+		seekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
 			@Override
 			public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
 				try {
-					if (camera.getParameters().isZoomSupported()) {
+					if (camera.getParameters().isZoomSupported())
+					{
 						//Zoom & Auto Focus
 						Camera.Parameters params = camera.getParameters();
 						//seekBar.setMax(params.getMaxZoom());
@@ -750,18 +739,16 @@ public class Cam extends AppCompatActivity {
 						low.setVisibility(View.VISIBLE);
 						more.setVisibility(View.VISIBLE);
 					}
-				}catch (NullPointerException e) {
+				} catch(NullPointerException e) {
 					Log.d("isRotate?", "rotate");
 				}
 			}
-
 			@Override
 			public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
 				//Touching the SeekBar, can see +,- icon
 				low.setVisibility(View.VISIBLE);
 				more.setVisibility(View.VISIBLE);
 			}
-
 			@Override
 			public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
 				low.setVisibility(View.INVISIBLE);
@@ -773,10 +760,7 @@ public class Cam extends AppCompatActivity {
 		more = (TextView)findViewById(R.id.more);
 		low.setVisibility(View.INVISIBLE);
 		more.setVisibility(View.INVISIBLE);
-
 	}
-
-
 	@Override
 	public void onResume()
 	{
@@ -790,7 +774,6 @@ public class Cam extends AppCompatActivity {
 			setCameraPreviewDisplayAndStartPreview();
 		}
 	}
-
 	@Override
 	public void onPause()
 	{
@@ -836,19 +819,16 @@ public class Cam extends AppCompatActivity {
 			areaOfInterestPaint.setARGB( 100, 0, 0, 0 );
 			areaOfInterestPaint.setStyle( Paint.Style.FILL );
 		}
-
 		public void setScaleX( int nominator, int denominator )
 		{
 			scaleNominatorX = nominator;
 			scaleDenominatorX = denominator;
 		}
-
 		public void setScaleY( int nominator, int denominator )
 		{
 			scaleNominatorY = nominator;
 			scaleDenominatorY = denominator;
 		}
-
 		public void setFillBackground( Boolean newValue )
 		{
 			if( newValue ) {
@@ -860,18 +840,15 @@ public class Cam extends AppCompatActivity {
 			}
 			invalidate();
 		}
-
 		public void setAreaOfInterest( Rect newValue )
 		{
 			areaOfInterest = newValue;
 			invalidate();
 		}
-
 		public Rect getAreaOfInterest()
 		{
 			return areaOfInterest;
 		}
-
 		public void setLines( ITextCaptureService.TextLine[] lines,
 			ITextCaptureService.ResultStabilityStatus resultStatus )
 		{
@@ -921,7 +898,6 @@ public class Cam extends AppCompatActivity {
 			}
 			this.invalidate();
 		}
-
 		@Override
 		protected void onDraw( Canvas canvas )
 		{
@@ -1001,7 +977,6 @@ public class Cam extends AppCompatActivity {
 				}
 			}
 			canvas.restore();
-
 			// Draw the 'progress'
 			if( stability > 0 ) {
 				int r = width / 50;
@@ -1051,43 +1026,19 @@ public class Cam extends AppCompatActivity {
 				startActivity(intent);
 			}
 		});
-//		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//		builder.setTitle("인식 결과");
-//		builder.setMessage("결과 내용은 직접 손으로도 수정 가능합니다");
-//		builder.setView(EditText);
-//		builder.setCancelable(false);
-//		builder.setPositiveButton("확인",
-//				new DialogInterface.OnClickListener() {
-//					public void onClick(DialogInterface dialog, int which) {
-//						InputMethodManager InputManger = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-//						InputManger.hideSoftInputFromWindow(EditText.getWindowToken(),0);
-//
-//						Result_Text = EditText.getText().toString();//String modified by keyboard
-//						Log.d("Result edit : ", Result_Text);
-//						startActivity(new Intent(Cam.this,Load.class));
-//					}
-//				});
-//		builder.setNegativeButton("취소",
-//				new DialogInterface.OnClickListener() {
-//					public void onClick(DialogInterface dialog, int which) {
-//						dialog.cancel();
-//					}
-//				});
-//		builder.show();
 	}
 	//When touch BackPress, app closes
-	int REQUEST_CODE = 1000;
 	public void onBackPressed()
 	{
 		super.onBackPressed();
 		ActivityCompat.finishAffinity(this);
 	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		if(data != null) {
+		if(data != null)
+		{
 			Result_Text = data.getStringExtra("text");
 			Toast.makeText(getApplicationContext(), "run", Toast.LENGTH_SHORT).show();
 		}

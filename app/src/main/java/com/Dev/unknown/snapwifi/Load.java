@@ -40,12 +40,10 @@ public class Load extends AppCompatActivity {
 
     private String passWord1, passWord2;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load);
-
         //Load adfit
         adView = findViewById(R.id.adView);
         adView.setClientId("DAN-t4yy5bfqsj8i");
@@ -190,7 +188,7 @@ public class Load extends AppCompatActivity {
             scanFailure();
         }
     }
-
+    //Success scan
     private void scanSuccess() {
         Log.d(TAG,"success scan method");
         List<ScanResult> results = WIFI_Manger.getScanResults();
@@ -202,7 +200,7 @@ public class Load extends AppCompatActivity {
             Toast.makeText(Load.this, "pass1 : "+ passWord1, Toast.LENGTH_SHORT).show();
             passWord2 = intent.getExtras().getString("pass2");
             Toast.makeText(Load.this, "pass2 : "+ passWord2, Toast.LENGTH_SHORT).show();
-        } catch (NullPointerException e) {
+        } catch(NullPointerException e) {
             Log.d("isNull?", "null");
         }
 
@@ -239,7 +237,7 @@ public class Load extends AppCompatActivity {
             }
         }
     }
-
+    //Fail scan
     private void scanFailure() {
         Log.d(TAG,"fail scan method");
         // handle failure: new scan did NOT succeed
