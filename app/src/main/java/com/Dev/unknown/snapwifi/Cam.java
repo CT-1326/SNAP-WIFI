@@ -28,10 +28,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -1046,34 +1044,11 @@ public class Cam extends AppCompatActivity {
 		EditText.setOnClickListener(new EditText.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(Cam.this, TestActivity.class);
+				Intent intent = new Intent(Cam.this, CustomDialog.class);
 				intent.putExtra("password", Result_Text);
 				startActivity(intent);
 			}
 		});
-//		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//		builder.setTitle("인식 결과");
-//		builder.setMessage("결과 내용은 직접 손으로도 수정 가능합니다");
-//		builder.setView(EditText);
-//		builder.setCancelable(false);
-//		builder.setPositiveButton("확인",
-//				new DialogInterface.OnClickListener() {
-//					public void onClick(DialogInterface dialog, int which) {
-//						InputMethodManager InputManger = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-//						InputManger.hideSoftInputFromWindow(EditText.getWindowToken(),0);
-//
-//						Result_Text = EditText.getText().toString();//String modified by keyboard
-//						Log.d("Result edit : ", Result_Text);
-//						startActivity(new Intent(Cam.this,Load.class));
-//					}
-//				});
-//		builder.setNegativeButton("취소",
-//				new DialogInterface.OnClickListener() {
-//					public void onClick(DialogInterface dialog, int which) {
-//						dialog.cancel();
-//					}
-//				});
-//		builder.show();
 	}
 	//When touch BackPress, app closes
 	int REQUEST_CODE = 1000;
@@ -1081,15 +1056,5 @@ public class Cam extends AppCompatActivity {
 	{
 		super.onBackPressed();
 		ActivityCompat.finishAffinity(this);
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-
-		if(data != null) {
-			Result_Text = data.getStringExtra("text");
-			Toast.makeText(getApplicationContext(), "run", Toast.LENGTH_SHORT).show();
-		}
 	}
 }
