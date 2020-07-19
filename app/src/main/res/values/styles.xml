@@ -4,7 +4,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme1" parent="Theme.AppCompat.Light.Dialog">
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="windowNoTitle">true</item>
     </style>
 

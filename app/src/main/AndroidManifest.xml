@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".CustomDialog"
-            android:theme="@style/Theme.AppCompat.Light.Dialog">
+            android:theme="@style/DialogTheme">
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>

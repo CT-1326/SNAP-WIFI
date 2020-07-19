@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="인식 결과"
+            android:text="비밀번호 수정"
             android:textSize="20sp" />
     </LinearLayout>
 

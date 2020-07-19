@@ -19,7 +19,6 @@ public class CustomDialog extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Intent intent = getIntent();
         text = intent.getExtras().getString("password");
         callFunction();
@@ -27,6 +26,7 @@ public class CustomDialog extends AppCompatActivity {
 
     public String callFunction() {
         final Dialog dig = new Dialog(CustomDialog.this);
+        dig.setCancelable(false);
         dig.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dig.setContentView(R.layout.activity_custom_dialog);
         WindowManager.LayoutParams params = dig.getWindow().getAttributes();
@@ -56,7 +56,7 @@ public class CustomDialog extends AppCompatActivity {
         NegativeButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dig.dismiss();
+                finish();
             }
         });
 
