@@ -24,9 +24,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TestActivity"
-            android:label="비밀번호 수정"
-            android:theme="@style/Theme.AppCompat.Dialog">
+        <activity android:name=".CustomDialog"
+            android:theme="@style/Theme.AppCompat.Light.Dialog">
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
