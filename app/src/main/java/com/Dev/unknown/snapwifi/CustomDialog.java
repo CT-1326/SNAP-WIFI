@@ -2,6 +2,8 @@ package com.Dev.unknown.snapwifi;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -23,10 +25,11 @@ public class CustomDialog extends AppCompatActivity {
         callFunction();
     }
 
-    public String callFunction() {
+    public void callFunction() {
         final Dialog dig = new Dialog(CustomDialog.this);
         dig.setCancelable(false);
         dig.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dig.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dig.setContentView(R.layout.activity_custom_dialog);
         dig.show();
 
@@ -52,7 +55,5 @@ public class CustomDialog extends AppCompatActivity {
                 finish();
             }
         });
-
-        return text;
     }
 }
