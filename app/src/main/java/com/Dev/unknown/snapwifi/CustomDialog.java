@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class CustomDialog extends AppCompatActivity {
 
     private String text;
+    private EditText et;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +35,7 @@ public class CustomDialog extends AppCompatActivity {
         dig.setContentView(R.layout.activity_custom_dialog);
         dig.show();
 
-        final EditText et = (EditText)dig.findViewById(R.id.et);
+        et = (EditText)dig.findViewById(R.id.et);
         final Button PositiveButton = (Button)dig.findViewById(R.id.ok_btn);
         final Button NegativeButton = (Button)dig.findViewById(R.id.cancel_btn);
 
@@ -52,8 +54,14 @@ public class CustomDialog extends AppCompatActivity {
         NegativeButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();
                 finish();
             }
         });
+    }
+
+    public void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(et.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }
