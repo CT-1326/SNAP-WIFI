@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -29,13 +28,7 @@ public class CustomDialog extends AppCompatActivity {
         dig.setCancelable(false);
         dig.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dig.setContentView(R.layout.activity_custom_dialog);
-        WindowManager.LayoutParams params = dig.getWindow().getAttributes();
-        params.width = 830;
-        params.height = 730;
         dig.show();
-
-        Window window = dig.getWindow();
-        window.setAttributes(params);
 
         final EditText et = (EditText)dig.findViewById(R.id.et);
         final Button PositiveButton = (Button)dig.findViewById(R.id.ok_btn);

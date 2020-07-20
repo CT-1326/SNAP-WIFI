@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingLeft="18dp"
+    android:paddingRight="18dp"
     tools:context=".CustomDialog">
 
     <LinearLayout
@@ -58,7 +60,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content">
 
-            <requestFocus />
+            <requestFocus/>
         </EditText>
     </LinearLayout>
 
@@ -72,8 +74,7 @@
         <Button
             android:id="@+id/cancel_btn"
             style="@style/dialog_blue_button"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_margin="10dp"
             android:background="@drawable/cancel_btn"
             android:text="취소"
             android:textColor="#FFFFFF"
@@ -82,8 +83,7 @@
         <Button
             android:id="@+id/ok_btn"
             style="@style/dialog_blue_button"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_margin="10dp"
             android:text="확인"
             android:textColor="#FFFFFF"
             android:textStyle="bold"/>
