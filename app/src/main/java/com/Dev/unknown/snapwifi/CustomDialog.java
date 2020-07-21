@@ -47,6 +47,7 @@ public class CustomDialog extends AppCompatActivity {
                 text = et.getText().toString();
                 Intent intent = new Intent(CustomDialog.this, Load.class);
                 intent.putExtra("pass2", text);
+                hideKeyboard();
                 startActivity(intent);
             }
         });
