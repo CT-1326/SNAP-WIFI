@@ -335,7 +335,6 @@ public class Load extends AppCompatActivity {
 //            pDialog.show();
 //        }
 //    }
-    //When touch BackPress twice, app closes
     @Override
     public void onBackPressed()
     {
