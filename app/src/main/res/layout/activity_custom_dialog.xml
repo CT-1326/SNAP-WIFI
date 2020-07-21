@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="비밀번호 수정"
+            android:text="@string/recog_result"
             android:textSize="20sp" />
     </LinearLayout>
 
@@ -76,7 +76,7 @@
             style="@style/dialog_blue_button"
             android:layout_margin="10dp"
             android:background="@drawable/cancel_btn"
-            android:text="취소"
+            android:text="@string/cancel"
             android:textColor="#FFFFFF"
             android:textStyle="bold"/>
 
@@ -84,7 +84,7 @@
             android:id="@+id/ok_btn"
             style="@style/dialog_blue_button"
             android:layout_margin="10dp"
-            android:text="확인"
+            android:text="@string/ok"
             android:textColor="#FFFFFF"
             android:textStyle="bold"/>
     </LinearLayout>

@@ -98,6 +98,13 @@ public class Cam extends AppCompatActivity {
 	private static final String BUTTON_TEXT_STOP = "Stop";
 	private static final String BUTTON_TEXT_STARTING = "Starting...";
 
+	private String onGPS,
+	                setting,
+					OK,
+					cancel,
+					recogResult,
+					close;
+
 	// To communicate with the Text Capture Service we will need this callback:
 	private ITextCaptureService.Callback textCaptureCallback = new ITextCaptureService.Callback() {
 		@Override
@@ -628,6 +635,13 @@ public class Cam extends AppCompatActivity {
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.cam);
 
+		onGPS = getResources().getString(R.string.onGPS);
+		setting = getResources().getString(R.string.setting);
+		OK = getResources().getString(R.string.ok);
+		cancel = getResources().getString(R.string.cancel);
+		recogResult = getResources().getString(R.string.recog_result);
+		close = getResources().getString(R.string.close);
+
 		//Clear the status bar
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -644,8 +658,8 @@ public class Cam extends AppCompatActivity {
 			LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 				KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
-				pDialog.setTitleText("GPS를 켜야해요!");
-				pDialog.setConfirmText("설정");
+				pDialog.setTitleText(onGPS);
+				pDialog.setConfirmText(setting);
 				pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
 							@Override
 							public void onClick(KAlertDialog kAlertDialog) {
@@ -655,7 +669,7 @@ public class Cam extends AppCompatActivity {
 								kAlertDialog.cancel();
 							}
 						});
-				pDialog.setCancelText("종료");
+				pDialog.setCancelText(close);
 				pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
 							@Override
 							public void onClick(KAlertDialog kAlertDialog) {
@@ -1019,9 +1033,9 @@ public class Cam extends AppCompatActivity {
 		EditText.setText(Result_Text);
 		// View on success alertDialog
 		KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
-		pDialog.setTitleText("인식 결과");
+		pDialog.setTitleText(recogResult);
 		pDialog.setCustomView(EditText);
-		pDialog.setConfirmText("확인");
+		pDialog.setConfirmText(OK);
 		pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
 			@Override
 			public void onClick(KAlertDialog kAlertDialog) {
@@ -1032,7 +1046,7 @@ public class Cam extends AppCompatActivity {
 				startActivity(intent1);
 			}
 		});
-		pDialog.setCancelText("취소");
+		pDialog.setCancelText(cancel);
 		pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
 			@Override
 			public void onClick(KAlertDialog kAlertDialog) {

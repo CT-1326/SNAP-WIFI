@@ -40,10 +40,23 @@ public class Load extends AppCompatActivity {
 
     private String passWord1, passWord2;
 
+    private String onWIFIing;
+    private String Close;
+    private String backFirst;
+    private String backOnemoreClose;
+    private String scanningWIFI;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load);
+        onWIFIing = getResources().getString(R.string.on_wifi_ing);
+        String onWIFI = getResources().getString(R.string.on_wifi);
+        String OK = getResources().getString(R.string.ok);
+        Close = getResources().getString(R.string.close);
+        backFirst = getResources().getString(R.string.back_first);
+        backOnemoreClose = getResources().getString(R.string.back_onemore_close);
+        scanningWIFI = getResources().getString(R.string.scanning_wifi);
         //Load adfit
         adView = findViewById(R.id.adView);
         adView.setClientId("DAN-t4yy5bfqsj8i");
@@ -58,8 +71,8 @@ public class Load extends AppCompatActivity {
         {
             Log.d(TAG,"New OS");
             KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
-            pDialog.setTitleText("WIFI를 켜야해요!");
-            pDialog.setConfirmText("확인");
+            pDialog.setTitleText(onWIFI);
+            pDialog.setConfirmText(OK);
             pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
                 @Override
                 public void onClick(KAlertDialog kAlertDialog) {
@@ -93,15 +106,15 @@ public class Load extends AppCompatActivity {
             if (WIFI.isConnected())
             {
                 KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
-                pDialog.setTitleText("이미 WIFI가 사용중 입니다");
-                pDialog.setConfirmText("종료");
+                pDialog.setTitleText(onWIFIing);
+                pDialog.setConfirmText(Close);
                 pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
                     @Override
                     public void onClick(KAlertDialog kAlertDialog) {
                         ActivityCompat.finishAffinity(Load.this);
                     }
                 });
-                pDialog.setCancelText("처음으로");
+                pDialog.setCancelText(backFirst);
                 pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
                     @Override
                     public void onClick(KAlertDialog kAlertDialog) {
@@ -116,7 +129,7 @@ public class Load extends AppCompatActivity {
             {
                 new SpotsDialog.Builder()
                         .setContext(this)
-                        .setMessage("WIFI 스캔중...")
+                        .setMessage(scanningWIFI)
                         .setCancelable(false)
                         .build()
                         .show();
@@ -336,7 +349,7 @@ public class Load extends AppCompatActivity {
         else
         {
             backPressedTime = One_Tab;
-            Toast.makeText(getApplicationContext(), "한번 더 뒤로가기를 누르면 어플이 종료됩니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), backOnemoreClose, Toast.LENGTH_SHORT).show();
         }
     }
 }

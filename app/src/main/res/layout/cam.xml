@@ -61,7 +61,7 @@
         android:layout_toLeftOf="@+id/seekBar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="-"
+        android:text="@string/minus"
         android:textColor="#ffffff"
         android:textSize="25dp"/>
     <TextView
@@ -71,7 +71,7 @@
         android:layout_toRightOf="@+id/seekBar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+"
+        android:text="@string/plus"
         android:textColor="#ffffff"
         android:textSize="25dp"/>
 
@@ -84,7 +84,7 @@
         android:layout_marginBottom="5dp"
         android:background="#19010000"
         android:onClick="onStartButtonClick"
-        android:text="Start Scan"
+        android:text="@string/start_scan"
         android:textColor="#ffffff"
         android:textSize="15dp" />
 </RelativeLayout>

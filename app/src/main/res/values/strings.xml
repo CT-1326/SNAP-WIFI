@@ -1,3 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SNAP WIFI</string>
+    <!-- activity_custom_dialog.xml -->
+    <string name="recog_result">Recognition results</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <!-- cam.xml -->
+    <string name="start_scan">Start Scan</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <!-- MainActivity.java -->
+    <string name="set_permission"><![CDATA[The permission is denied, so you cannot use the app… \n\nPlease allow permission!\n[Setting] > [Permission]]]></string>
+    <!-- Load.java -->
+    <string name="on_wifi">Turn on the WIFI to need execution!</string>
+    <string name="on_wifi_ing">WIFI is already in use.</string>
+    <string name="close">End</string>
+    <string name="back_first">Go first</string>
+    <string name="back_onemore_close">If you press Back once more, the app will be closed.</string>
+    <string name="scanning_wifi">Scanning WIFI…</string>
+    <!-- Cam.java -->
+    <string name="onGPS">Turn on the GPS to need execution!</string>
+    <string name="setting">Setting</string>
 </resources>
