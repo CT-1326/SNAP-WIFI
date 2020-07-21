@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SNAP WIFI</string>
+    <!-- activity_custom_dialog.xml -->
+    <string name="recog_result">認識結果</string>
+    <string name="cancel">キャンセル</string>
+    <string name="ok">例</string>
+    <!-- cam.xml -->
+    <string name="start_scan">スキャン開始</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <!-- MainActivity.java -->
+    <string name="set_permission"><![CDATA[許可が拒否されたため、アプリを使用できません… \n\n許可してください！\n[設定] > [許可]]]></string>
+    <!-- Load.java -->
+    <string name="on_wifi">WIFIをオンにして実行する必要があります！</string>
+    <string name="on_wifi_ing">WIFIは既に使用されています.</string>
+    <string name="close">終わり</string>
+    <string name="back_first">最初に行く</string>
+    <string name="back_onemore_close">もう一度[戻る]を押すと、アプリが閉じます。</string>
+    <string name="scanning_wifi">WIFIをスキャンしています…</string>
+    <!-- Cam.java -->
+    <string name="onGPS">GPSをオンにして実行する必要があります！</string>
+    <string name="setting">設定</string>
+</resources>

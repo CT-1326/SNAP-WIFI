@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SNAP WIFI</string>
+    <!-- activity_custom_dialog.xml -->
+    <string name="recog_result">인식 결과</string>
+    <string name="cancel">취소</string>
+    <string name="ok">확인</string>
+    <!-- cam.xml -->
+    <string name="start_scan">Start Scan</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <!-- MainActivity.java -->
+    <string name="set_permission"><![CDATA[권한이 거부되어 어플 이용이 불가능합니다…\n\n권한을 허용해주세요!\n[설정] > [권한]]]></string>
+    <!-- Load.java -->
+    <string name="on_wifi">WIFI를 켜야해요!</string>
+    <string name="on_wifi_ing">이미 WIFI가 사용 중 입니다.</string>
+    <string name="close">종료</string>
+    <string name="back_first">처음으로</string>
+    <string name="back_onemore_close">한번 더 뒤로가기를 누르면 어플이 종료됩니다.</string>
+    <string name="scanning_wifi">WIFI 스캔 중…</string>
+    <!-- Cam.java -->
+    <string name="onGPS">GPS를 켜야해요!</string>
+    <string name="setting">설정</string>
+</resources>
