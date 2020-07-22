@@ -665,7 +665,8 @@ public class Cam extends AppCompatActivity {
 		more.setVisibility(View.INVISIBLE);
 
 		//Check GPS ON/OFF (OS 6.0 UP)
-		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
+		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
+		{
 			LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 				KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
@@ -804,6 +805,36 @@ public class Cam extends AppCompatActivity {
 		}
 	}
 
+	public void onRestart() {
+		super.onRestart();
+		//Check GPS ON/OFF (OS 6.0 UP)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+			if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+				KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
+				pDialog.setTitleText(onGPS);
+				pDialog.setConfirmText(setting);
+				pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+					@Override
+					public void onClick(KAlertDialog kAlertDialog) {
+						Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+						intent.addCategory(Intent.CATEGORY_DEFAULT);
+						startActivity(intent);
+						kAlertDialog.cancel();
+					}
+				});
+				pDialog.setCancelText(close);
+				pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+					@Override
+					public void onClick(KAlertDialog kAlertDialog) {
+						ActivityCompat.finishAffinity(Cam.this);
+					}
+				});
+				pDialog.setCancelable(false);
+				pDialog.show();
+			}
+		}
+	}
 	@Override
 	public void onPause()
 	{
