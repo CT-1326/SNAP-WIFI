@@ -24,6 +24,8 @@ import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 
+import static com.Dev.unknown.snapwifi.Cam.Result_Text;
+
 public class Load extends AppCompatActivity {
     private static final String TAG = "To WIFI";
     //BackPress values
@@ -38,8 +40,6 @@ public class Load extends AppCompatActivity {
     NetworkInfo WIFI;
     //Save WIFI AP list
     private ArrayList List = new ArrayList<String>();
-    //Scan result passWord Text
-    private String passWord1, passWord2;
     //String files Text
     private String onWIFIing;
     private String Close;
@@ -51,6 +51,8 @@ public class Load extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load);
+
+        Log.d(TAG, Result_Text);
 
         //Retrieve string files Text
         onWIFIing = getResources().getString(R.string.on_wifi_ing);
@@ -215,16 +217,6 @@ public class Load extends AppCompatActivity {
         Log.d(TAG,"success scan method");
         List<ScanResult> results = WIFI_Manger.getScanResults();
         Log.d("Result success : ", String.valueOf(results));
-
-        Intent intent = getIntent();
-        try {
-            passWord1 = intent.getExtras().getString("pass1");
-            Toast.makeText(Load.this, "pass1 : "+ passWord1, Toast.LENGTH_SHORT).show();
-            passWord2 = intent.getExtras().getString("pass2");
-            Toast.makeText(Load.this, "pass2 : "+ passWord2, Toast.LENGTH_SHORT).show();
-        } catch(NullPointerException e) {
-            Log.d("isNull?", "null");
-        }
 
         for (int i = 0; i < results.size(); i++)
         {

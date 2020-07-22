@@ -54,7 +54,6 @@
         android:layout_above="@+id/startButton"
         android:layout_marginBottom="50dp"
         android:saveEnabled="false"/>
-
     <TextView
         android:id="@+id/low"
         android:layout_alignBottom="@+id/seekBar1"
