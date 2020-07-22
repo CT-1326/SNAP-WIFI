@@ -296,69 +296,53 @@ public class Load extends AppCompatActivity {
 //            }
 //        }
 //
-//        //Show wifi connection result
-//        if (WIFI.isConnected())
-//        {
-//            KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
-//            pDialog.setTitleText("WIFI 연결에 성공!");
-//            pDialog.setConfirmText("종료");
-//            pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
-//                        @Override
-//                        public void onClick(KAlertDialog kAlertDialog) {
-//                            ActivityCompat.finishAffinity(Load.this);
-//                        }
-//                    });
-//            pDialog.setCancelText("처음으로");
-//            pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
-//                        @Override
-//                        public void onClick(KAlertDialog kAlertDialog) {
-//                            finish();
-//                            startActivity(new Intent(Load.this, Cam.class));
-//                        }
-//                    });
-//            pDialog.setCancelable(false);
-//            pDialog.show();
-//        }
-//        else
-//        {
-//            KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
-//            pDialog.setTitleText("WIFI 연결에 실패...");
-//            pDialog.setContentText("현재 이용하려는 WIFI 연결상태 문제일 수도 있습니다");
-//            pDialog.setConfirmText("종료");
-//            pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
-//                @Override
-//                public void onClick(KAlertDialog kAlertDialog) {
-//                    ActivityCompat.finishAffinity(Load.this);
-//                }
-//            });
-//            pDialog.setCancelText("처음으로");
-//            pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
-//                @Override
-//                public void onClick(KAlertDialog kAlertDialog) {
-//                    finish();
-//                    startActivity(new Intent(Load.this, Cam.class));
-//                }
-//            });
-//            pDialog.setCancelable(false);
-//            pDialog.show();
-//        }
-    }
-
-    //When touch BackPress twice, app close
-    @Override
-    public void onBackPressed()
-    {
-        long One_Tab = System.currentTimeMillis();
-        long Double_Tab = One_Tab -backPressedTime;
-
-        if (0 <= Double_Tab && FINISH_INTERVAL_TIME >= Double_Tab)
+        //Show wifi connection result
+        if (WIFI.isConnected())
         {
-            ActivityCompat.finishAffinity(this);
+            KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
+            pDialog.setTitleText("WIFI 연결에 성공!");
+            pDialog.setConfirmText("종료");
+            pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+                        @Override
+                        public void onClick(KAlertDialog kAlertDialog) {
+                            moveTaskToBack(true);
+                            finish();
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                        }
+                    });
+            pDialog.setCancelText("처음으로");
+            pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+                        @Override
+                        public void onClick(KAlertDialog kAlertDialog) {
+                            System.exit(0);
+                        }
+                    });
+            pDialog.setCancelable(false);
+            pDialog.show();
         }
         else
         {
-            backPressedTime = One_Tab;
-            Toast.makeText(getApplicationContext(), backOnemoreClose, Toast.LENGTH_SHORT).show();
+            KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
+            pDialog.setTitleText("WIFI 연결에 실패...");
+            pDialog.setContentText("현재 이용하려는 WIFI 연결상태 문제일 수도 있습니다");
+            pDialog.setConfirmText("종료");
+            pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+                @Override
+                public void onClick(KAlertDialog kAlertDialog) {
+                    moveTaskToBack(true);
+                    finish();
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                }
+            });
+            pDialog.setCancelText("처음으로");
+            pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
+                @Override
+                public void onClick(KAlertDialog kAlertDialog) {
+                    System.exit(0);
+                }
+            });
+            pDialog.setCancelable(false);
+            pDialog.show();
         }
     }
 }

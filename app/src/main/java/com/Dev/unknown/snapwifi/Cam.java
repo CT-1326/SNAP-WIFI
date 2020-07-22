@@ -1075,6 +1075,8 @@ public class Cam extends AppCompatActivity {
 	public void onBackPressed()
 	{
 		super.onBackPressed();
-		ActivityCompat.finishAffinity(this);
+		moveTaskToBack(true);
+		finish();
+		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 }
