@@ -1,14 +1,17 @@
 package com.Dev.unknown.snapwifi;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -23,7 +26,9 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -1025,39 +1030,43 @@ public class Cam extends AppCompatActivity {
 	//Show OCR result
 	private void Show_Result()
 	{
-		// Setup editText as OCR result
-		final EditText EditText = new EditText(this);
-		EditText.setText(Result_Text);
 		// View on success alertDialog
-		KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
-		pDialog.setTitleText(recogResult);
-		pDialog.setCustomView(EditText);
-		pDialog.setConfirmText(OK);
-		pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
-			@Override
-			public void onClick(KAlertDialog kAlertDialog) {
-				Result_Text = EditText.getText().toString();//String modified by keyboard
-				Log.d("Result edit : ", Result_Text);
-				Intent intent1 = new Intent(Cam.this, Load.class);
-				intent1.putExtra("pass1", Result_Text);
-				startActivity(intent1);
-			}
-		});
-		pDialog.setCancelText(cancel);
-		pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
-			@Override
-			public void onClick(KAlertDialog kAlertDialog) {
-				kAlertDialog.cancel();
-			}
-		});
-		pDialog.setCancelable(false);
-		pDialog.show();
-		EditText.setOnClickListener(new EditText.OnClickListener() {
+		final Dialog dig = new Dialog(Cam.this);
+		dig.setCancelable(false);
+		dig.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dig.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		dig.setContentView(R.layout.activity_custom_dialog);
+		dig.show();
+
+		// Setup editText as OCR result
+		final EditText EditText = (EditText)dig.findViewById(R.id.edit_text);
+		EditText.setText(Result_Text);
+
+		final Button PositiveButton = (Button)dig.findViewById(R.id.ok_btn);
+		final Button NegativeButton = (Button)dig.findViewById(R.id.cancel_btn);
+		PositiveButton.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(Cam.this, CustomDialog.class);
-				intent.putExtra("password", Result_Text);
+				//String modified by keyboard
+				Result_Text = EditText.getText().toString();
+				Log.d("Result edit : ", Result_Text);
+
+				//Hide keyBoard
+				InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(EditText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+				Intent intent = new Intent(Cam.this, Load.class);
 				startActivity(intent);
+			}
+		});
+		NegativeButton.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//Hide keyBoard
+				InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(EditText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+				dig.cancel();
 			}
 		});
 	}
