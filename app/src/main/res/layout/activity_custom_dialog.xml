@@ -14,19 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal">
-
         <FrameLayout
             android:id="@+id/warning_frame"
             android:layout_width="53dp"
             android:layout_height="53dp"
             android:layout_marginTop="10dp"
             android:visibility="visible">
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/warning_circle" />
-
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -40,7 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal">
-
         <TextView
             android:id="@+id/result_text"
             android:layout_width="wrap_content"
@@ -54,13 +50,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal">
-
         <EditText
             android:id="@+id/et"
             android:layout_width="250dp"
             android:layout_height="wrap_content">
-
-            <requestFocus/>
+            <requestFocus />
         </EditText>
     </LinearLayout>
 
@@ -70,7 +64,6 @@
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
-
         <Button
             android:id="@+id/cancel_btn"
             style="@style/dialog_blue_button"
@@ -79,7 +72,6 @@
             android:text="@string/cancel"
             android:textColor="#FFFFFF"
             android:textStyle="bold"/>
-
         <Button
             android:id="@+id/ok_btn"
             style="@style/dialog_blue_button"

@@ -23,12 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
+
 public class Load extends AppCompatActivity {
     private static final String TAG = "To WIFI";
     //BackPress values
     private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
-    //Adfit
+    //AdFit
     private BannerAdView adView;
     private BannerAdView adView2;
     // WIFI & network
@@ -37,9 +38,9 @@ public class Load extends AppCompatActivity {
     NetworkInfo WIFI;
     //Save WIFI AP list
     private ArrayList List = new ArrayList<String>();
-
+    //Scan result passWord Text
     private String passWord1, passWord2;
-
+    //String files Text
     private String onWIFIing;
     private String Close;
     private String backFirst;
@@ -50,6 +51,8 @@ public class Load extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load);
+
+        //Retrieve string files Text
         onWIFIing = getResources().getString(R.string.on_wifi_ing);
         String onWIFI = getResources().getString(R.string.on_wifi);
         String OK = getResources().getString(R.string.ok);
@@ -57,6 +60,7 @@ public class Load extends AppCompatActivity {
         backFirst = getResources().getString(R.string.back_first);
         backOnemoreClose = getResources().getString(R.string.back_onemore_close);
         scanningWIFI = getResources().getString(R.string.scanning_wifi);
+
         //Load adfit
         adView = findViewById(R.id.adView);
         adView.setClientId("DAN-t4yy5bfqsj8i");
@@ -65,7 +69,11 @@ public class Load extends AppCompatActivity {
         adView2.setClientId("DAN-t4yy5bfqsj8i");
         adView2.loadAd();
 
+        //Retrieve WIFI & Network status
         WIFI_Manger = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
         //IF WIFI is OFF
         if (WIFI_Manger.isWifiEnabled() == false && Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q)
         {
@@ -79,7 +87,7 @@ public class Load extends AppCompatActivity {
                     if (WIFI_Manger.isWifiEnabled() == true)
                     {
                         kAlertDialog.cancel();
-                        WIFI_Conneted();
+                        WIFI_Connected();
                     }
                 }
             });
@@ -90,18 +98,17 @@ public class Load extends AppCompatActivity {
         {
             Log.d(TAG,"Old OS");
             WIFI_Manger.setWifiEnabled(true);
-            WIFI_Conneted();
+            WIFI_Connected();
         }
         else
-            WIFI_Conneted();
+            WIFI_Connected();
     }
+
     //Try to WIFI connect
-    public void WIFI_Conneted()
+    public void WIFI_Connected()
     {
         if (WIFI_Manger.isWifiEnabled() == true)
         {
-            connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-            WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             //IF already WIFI connected
             if (WIFI.isConnected())
             {
@@ -170,6 +177,7 @@ public class Load extends AppCompatActivity {
 //        }
 //        unregisterReceiver(mReceiver); //Stop WIFI SCan
 //    }
+
     //init WIFI SCAN
     public void initWIFIScan()
     {
@@ -201,6 +209,7 @@ public class Load extends AppCompatActivity {
             scanFailure();
         }
     }
+
     //Success scan
     private void scanSuccess() {
         Log.d(TAG,"success scan method");
@@ -250,6 +259,7 @@ public class Load extends AppCompatActivity {
             }
         }
     }
+
     //Fail scan
     private void scanFailure() {
         Log.d(TAG,"fail scan method");
@@ -335,6 +345,8 @@ public class Load extends AppCompatActivity {
 //            pDialog.show();
 //        }
 //    }
+
+    //When touch BackPress twice, app close
     @Override
     public void onBackPressed()
     {

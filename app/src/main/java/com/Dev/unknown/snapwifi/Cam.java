@@ -46,7 +46,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cam extends AppCompatActivity {
-	private int progress=0;
 	//Adfit
 	private BannerAdView Adview;
 	//camera zoom bar
@@ -55,6 +54,13 @@ public class Cam extends AppCompatActivity {
 	private TextView low, more;
 	//OCR result text
 	static String Result_Text;
+	//String files Text
+	private String onGPS,
+			setting,
+			OK,
+			cancel,
+			recogResult,
+			close;
 	// Licensing
 	private static final String licenseFileName = "AbbyyRtrSdk.license";
 
@@ -97,13 +103,6 @@ public class Cam extends AppCompatActivity {
 	private static final String BUTTON_TEXT_START = "Start Scan";
 	private static final String BUTTON_TEXT_STOP = "Stop";
 	private static final String BUTTON_TEXT_STARTING = "Starting...";
-
-	private String onGPS,
-	                setting,
-					OK,
-					cancel,
-					recogResult,
-					close;
 
 	// To communicate with the Text Capture Service we will need this callback:
 	private ITextCaptureService.Callback textCaptureCallback = new ITextCaptureService.Callback() {
@@ -196,7 +195,6 @@ public class Cam extends AppCompatActivity {
 			// When surface is created, store the holder
 			previewSurfaceHolder = holder;
 		}
-
 		@Override
 		public void surfaceChanged(SurfaceHolder holder, int format, int width, int height )
 		{
@@ -206,7 +204,6 @@ public class Cam extends AppCompatActivity {
 				Log.d("isChange?", "change");
 			}
 		}
-
 		@Override
 		public void surfaceDestroyed( SurfaceHolder holder )
 		{
@@ -248,12 +245,13 @@ public class Cam extends AppCompatActivity {
 			}
 		}
 	};
-	// Autofocus by tap
+
+	// AutoFocus by tap
 	private View.OnClickListener clickListener = new View.OnClickListener() {
 		@Override
         public void onClick(View v )
 		{
-			// if BUTTON_TEXT_STARTING autofocus is already in progress, it is incorrect to interrupt it
+			// if BUTTON_TEXT_STARTING autoFocus is already in progress, it is incorrect to interrupt it
 			if( !startButton.getText().equals( BUTTON_TEXT_STARTING ) ) {
 				autoFocus( simpleCameraAutoFocusCallback );
 			}
@@ -271,7 +269,7 @@ public class Cam extends AppCompatActivity {
 		}
 	}
 
-	// Start autofocus (used when continuous autofocus is disabled)
+	// Start autoFocus (used when continuous autoFocus is disabled)
 	private void autoFocus( Camera.AutoFocusCallback callback )
 	{
 		if( camera != null ) {
@@ -629,12 +627,14 @@ public class Cam extends AppCompatActivity {
 			}
 		}
 	}
+
 	@Override
 	public void onCreate( Bundle savedInstanceState )
 	{
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.cam);
 
+		//Retrieve string files Text
 		onGPS = getResources().getString(R.string.onGPS);
 		setting = getResources().getString(R.string.setting);
 		OK = getResources().getString(R.string.ok);
@@ -648,10 +648,16 @@ public class Cam extends AppCompatActivity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		//Load adfit
+		//Load adFit
 		Adview = findViewById(R.id.adView);
 		Adview.setClientId("DAN-sof3sp44hw6s");
 		Adview.loadAd();
+
+		//Retrieve seekBar UI
+		low = (TextView)findViewById(R.id.low);
+		more = (TextView)findViewById(R.id.more);
+		low.setVisibility(View.INVISIBLE);
+		more.setVisibility(View.INVISIBLE);
 
 		//Check GPS ON/OFF (OS 6.0 UP)
 		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
@@ -681,7 +687,6 @@ public class Cam extends AppCompatActivity {
 			}
 		}
 
-
 		// Retrieve some ui components
 		warningTextView = (TextView) findViewById( R.id.warningText );
 		errorTextView = (TextView) findViewById( R.id.errorText );
@@ -708,7 +713,7 @@ public class Cam extends AppCompatActivity {
 		}
 
 		layout.setOnClickListener( clickListener );
-
+		//Setup seekBar
 		seekBar=(BubbleSeekBar) findViewById(R.id.seekBar1);
 		seekBar.getConfigBuilder()
 				.min(0)
@@ -749,7 +754,7 @@ public class Cam extends AppCompatActivity {
 			}
 		});
 
-			seekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
+		seekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
 			@Override
 			public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
 				try {
@@ -766,28 +771,19 @@ public class Cam extends AppCompatActivity {
 					Log.d("isRotate?", "rotate");
 				}
 			}
-
+			//Touching the SeekBar, can see +,- icon
 			@Override
 			public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
-				//Touching the SeekBar, can see +,- icon
 				low.setVisibility(View.VISIBLE);
 				more.setVisibility(View.VISIBLE);
 			}
-
 			@Override
 			public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
 				low.setVisibility(View.INVISIBLE);
 				more.setVisibility(View.INVISIBLE);
 			}
 		});
-
-		low = (TextView)findViewById(R.id.low);
-		more = (TextView)findViewById(R.id.more);
-		low.setVisibility(View.INVISIBLE);
-		more.setVisibility(View.INVISIBLE);
-
 	}
-
 
 	@Override
 	public void onResume()
@@ -1025,6 +1021,7 @@ public class Cam extends AppCompatActivity {
 			}
 		}
 	}
+
 	//Show OCR result
 	private void Show_Result()
 	{
@@ -1064,8 +1061,8 @@ public class Cam extends AppCompatActivity {
 			}
 		});
 	}
+
 	//When touch BackPress, app closes
-	int REQUEST_CODE = 1000;
 	public void onBackPressed()
 	{
 		super.onBackPressed();
