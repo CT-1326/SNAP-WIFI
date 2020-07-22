@@ -216,13 +216,13 @@ public class Load extends AppCompatActivity {
     private void scanSuccess() {
         Log.d(TAG,"success scan method");
         List<ScanResult> results = WIFI_Manger.getScanResults();
-        Log.d("Result success : ", String.valueOf(results));
+        Log.d(TAG,"Result success : " + results);
 
         for (int i = 0; i < results.size(); i++)
         {
             ScanResult Result = results.get(i);
             String Capabilities =  Result.capabilities;
-            Log.d("Index : ", String.valueOf(i));
+            Log.d(TAG, "Index : " + i);
             //Blocking Free carrier WIFI
             if(Capabilities.contains("EAP"))
             {
@@ -231,8 +231,14 @@ public class Load extends AppCompatActivity {
             //Automatic connection
             else
             {
+                new SpotsDialog.Builder()
+                        .setContext(this)
+                        .setMessage(Result.SSID + "에 연결 시도중...")
+                        .setCancelable(false)
+                        .build()
+                        .show();
                 List.add(Result.SSID);
-                Log.d("SSID : ", Result.SSID);
+                Log.d(TAG,"SSID : " + Result.SSID);
 //                WifiConfiguration WIFI_Config = new WifiConfiguration();
 //                WIFI_Config.SSID = String.format("\"%s\"", Result.SSID);
 //                WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
@@ -250,6 +256,7 @@ public class Load extends AppCompatActivity {
 //                    Show_Result();
             }
         }
+        Show_Result();
     }
 
     //Fail scan
@@ -258,12 +265,13 @@ public class Load extends AppCompatActivity {
         // handle failure: new scan did NOT succeed
         // consider using old scan results: these are the OLD results!
         List<ScanResult> results = WIFI_Manger.getScanResults();
-        Log.d("Result fail : ", String.valueOf(results));
+        Log.d(TAG,"Result fail : " + results);
     }
 
-//    //Remove all AP except connected AP
-//    private void Show_Result()
-//    {
+    //Remove all AP except connected AP
+    private void Show_Result()
+    {
+        Log.d(TAG,"Done!");
 //        WifiInfo wifiInfo = WIFI_Manger.getConnectionInfo();
 //        String SSID = new String(wifiInfo.getSSID());
 //        SSID = SSID.substring(1, SSID.length()-1);
@@ -288,8 +296,6 @@ public class Load extends AppCompatActivity {
 //            }
 //        }
 //
-//        connectivityManager = (ConnectivityManager)getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-//        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 //        //Show wifi connection result
 //        if (WIFI.isConnected())
 //        {
@@ -336,7 +342,7 @@ public class Load extends AppCompatActivity {
 //            pDialog.setCancelable(false);
 //            pDialog.show();
 //        }
-//    }
+    }
 
     //When touch BackPress twice, app close
     @Override
