@@ -18,6 +18,10 @@
     <string name="back_first">처음으로</string>
     <string name="back_onemore_close">한번 더 뒤로가기를 누르면 어플이 종료됩니다.</string>
     <string name="scanning_wifi">WIFI 스캔 중…</string>
+    <string name="wifi_connect_success">WIFI 연결 성공!</string>
+    <string name="wifi_connect_fial">WIFI 연결 실패…</string>
+    <string name="wifi_connect_error">현재 사용하려는 WIFI 연결 상태 문제일 수 있습니다.</string>
+    <string name="wifi_setting">WIFI 설정</string>
     <!-- Cam.java -->
     <string name="onGPS">GPS를 켜야해요!</string>
     <string name="setting">설정</string>

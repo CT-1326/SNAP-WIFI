@@ -18,6 +18,10 @@
     <string name="back_first">先走</string>
     <string name="back_onemore_close">如果再次按返回，则该应用程序将关闭。</string>
     <string name="scanning_wifi">正在扫描WIFI…</string>
+    <string name="wifi_connect_success">您已成功连接到WIFI！</string>
+    <string name="wifi_connect_fial">WIFI连接失败…</string>
+    <string name="wifi_connect_error">您尝试使用的WIFI连接可能有问题。</string>
+    <string name="wifi_setting">无线网络设置</string>
     <!-- Cam.java -->
     <string name="onGPS">打开GPS需要执行！</string>
     <string name="setting">设置</string>
