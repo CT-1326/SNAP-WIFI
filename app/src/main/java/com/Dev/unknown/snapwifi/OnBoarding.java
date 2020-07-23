@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
+import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground;
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
 public class OnBoarding extends AppCompatActivity {
 
@@ -31,7 +33,7 @@ public class OnBoarding extends AppCompatActivity {
                 .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
                     @Override
                     public void onPromptStateChanged(@NonNull MaterialTapTargetPrompt prompt, int state) {
-                        if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED) {
+                        if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED) {
                             showSeekBar();
                         }
                     }
@@ -45,7 +47,7 @@ public class OnBoarding extends AppCompatActivity {
                 .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
                     @Override
                     public void onPromptStateChanged(@NonNull MaterialTapTargetPrompt prompt, int state) {
-                        if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED) {
+                        if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED) {
                             scanResultDialog.setVisibility(View.VISIBLE);
                             showScanResultDialog();
                         }
@@ -58,10 +60,12 @@ public class OnBoarding extends AppCompatActivity {
         editText = findViewById(R.id.edit_text);
         builder.setTarget(R.id.edit_text)
                 .setPrimaryText("scan result dialog")
+                .setPromptBackground(new RectanglePromptBackground())
+                .setPromptFocal(new RectanglePromptFocal())
                 .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
                     @Override
                     public void onPromptStateChanged(@NonNull MaterialTapTargetPrompt prompt, int state) {
-                        if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED) {
+                        if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED) {
                             editText.setFocusable(false);
                             editText.setClickable(false);
                             showConfirmButton();
@@ -72,12 +76,13 @@ public class OnBoarding extends AppCompatActivity {
     }
 
     private void showConfirmButton() {
-        builder.setTarget(R.id.ok_btn)
+        new MaterialTapTargetPrompt.Builder(this)
+                .setTarget(R.id.ok_btn)
                 .setPrimaryText("confirm button")
                 .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
                     @Override
                     public void onPromptStateChanged(@NonNull MaterialTapTargetPrompt prompt, int state) {
-                        if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED) {
+                        if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED) {
                             Intent intent = new Intent(OnBoarding.this, Cam.class);
                             startActivity(intent);
                             finish();
