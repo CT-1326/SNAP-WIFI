@@ -29,7 +29,10 @@ public class OnBoarding extends AppCompatActivity {
         scanResultDialog = (LinearLayout) findViewById(R.id.scan_result_dialog);
 
         builder.setTarget(R.id.startButton)
-                .setPrimaryText("start button")
+                .setPrimaryText("스캔 시작")
+                .setSecondaryText("이 버튼을 누르면 스캔을 시작 및 정지를 할 수 있습니다. 앱 실행 시 자동으로 스캔을 시작합니다.")
+                .setPromptBackground(new RectanglePromptBackground())
+                .setPromptFocal(new RectanglePromptFocal())
                 .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
                     @Override
                     public void onPromptStateChanged(@NonNull MaterialTapTargetPrompt prompt, int state) {
@@ -42,8 +45,10 @@ public class OnBoarding extends AppCompatActivity {
     }
 
     private void showSeekBar() {
-        builder.setTarget(R.id.seekBar1)
-                .setPrimaryText("seekbar")
+        new MaterialTapTargetPrompt.Builder(this)
+                .setTarget(R.id.seekBar1)
+                .setPrimaryText("카메라 줌 인/아웃")
+                .setSecondaryText("카메라 화면을 확대 및 축소를 할 수 있습니다.")
                 .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
                     @Override
                     public void onPromptStateChanged(@NonNull MaterialTapTargetPrompt prompt, int state) {
@@ -59,7 +64,8 @@ public class OnBoarding extends AppCompatActivity {
     private void showScanResultDialog() {
         editText = findViewById(R.id.edit_text);
         builder.setTarget(R.id.edit_text)
-                .setPrimaryText("scan result dialog")
+                .setPrimaryText("비밀번호 스캔 결과")
+                .setSecondaryText("이곳에 WIFI 비밀번호가 스캔되서 나옵니다. 수정도 가능합니다.")
                 .setPromptBackground(new RectanglePromptBackground())
                 .setPromptFocal(new RectanglePromptFocal())
                 .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
@@ -78,7 +84,8 @@ public class OnBoarding extends AppCompatActivity {
     private void showConfirmButton() {
         new MaterialTapTargetPrompt.Builder(this)
                 .setTarget(R.id.ok_btn)
-                .setPrimaryText("confirm button")
+                .setPrimaryText("연결 시작")
+                .setSecondaryText(" \"확인\" 버튼을 누르면 와이파이 자동 연결이 시작됩니다.")
                 .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
                     @Override
                     public void onPromptStateChanged(@NonNull MaterialTapTargetPrompt prompt, int state) {
