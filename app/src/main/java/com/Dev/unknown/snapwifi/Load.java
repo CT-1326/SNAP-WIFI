@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -188,7 +189,6 @@ public class Load extends AppCompatActivity {
         }
     }
 
-    SpotsDialog.Builder builder;
     //Success scan
     private void scanSuccess() {
         Log.d(TAG,"success scan method");
@@ -201,66 +201,52 @@ public class Load extends AppCompatActivity {
         }
         else
         {
-            WifiConfiguration WIFI_Config = new WifiConfiguration();
-            WIFI_Config.SSID = String.format("\"%s\"", "");
-            WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
-            int netId = WIFI_Manger.addNetwork(WIFI_Config);
-            //wifimanager.disconnect();
-            WIFI_Manger.enableNetwork(netId,false);
-            WIFI_Manger.reconnect();
-        }
+            for (int i = 0; i < results.size(); i++)
+            {
+                ScanResult Result = results.get(i);
+                String Capabilities =  Result.capabilities;
+                Log.d(TAG, "Index : " + i);
 
-        for (int i = 0; i < results.size(); i++)
-        {
-            ScanResult Result = results.get(i);
-            String Capabilities =  Result.capabilities;
-            Log.d(TAG, "Index : " + i);
-            //Blocking Free carrier WIFI
-            if(Capabilities.contains("EAP"))
-            {
-                continue;
-            }
-            //Automatic connection
-            else
-            {
-//                builder.setContext(Load.this)
-//                        .setMessage(Result.SSID)
-//                        .setCancelable(true)
-//                        .build()
-//                        .show();
-//
-//                builder.setCancelListener(new DialogInterface.OnCancelListener() {
-//                    @Override
-//                    public void onCancel(DialogInterface dialogInterface) {
-//                        dialogInterface.dismiss();
-//                    }
-//                });
-//                new SpotsDialog.Builder()
-//                        .setContext(this)
-//                        .setMessage(Result.SSID + "에 연결 시도중...")
-//                        .setCancelable(false)
-//                        .build()
-//                        .show();
-                List.add(Result.SSID);
-                Log.d(TAG,"SSID : " + Result.SSID);
-                WifiConfiguration WIFI_Config = new WifiConfiguration();
-                WIFI_Config.SSID = String.format("\"%s\"", Result.SSID);
-                WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
-                int netId = WIFI_Manger.addNetwork(WIFI_Config);
-                //wifimanager.disconnect();
-                WIFI_Manger.enableNetwork(netId,false);
-                WIFI_Manger.reconnect();
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                if (WIFI.isConnected())
-//                    Show_Result();
+                //Blocking Free carrier WIFI
+                if(Capabilities.contains("EAP"))
+                {
+                    continue;
+                }
+                //Automatic connection
+                else
+                {
+                    List.add(Result.SSID);
+                    Log.d(TAG,"SSID : " + Result.SSID);
+                    WifiConfiguration WIFI_Config = new WifiConfiguration();
+                    WIFI_Config.SSID = String.format("\"%s\"", Result.SSID);
+                    WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
+                    int netId = WIFI_Manger.addNetwork(WIFI_Config);
+                    //wifimanager.disconnect();
+                    WIFI_Manger.enableNetwork(netId,false);
+                    WIFI_Manger.reconnect();
+
+                    new ConnectTask().execute();
+                }
             }
         }
-        Show_Result();
+//        Show_Result();
+    }
+
+    private class ConnectTask extends AsyncTask<Void,Void,Void> {
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            // TODO Auto-generated method stub
+        }
+        @Override
+        protected Void doInBackground(Void... params) {
+            // TODO Auto-generated method stub
+            return null;
+        }
     }
 
     //Fail scan
