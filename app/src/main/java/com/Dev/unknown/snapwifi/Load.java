@@ -2,6 +2,7 @@ package com.Dev.unknown.snapwifi;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -10,8 +11,8 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -212,6 +213,7 @@ public class Load extends AppCompatActivity {
         }
     }
 
+    SpotsDialog.Builder builder;
     //Success scan
     private void scanSuccess() {
         Log.d(TAG,"success scan method");
@@ -231,6 +233,18 @@ public class Load extends AppCompatActivity {
             //Automatic connection
             else
             {
+                builder.setContext(Load.this);
+                        .setMessage(Result.SSID)
+                        .setCancelable(true)
+                        .build()
+                        .show();
+
+                builder.setCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        dialogInterface.dismiss();
+                    }
+                });
 //                new SpotsDialog.Builder()
 //                        .setContext(this)
 //                        .setMessage(Result.SSID + "에 연결 시도중...")
@@ -325,20 +339,23 @@ public class Load extends AppCompatActivity {
             KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
             pDialog.setTitleText("WIFI 연결에 실패...");
             pDialog.setContentText("현재 이용하려는 WIFI 연결상태 문제일 수도 있습니다");
-            pDialog.setConfirmText("종료");
+            pDialog.setConfirmText("WIFI 설정");
             pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
                 @Override
                 public void onClick(KAlertDialog kAlertDialog) {
-                    moveTaskToBack(true);
+                    /*moveTaskToBack(true);
                     finish();
-                    android.os.Process.killProcess(android.os.Process.myPid());
+                    android.os.Process.killProcess(android.os.Process.myPid());*/
+                    Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                    startActivity(intent);
                 }
             });
             pDialog.setCancelText("처음으로");
             pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
                 @Override
                 public void onClick(KAlertDialog kAlertDialog) {
-                    System.exit(0);
+                   // System.exit(0);
+                    finish();
                 }
             });
             pDialog.setCancelable(false);
