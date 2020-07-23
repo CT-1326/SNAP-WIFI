@@ -63,9 +63,9 @@ public class OnBoarding extends AppCompatActivity {
 
     private void showScanResultDialog() {
         editText = findViewById(R.id.edit_text);
-        builder.setTarget(R.id.edit_text)
+        builder.setTarget(R.id.scan_result_dialog)
                 .setPrimaryText("비밀번호 스캔 결과")
-                .setSecondaryText("이곳에 WIFI 비밀번호가 스캔되서 나옵니다. 수정도 가능합니다.")
+                .setSecondaryText("이곳에 WIFI 비밀번호가 스캔되서 나옵니다. 비밀번호 수정도 가능합니다.")
                 .setPromptBackground(new RectanglePromptBackground())
                 .setPromptFocal(new RectanglePromptFocal())
                 .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
