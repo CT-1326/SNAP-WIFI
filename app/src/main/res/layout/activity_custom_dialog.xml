@@ -22,13 +22,13 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/warning_circle" />
+                android:background="@drawable/success_circle" />
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/app_name"
                 android:scaleType="center"
-                android:src="@drawable/warning_sign" />
+                android:src="@drawable/ic_success" />
         </FrameLayout>
     </LinearLayout>
 
