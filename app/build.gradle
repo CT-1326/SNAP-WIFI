@@ -37,8 +37,8 @@ dependencies {
     implementation 'com.github.TutorialsAndroid:KAlertDialog:v11.0.19'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'com.xw.repo:bubbleseekbar:3.20'
+    implementation 'uk.co.samuelwall:material-tap-target-prompt:3.0.0'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'uk.co.samuelwall:material-tap-target-prompt:3.0.0'
 }
