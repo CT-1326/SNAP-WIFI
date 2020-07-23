@@ -253,7 +253,7 @@ public class Load extends AppCompatActivity {
 ////                    Show_Result();
 //            }
 //        }
-        Show_Result();
+//        Show_Result();
     }
 
     //Fail scan
