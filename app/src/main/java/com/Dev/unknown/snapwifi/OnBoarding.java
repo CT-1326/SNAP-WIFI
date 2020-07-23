@@ -19,6 +19,7 @@ public class OnBoarding extends AppCompatActivity {
     private MaterialTapTargetPrompt.Builder builder;
     LinearLayout scanResultDialog;
     EditText editText;
+    View Rect;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,12 +28,29 @@ public class OnBoarding extends AppCompatActivity {
 
         builder = new MaterialTapTargetPrompt.Builder(this);
         scanResultDialog = (LinearLayout) findViewById(R.id.scan_result_dialog);
+        Rect = (View) findViewById(R.id.rect);
 
         builder.setTarget(R.id.startButton)
                 .setPrimaryText("스캔 시작")
                 .setSecondaryText("이 버튼을 누르면 스캔을 시작 및 정지를 할 수 있습니다. 앱 실행 시 자동으로 스캔을 시작합니다.")
                 .setPromptBackground(new RectanglePromptBackground())
                 .setPromptFocal(new RectanglePromptFocal())
+                .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
+                    @Override
+                    public void onPromptStateChanged(@NonNull MaterialTapTargetPrompt prompt, int state) {
+                        if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED) {
+                            Rect.setVisibility(View.VISIBLE);
+                            showRect();
+                        }
+                    }
+                })
+                .show();
+    }
+
+    private void showRect() {
+        builder.setTarget(R.id.rect)
+                .setPrimaryText("스캔 영역")
+                .setSecondaryText("WIFI 비밀번호가 적힌 곳을 사각형 영역 안에 포함시키세요. 자동으로 스캔됩니다.")
                 .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
                     @Override
                     public void onPromptStateChanged(@NonNull MaterialTapTargetPrompt prompt, int state) {
@@ -86,6 +104,21 @@ public class OnBoarding extends AppCompatActivity {
                 .setTarget(R.id.ok_btn)
                 .setPrimaryText("연결 시작")
                 .setSecondaryText(" \"확인\" 버튼을 누르면 와이파이 자동 연결이 시작됩니다.")
+                .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
+                    @Override
+                    public void onPromptStateChanged(@NonNull MaterialTapTargetPrompt prompt, int state) {
+                        if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED) {
+                            reloadOnboarding();
+                        }
+                    }
+                })
+                .show();
+    }
+
+    private void reloadOnboarding() {
+        builder.setTarget(R.id.reload_onboarding)
+                .setPrimaryText("설명 다시보기")
+                .setSecondaryText("버튼을 누르면 설명을 다시 볼 수 있습니다.")
                 .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
                     @Override
                     public void onPromptStateChanged(@NonNull MaterialTapTargetPrompt prompt, int state) {

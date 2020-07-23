@@ -31,6 +31,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -57,6 +58,7 @@ public class Cam extends AppCompatActivity {
 	private BubbleSeekBar seekBar;
 	//camera zoom icon
 	private TextView low, more;
+	private ImageView reloadOnboarding;
 	//OCR result text
 	static String Result_Text;
 	//String files Text
@@ -663,6 +665,16 @@ public class Cam extends AppCompatActivity {
 		more = (TextView)findViewById(R.id.more);
 		low.setVisibility(View.INVISIBLE);
 		more.setVisibility(View.INVISIBLE);
+
+		reloadOnboarding = findViewById(R.id.reload_onboarding);
+		reloadOnboarding.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Cam.this, OnBoarding.class);
+				startActivity(intent);
+				finish();
+			}
+		});
 
 		//Check GPS ON/OFF (OS 6.0 UP)
 		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
