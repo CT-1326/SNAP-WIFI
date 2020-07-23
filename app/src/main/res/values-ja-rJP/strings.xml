@@ -18,6 +18,10 @@
     <string name="back_first">最初に行く</string>
     <string name="back_onemore_close">もう一度[戻る]を押すと、アプリが閉じます。</string>
     <string name="scanning_wifi">WIFIをスキャンしています…</string>
+    <string name="wifi_connect_success">WIFI接続に成功しました！</string>
+    <string name="wifi_connect_fial">WIFI接続に失敗しました…</string>
+    <string name="wifi_connect_error">使用しようとしているWIFI接続に問題がある可能性があります。</string>
+    <string name="wifi_setting">WIFI設定</string>
     <!-- Cam.java -->
     <string name="onGPS">GPSをオンにして実行する必要があります！</string>
     <string name="setting">設定</string>

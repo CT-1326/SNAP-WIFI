@@ -2,7 +2,6 @@ package com.Dev.unknown.snapwifi;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -48,6 +47,10 @@ public class Load extends AppCompatActivity {
     private String backFirst;
     private String backOnemoreClose;
     private String scanningWIFI;
+    private String wifiConnectSuccess;
+    private String wifiConnectFail;
+    private String wifiConnectError;
+    private String wifiSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,10 @@ public class Load extends AppCompatActivity {
         backFirst = getResources().getString(R.string.back_first);
         backOnemoreClose = getResources().getString(R.string.back_onemore_close);
         scanningWIFI = getResources().getString(R.string.scanning_wifi);
+        wifiConnectSuccess = getResources().getString(R.string.wifi_connect_success);
+        wifiConnectFail = getResources().getString(R.string.wifi_connect_fial);;
+        wifiConnectError = getResources().getString(R.string.wifi_connect_error);;
+        wifiSetting = getResources().getString(R.string.wifi_setting);;
 
         //Load adfit
         adView = findViewById(R.id.adView);
@@ -297,8 +304,8 @@ public class Load extends AppCompatActivity {
         if (WIFI.isConnected())
         {
             KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
-            pDialog.setTitleText("WIFI 연결에 성공!");
-            pDialog.setConfirmText("종료");
+            pDialog.setTitleText(wifiConnectSuccess);
+            pDialog.setConfirmText(Close);
             pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
                         @Override
                         public void onClick(KAlertDialog kAlertDialog) {
@@ -307,7 +314,7 @@ public class Load extends AppCompatActivity {
                             android.os.Process.killProcess(android.os.Process.myPid());
                         }
                     });
-            pDialog.setCancelText("처음으로");
+            pDialog.setCancelText(backFirst);
             pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
                         @Override
                         public void onClick(KAlertDialog kAlertDialog) {
@@ -320,9 +327,9 @@ public class Load extends AppCompatActivity {
         else
         {
             KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
-            pDialog.setTitleText("WIFI 연결에 실패...");
-            pDialog.setContentText("현재 이용하려는 WIFI 연결상태 문제일 수도 있습니다");
-            pDialog.setConfirmText("WIFI 설정");
+            pDialog.setTitleText(wifiConnectFail);
+            pDialog.setContentText(wifiConnectFail);
+            pDialog.setConfirmText(wifiSetting);
             pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
                 @Override
                 public void onClick(KAlertDialog kAlertDialog) {
@@ -333,7 +340,7 @@ public class Load extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-            pDialog.setCancelText("처음으로");
+            pDialog.setCancelText(backFirst);
             pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
                 @Override
                 public void onClick(KAlertDialog kAlertDialog) {

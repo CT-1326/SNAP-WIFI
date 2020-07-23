@@ -18,7 +18,9 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    -->
 
     <application
         android:allowBackup="true"
@@ -38,7 +40,6 @@
             android:configChanges="keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Load" />
-        <activity android:name=".ShowSpotsDialog"/>
     </application>
 
 </manifest>

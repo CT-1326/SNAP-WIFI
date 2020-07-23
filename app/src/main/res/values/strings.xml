@@ -17,6 +17,10 @@
     <string name="close">End</string>
     <string name="back_first">Go first</string>
     <string name="back_onemore_close">If you press Back once more, the app will be closed.</string>
+    <string name="wifi_connect_success">WIFI connection successful!</string>
+    <string name="wifi_connect_fial">WIFI connection failed…</string>
+    <string name="wifi_connect_error">It may be a problem with the WIFI connection you are trying to use.</string>
+    <string name="wifi_setting">WIFI settings</string>
     <string name="scanning_wifi">Scanning WIFI…</string>
     <!-- Cam.java -->
     <string name="onGPS">Turn on the GPS to need execution!</string>
