@@ -229,7 +229,7 @@ public class Load extends AppCompatActivity {
                 }
             }
         }
-        Show_Result();
+//        Show_Result();
     }
 
     private class ConnectTask extends AsyncTask<Void,Void,Void> {
