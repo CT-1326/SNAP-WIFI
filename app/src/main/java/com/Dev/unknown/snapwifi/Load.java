@@ -201,71 +201,28 @@ public class Load extends AppCompatActivity {
         }
         else
         {
-            for (int i = 0; i < results.size(); i++)
-            {
-                ScanResult Result = results.get(i);
-                String Capabilities =  Result.capabilities;
-                Log.d(TAG, "Index : " + i);
-                //Blocking Free carrier WIFI
-                if(Capabilities.contains("EAP"))
-                {
-                    continue;
-                }
-                //Automatic connection
-                else
-                {
-//                    builder.setContext(Load.this)
-//                            .setMessage(Result.SSID)
-//                            .setCancelable(true)
-//                            .build()
-//                            .show();
-//
-//                    builder.setCancelListener(new DialogInterface.OnCancelListener() {
-//                        @Override
-//                        public void onCancel(DialogInterface dialogInterface) {
-//                            dialogInterface.dismiss();
-//                        }
-//                    });
-    //                new SpotsDialog.Builder()
-    //                        .setContext(this)
-    //                        .setMessage(Result.SSID + "에 연결 시도중...")
-    //                        .setCancelable(false)
-    //                        .build()
-    //                        .show();
-                    List.add(Result.SSID);
-                    Log.d(TAG,"SSID : " + Result.SSID);
-                    WifiConfiguration WIFI_Config = new WifiConfiguration();
-                    WIFI_Config.SSID = String.format("\"%s\"", Result.SSID);
-                    WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
-                    int netId = WIFI_Manger.addNetwork(WIFI_Config);
-                    //wifimanager.disconnect();
-                    WIFI_Manger.enableNetwork(netId,false);
-                    WIFI_Manger.reconnect();
-//                    try {
-//                        Thread.sleep(1000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-
-    //                if (WIFI.isConnected())
-    //                    Show_Result();
-                }
-            }
+            WifiConfiguration WIFI_Config = new WifiConfiguration();
+            WIFI_Config.SSID = String.format("\"%s\"", "");
+            WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
+            int netId = WIFI_Manger.addNetwork(WIFI_Config);
+            //wifimanager.disconnect();
+            WIFI_Manger.enableNetwork(netId,false);
+            WIFI_Manger.reconnect();
         }
 
-//        for (int i = 0; i < results.size(); i++)
-//        {
-//            ScanResult Result = results.get(i);
-//            String Capabilities =  Result.capabilities;
-//            Log.d(TAG, "Index : " + i);
-//            //Blocking Free carrier WIFI
-//            if(Capabilities.contains("EAP"))
-//            {
-//                continue;
-//            }
-//            //Automatic connection
-//            else
-//            {
+        for (int i = 0; i < results.size(); i++)
+        {
+            ScanResult Result = results.get(i);
+            String Capabilities =  Result.capabilities;
+            Log.d(TAG, "Index : " + i);
+            //Blocking Free carrier WIFI
+            if(Capabilities.contains("EAP"))
+            {
+                continue;
+            }
+            //Automatic connection
+            else
+            {
 //                builder.setContext(Load.this)
 //                        .setMessage(Result.SSID)
 //                        .setCancelable(true)
@@ -278,31 +235,31 @@ public class Load extends AppCompatActivity {
 //                        dialogInterface.dismiss();
 //                    }
 //                });
-////                new SpotsDialog.Builder()
-////                        .setContext(this)
-////                        .setMessage(Result.SSID + "에 연결 시도중...")
-////                        .setCancelable(false)
-////                        .build()
-////                        .show();
-//                List.add(Result.SSID);
-//                Log.d(TAG,"SSID : " + Result.SSID);
-////                WifiConfiguration WIFI_Config = new WifiConfiguration();
-////                WIFI_Config.SSID = String.format("\"%s\"", Result.SSID);
-////                WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
-////                int netId = WIFI_Manger.addNetwork(WIFI_Config);
-////                //wifimanager.disconnect();
-////                WIFI_Manger.enableNetwork(netId,false);
-////                WIFI_Manger.reconnect();
-////                try {
-////                    Thread.sleep(1000);
-////                } catch (InterruptedException e) {
-////                    e.printStackTrace();
-////                }
+//                new SpotsDialog.Builder()
+//                        .setContext(this)
+//                        .setMessage(Result.SSID + "에 연결 시도중...")
+//                        .setCancelable(false)
+//                        .build()
+//                        .show();
+                List.add(Result.SSID);
+                Log.d(TAG,"SSID : " + Result.SSID);
+                WifiConfiguration WIFI_Config = new WifiConfiguration();
+                WIFI_Config.SSID = String.format("\"%s\"", Result.SSID);
+                WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
+                int netId = WIFI_Manger.addNetwork(WIFI_Config);
+                //wifimanager.disconnect();
+                WIFI_Manger.enableNetwork(netId,false);
+                WIFI_Manger.reconnect();
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
 //
-////                if (WIFI.isConnected())
-////                    Show_Result();
-//            }
-//        }
+//                if (WIFI.isConnected())
+//                    Show_Result();
+            }
+        }
         Show_Result();
     }
 
