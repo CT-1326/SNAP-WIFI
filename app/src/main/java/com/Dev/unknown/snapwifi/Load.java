@@ -225,11 +225,11 @@ public class Load extends AppCompatActivity {
                     WIFI_Manger.enableNetwork(netId,false);
                     WIFI_Manger.reconnect();
 
-                    new ConnectTask().execute();
+//                    new ConnectTask().execute();
                 }
             }
         }
-//        Show_Result();
+        Show_Result();
     }
 
     private class ConnectTask extends AsyncTask<Void,Void,Void> {
@@ -261,7 +261,15 @@ public class Load extends AppCompatActivity {
     //Remove all AP except connected AP
     private void Show_Result()
     {
+        connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+        WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
         Log.d(TAG,"Done!");
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 //        WifiInfo wifiInfo = WIFI_Manger.getConnectionInfo();
 //        String SSID = new String(wifiInfo.getSSID());
 //        SSID = SSID.substring(1, SSID.length()-1);
