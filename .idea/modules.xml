@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidStudioProjects-SNAP-WIFI.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidStudioProjects-SNAP-WIFI.iml" group="SNAP-WIFI" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GitHub-SNAP-WIFI.iml" filepath="$PROJECT_DIR$/.idea/modules/GitHub-SNAP-WIFI.iml" group="SNAP-WIFI" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GitHub-SNAP-WIFI-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GitHub-SNAP-WIFI-app.iml" group="SNAP-WIFI/app" />
       <module fileurl="file://$PROJECT_DIR$/SNAP-WIFI.iml" filepath="$PROJECT_DIR$/SNAP-WIFI.iml" group="SNAP-WIFI" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SNAP-WIFI-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SNAP-WIFI-app.iml" group="SNAP-WIFI/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="SNAP-WIFI/app" />
