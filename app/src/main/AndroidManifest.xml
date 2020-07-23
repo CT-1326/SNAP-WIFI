@@ -37,6 +37,7 @@
             android:configChanges="keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Load" />
+        <activity android:name=".OnBoarding"/>
     </application>
 
 </manifest>

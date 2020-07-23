@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                startActivity(new Intent(MainActivity.this,Cam.class));
+                startActivity(new Intent(MainActivity.this,OnBoarding.class));
             }
             @Override
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
