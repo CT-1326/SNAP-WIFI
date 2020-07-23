@@ -231,12 +231,12 @@ public class Load extends AppCompatActivity {
             //Automatic connection
             else
             {
-                new SpotsDialog.Builder()
-                        .setContext(this)
-                        .setMessage(Result.SSID + "에 연결 시도중...")
-                        .setCancelable(false)
-                        .build()
-                        .show();
+//                new SpotsDialog.Builder()
+//                        .setContext(this)
+//                        .setMessage(Result.SSID + "에 연결 시도중...")
+//                        .setCancelable(false)
+//                        .build()
+//                        .show();
                 List.add(Result.SSID);
                 Log.d(TAG,"SSID : " + Result.SSID);
 //                WifiConfiguration WIFI_Config = new WifiConfiguration();
