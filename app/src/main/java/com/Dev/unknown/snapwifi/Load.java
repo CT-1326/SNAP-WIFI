@@ -253,7 +253,7 @@ public class Load extends AppCompatActivity {
 ////                    Show_Result();
 //            }
 //        }
-//        Show_Result();
+        Show_Result();
     }
 
     //Fail scan
@@ -337,8 +337,7 @@ public class Load extends AppCompatActivity {
             pDialog.setCancelClickListener(new KAlertDialog.KAlertClickListener() {
                 @Override
                 public void onClick(KAlertDialog kAlertDialog) {
-                   // System.exit(0);
-                    finish();
+                    System.exit(0);
                 }
             });
             pDialog.setCancelable(false);
