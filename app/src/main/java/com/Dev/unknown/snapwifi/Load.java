@@ -237,7 +237,7 @@ public class Load extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
-//            new SpotsDialog.Builder()
+////            new SpotsDialog.Builder()
 //                    .setContext(Load.this)
 //                    .setMessage(scanningWIFI)
 //                    .setCancelable(false)
