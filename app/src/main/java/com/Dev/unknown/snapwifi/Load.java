@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,14 +18,14 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import com.developer.kalert.KAlertDialog;
 import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import static com.Dev.unknown.snapwifi.Cam.Result_Text;
 
@@ -304,34 +305,34 @@ public class Load extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//        WifiInfo wifiInfo = WIFI_Manger.getConnectionInfo();
-//        String SSID = new String(wifiInfo.getSSID());
-//        SSID = SSID.substring(1, SSID.length()-1);
-//        Log.d("List of SSID : ", SSID);
-//
-//        for (int i = 0; i < List.size(); i++)
-//        {
-//            WifiConfiguration WIFI_Config = new WifiConfiguration();
-//            WIFI_Config.SSID = String.format("\"%s\"", List.get(i));
-//            WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
-//            int netId = WIFI_Manger.addNetwork(WIFI_Config);
-//
-//            if(SSID.equals(List.get(i)))
-//            {
-//                continue;
-//            }
-//            else
-//            {
-//                Log.d("WIFI AP?", (String) List.get(i));
-//                WIFI_Manger.removeNetwork(netId);
-//                WIFI_Manger.saveConfiguration();
-//            }
-//        }
-//
         //Show wifi connection result
         if (WIFI.isConnected())
         {
             isConnected = 1;
+
+            WifiInfo wifiInfo = WIFI_Manger.getConnectionInfo();
+            String SSID = new String(wifiInfo.getSSID());
+            SSID = SSID.substring(1, SSID.length()-1);
+            Log.d(TAG, "Now AP : "+ SSID);
+
+            for (int i = 0; i < List.size(); i++)
+            {
+                WifiConfiguration WIFI_Config = new WifiConfiguration();
+                WIFI_Config.SSID = String.format("\"%s\"", List.get(i));
+                WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
+                int netId = WIFI_Manger.addNetwork(WIFI_Config);
+
+                if(SSID.equals(List.get(i)))
+                {
+                    continue;
+                }
+                else
+                {
+                    Log.d(TAG, "Delete this AP : " + (String) List.get(i));
+                    WIFI_Manger.removeNetwork(netId);
+                    WIFI_Manger.saveConfiguration();
+                }
+            }
 
             KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
             pDialog.setTitleText(wifiConnectSuccess);
@@ -379,7 +380,6 @@ public class Load extends AppCompatActivity {
             });
             pDialog.setCancelable(false);
             pDialog.show();
-
         }
 
         return isConnected;
