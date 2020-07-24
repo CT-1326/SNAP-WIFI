@@ -35,12 +35,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import com.abbyy.mobile.rtr.BuildConfig;
 import com.abbyy.mobile.rtr.Engine;
 import com.abbyy.mobile.rtr.ITextCaptureService;
@@ -50,6 +44,12 @@ import com.xw.repo.BubbleSeekBar;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class Cam extends AppCompatActivity {
 	//Adfit
@@ -817,12 +817,15 @@ public class Cam extends AppCompatActivity {
 		}
 	}
 
-	public void onRestart() {
+	public void onRestart()
+	{
 		super.onRestart();
 		//Check GPS ON/OFF (OS 6.0 UP)
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+		{
 			LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-			if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+			{
 				KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
 				pDialog.setTitleText(onGPS);
 				pDialog.setConfirmText(setting);
