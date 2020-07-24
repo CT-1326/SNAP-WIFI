@@ -12,7 +12,7 @@
     <!-- MainActivity.java -->
     <string name="set_permission"><![CDATA[許可が拒否されたため、アプリを使用できません… \n\n許可してください！\n[設定] > [許可]]]></string>
     <!-- Load.java -->
-    <string name="on_wifi">WIFIをオンにして実行する必要があります！</string>
+    <string name="on_wifi">Wi-Fiを自動的に実行します。</string>
     <string name="on_wifi_ing">WIFIは既に使用されています.</string>
     <string name="close">終わり</string>
     <string name="back_first">最初に行く</string>

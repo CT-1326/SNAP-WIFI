@@ -12,7 +12,7 @@
     <!-- MainActivity.java -->
     <string name="set_permission"><![CDATA[권한이 거부되어 어플 이용이 불가능합니다…\n\n권한을 허용해주세요!\n[설정] > [권한]]]></string>
     <!-- Load.java -->
-    <string name="on_wifi">WIFI를 켜야해요!</string>
+    <string name="on_wifi">WIFI를 자동으로 실행합니다.</string>
     <string name="on_wifi_ing">이미 WIFI가 사용 중 입니다.</string>
     <string name="close">종료</string>
     <string name="back_first">처음으로</string>
