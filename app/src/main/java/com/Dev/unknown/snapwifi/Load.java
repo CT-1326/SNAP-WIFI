@@ -1,6 +1,5 @@
 package com.Dev.unknown.snapwifi;
 
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,8 +12,6 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -26,6 +23,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import dmax.dialog.SpotsDialog;
 
 import static com.Dev.unknown.snapwifi.Cam.Result_Text;
 
@@ -144,12 +142,12 @@ public class Load extends AppCompatActivity {
             }
             else
             {
-//                new SpotsDialog.Builder()
-//                        .setContext(this)
-//                        .setMessage(scanningWIFI)
-//                        .setCancelable(false)
-//                        .build()
-//                        .show();
+                new SpotsDialog.Builder()
+                        .setContext(this)
+                        .setMessage(scanningWIFI)
+                        .setCancelable(false)
+                        .build()
+                        .show();
                 initWIFIScan();
             }
         }
@@ -166,9 +164,7 @@ public class Load extends AppCompatActivity {
                         WifiManager.EXTRA_RESULTS_UPDATED, false);
                 if (success) {
                     Log.d(TAG,"success!");
-                    //scanSuccess();
-                    connectTask = new ConnectTask();
-                    connectTask.execute();
+                    scanSuccess();
                 } else {
                     // scan failure handling
                     Log.d(TAG,"fail...");
@@ -220,17 +216,14 @@ public class Load extends AppCompatActivity {
                 WIFI_Manger.enableNetwork(netId,false);
                 WIFI_Manger.reconnect();
             }
-            connectTask.cancel(true);
+//            connectTask.cancel(true);
         }
-        Show_Result();
+        connectTask = new ConnectTask();
+        connectTask.execute();
     }
 
-
-    private class ConnectTask extends AsyncTask<Integer,Void,Void>
+    private class ConnectTask extends AsyncTask<Integer, Void, Boolean>
     {
-        ProgressDialog dig = new ProgressDialog(Load.this);
-        int isConnected;
-
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
@@ -240,47 +233,55 @@ public class Load extends AppCompatActivity {
 //                    .setCancelable(false)
 //                    .build()
 //                    .show();
-            dig.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            dig.show();
             super.onPreExecute();
         }
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(Boolean result) {
             // TODO Auto-generated method stub
-            if(Show_Result() == 1) {
-                dig.dismiss();
-            }
+            Log.d(TAG,"finish this work");
+            Show_Result();
         }
         @Override
-        protected Void doInBackground(Integer... isConnected) {
-            // TODO Auto-generated method stub
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    scanSuccess();
+        protected Boolean doInBackground(Integer... isConnected) {
+            while (true)
+            {
+                connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+                WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+                if(WIFI.isConnected())
+                {
+                    Log.d(TAG,"wifi connect success!");
+                    return null;
                 }
-            },0);
-            return null;
-        }
-
-        protected void onCancelled() {
-            super.onCancelled();
-            dig.dismiss();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        try {
-            if (connectTask.getStatus() == AsyncTask.Status.RUNNING) {
-                connectTask.cancel(true);
-            } else {
+                else
+                {
+                    Log.d(TAG,"FUCKTHISHIT");
+                }
             }
-        } catch (Exception e) {
+            // TODO Auto-generated method stub
+////            Handler handler = new Handler(Looper.getMainLooper());
+////            handler.postDelayed(new Runnable() {
+////                @Override
+////                public void run() {
+////                    scanSuccess();
+////                }
+////            },0);
+//            return null;
         }
+
     }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        try {
+//            if (connectTask.getStatus() == AsyncTask.Status.RUNNING) {
+//                connectTask.cancel(true);
+//            } else {
+//            }
+//        } catch (Exception e) {
+//        }
+//    }
 
     //Fail scan
     private void scanFailure()
@@ -293,22 +294,22 @@ public class Load extends AppCompatActivity {
     }
 
     //Remove all AP except connected AP
-    private int Show_Result()
+    private void Show_Result()
     {
-        int isConnected = 0;
+//        int isConnected = 0;
         connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
         WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
         Log.d(TAG,"Done!");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         //Show wifi connection result
         if (WIFI.isConnected())
         {
-            isConnected = 1;
+//            isConnected = 1;
 
             WifiInfo wifiInfo = WIFI_Manger.getConnectionInfo();
             String SSID = new String(wifiInfo.getSSID());
@@ -382,6 +383,6 @@ public class Load extends AppCompatActivity {
             pDialog.show();
         }
 
-        return isConnected;
+//        return isConnected;
     }
 }
