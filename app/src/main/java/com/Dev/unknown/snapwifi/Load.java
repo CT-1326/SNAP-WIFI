@@ -278,9 +278,17 @@ public class Load extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Integer... isConnected)
         {
+            int Time = 15;
             // TODO Auto-generated method stub
-            while (true)
+            while (Time > 0)
             {
+                Log.d(TAG,"Time : " + Time);
+                try {
+                    Thread.sleep(1000);
+                    Time-=1;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
                 WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
@@ -294,6 +302,7 @@ public class Load extends AppCompatActivity {
                     Log.d(TAG,"working at wifi connect...");
                 }
             }
+            return null;
         }
         @Override
         protected void onPostExecute(Boolean result)
@@ -307,6 +316,8 @@ public class Load extends AppCompatActivity {
     //Remove all AP except connected AP
     private void Show_Result()
     {
+        connectTask.cancel(true);
+
         connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
         WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
@@ -362,6 +373,17 @@ public class Load extends AppCompatActivity {
         }
         else
         {
+            for (int i = 0; i < List.size(); i++)
+            {
+                WifiConfiguration WIFI_Config = new WifiConfiguration();
+                WIFI_Config.SSID = String.format("\"%s\"", List.get(i));
+                WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
+                int netId = WIFI_Manger.addNetwork(WIFI_Config);
+                Log.d(TAG, "Delete this AP : " + (String) List.get(i));
+                WIFI_Manger.removeNetwork(netId);
+                WIFI_Manger.saveConfiguration();
+            }
+
             KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
             pDialog.setTitleText(wifiConnectFail);
             pDialog.setContentText(wifiConnectFail);
