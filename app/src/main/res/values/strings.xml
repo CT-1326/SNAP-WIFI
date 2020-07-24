@@ -12,7 +12,7 @@
     <!-- MainActivity.java -->
     <string name="set_permission"><![CDATA[The permission is denied, so you cannot use the app… \n\nPlease allow permission!\n[Setting] > [Permission]]]></string>
     <!-- Load.java -->
-    <string name="on_wifi">Turn on the WIFI to need execution!</string>
+    <string name="on_wifi">Run the WIFI automatically</string>
     <string name="on_wifi_ing">WIFI is already in use.</string>
     <string name="close">End</string>
     <string name="back_first">Go first</string>

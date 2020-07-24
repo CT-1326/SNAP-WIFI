@@ -87,8 +87,23 @@ public class Load extends AppCompatActivity {
         //IF WIFI is OFF
         if (WIFI_Manger.isWifiEnabled() == false)
         {
-            Log.d(TAG,"Old OS");
             WIFI_Manger.setWifiEnabled(true);
+            KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
+            pDialog.setTitleText(onWIFI);
+            pDialog.setConfirmText(OK);
+            pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
+                @Override
+                public void onClick(KAlertDialog kAlertDialog) {
+                    if (WIFI_Manger.isWifiEnabled() == true)
+                    {
+                        kAlertDialog.cancel();
+                        WIFI_Connected();
+                    }
+                }
+            });
+            pDialog.setCancelable(false);
+            pDialog.show();
+
             WIFI_Connected();
         }
         else
