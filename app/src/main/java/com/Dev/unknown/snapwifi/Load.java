@@ -15,15 +15,14 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import com.developer.kalert.KAlertDialog;
 import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import dmax.dialog.SpotsDialog;
 
 import static com.Dev.unknown.snapwifi.Cam.Result_Text;
@@ -87,7 +86,7 @@ public class Load extends AppCompatActivity {
         WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
         //IF WIFI is OFF
-        if (WIFI_Manger.isWifiEnabled() == false && Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q)
+        if (WIFI_Manger.isWifiEnabled() == false && Build.VERSION.SDK_INT>=Build.VERSION_CODES.P)
         {
             Log.d(TAG,"New OS");
             KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
@@ -195,9 +194,15 @@ public class Load extends AppCompatActivity {
         List<ScanResult> results = WIFI_Manger.getScanResults();
         Log.d(TAG,"Result success : " + results);
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q)
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.P)
         {
-
+            WifiConfiguration WIFI_Config = new WifiConfiguration();
+            WIFI_Config.SSID = String.format("\"%s\"", "");
+            WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
+            int netId = WIFI_Manger.addNetwork(WIFI_Config);
+            //wifimanager.disconnect();
+            WIFI_Manger.enableNetwork(netId,false);
+            WIFI_Manger.reconnect();
         }
         else
         {
