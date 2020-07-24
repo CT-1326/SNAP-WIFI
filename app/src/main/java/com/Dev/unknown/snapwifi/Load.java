@@ -10,7 +10,6 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -86,26 +85,7 @@ public class Load extends AppCompatActivity {
         WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
         //IF WIFI is OFF
-        if (WIFI_Manger.isWifiEnabled() == false && Build.VERSION.SDK_INT>=Build.VERSION_CODES.P)
-        {
-            Log.d(TAG,"New OS");
-            KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.WARNING_TYPE);
-            pDialog.setTitleText(onWIFI);
-            pDialog.setConfirmText(OK);
-            pDialog.setConfirmClickListener(new KAlertDialog.KAlertClickListener() {
-                @Override
-                public void onClick(KAlertDialog kAlertDialog) {
-                    if (WIFI_Manger.isWifiEnabled() == true)
-                    {
-                        kAlertDialog.cancel();
-                        WIFI_Connected();
-                    }
-                }
-            });
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-        else if (WIFI_Manger.isWifiEnabled() == false)
+        if (WIFI_Manger.isWifiEnabled() == false)
         {
             Log.d(TAG,"Old OS");
             WIFI_Manger.setWifiEnabled(true);
@@ -189,55 +169,43 @@ public class Load extends AppCompatActivity {
     }
 
     //Success scan
-    private void scanSuccess() {
+    private void scanSuccess()
+    {
         Log.d(TAG,"success scan method");
         List<ScanResult> results = WIFI_Manger.getScanResults();
         Log.d(TAG,"Result success : " + results);
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.P)
+        for (int i = 0; i < results.size(); i++)
         {
-            WifiConfiguration WIFI_Config = new WifiConfiguration();
-            WIFI_Config.SSID = String.format("\"%s\"", "");
-            WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
-            int netId = WIFI_Manger.addNetwork(WIFI_Config);
-            //wifimanager.disconnect();
-            WIFI_Manger.enableNetwork(netId,false);
-            WIFI_Manger.reconnect();
-        }
-        else
-        {
-            for (int i = 0; i < results.size(); i++)
+            ScanResult Result = results.get(i);
+            String Capabilities =  Result.capabilities;
+            Log.d(TAG, "Index : " + i);
+
+            //Blocking Free carrier WIFI
+            if(Capabilities.contains("EAP"))
             {
-                ScanResult Result = results.get(i);
-                String Capabilities =  Result.capabilities;
-                Log.d(TAG, "Index : " + i);
-
-                //Blocking Free carrier WIFI
-                if(Capabilities.contains("EAP"))
-                {
-                    continue;
-                }
-                //Automatic connection
-                else
-                {
-                    List.add(Result.SSID);
-                    Log.d(TAG,"SSID : " + Result.SSID);
-                    WifiConfiguration WIFI_Config = new WifiConfiguration();
-                    WIFI_Config.SSID = String.format("\"%s\"", Result.SSID);
-                    WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
-                    int netId = WIFI_Manger.addNetwork(WIFI_Config);
-                    //wifimanager.disconnect();
-                    WIFI_Manger.enableNetwork(netId,false);
-                    WIFI_Manger.reconnect();
-
-//                    new ConnectTask().execute();
-                }
+                continue;
+            }
+            //Automatic connection
+            else
+            {
+                List.add(Result.SSID);
+                Log.d(TAG,"SSID : " + Result.SSID);
+                WifiConfiguration WIFI_Config = new WifiConfiguration();
+                WIFI_Config.SSID = String.format("\"%s\"", Result.SSID);
+                WIFI_Config.preSharedKey = String.format("\"%s\"", Result_Text);
+                int netId = WIFI_Manger.addNetwork(WIFI_Config);
+                //wifimanager.disconnect();
+                WIFI_Manger.enableNetwork(netId,false);
+                WIFI_Manger.reconnect();
+                //new ConnectTask().execute();
             }
         }
 //        Show_Result();
     }
 
-    private class ConnectTask extends AsyncTask<Void,Void,Void> {
+    private class ConnectTask extends AsyncTask<Void,Void,Void>
+    {
         @Override
         protected void onPreExecute() {
             // TODO Auto-generated method stub
@@ -255,7 +223,8 @@ public class Load extends AppCompatActivity {
     }
 
     //Fail scan
-    private void scanFailure() {
+    private void scanFailure()
+    {
         Log.d(TAG,"fail scan method");
         // handle failure: new scan did NOT succeed
         // consider using old scan results: these are the OLD results!
