@@ -106,8 +106,6 @@ public class Load extends AppCompatActivity {
             });
             pDialog.setCancelable(false);
             pDialog.show();
-
-            WIFI_Connected();
         }
         else
             WIFI_Connected();
