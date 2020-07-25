@@ -276,7 +276,7 @@ public class Load extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Integer... isConnected)
         {
-            int Time = 15;
+            int Time = 30;
             // TODO Auto-generated method stub
             while (Time > 0)
             {
