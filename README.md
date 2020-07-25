@@ -36,13 +36,17 @@ https://github.com/sjwall/MaterialTapTargetPrompt
 <b>Thanks for again great help!</b>
 
 # Screenshots
-| Scan | Check |
+| Permission | OnBoarding |
 |:-:|:-:|
-| ![First](https://user-images.githubusercontent.com/33346331/53023329-5bbc7580-34a0-11e9-9d6d-7deaf503dc92.jpg) | ![Sec](https://user-images.githubusercontent.com/33346331/53023923-78a57880-34a1-11e9-9d4f-f45ccdf20558.jpg) |
+| ![First](https://user-images.githubusercontent.com/33346331/88458771-5bad7a00-cecb-11ea-8e76-dc024704a6fa.jpg) | ![Sec](https://user-images.githubusercontent.com/33346331/88458778-5ea86a80-cecb-11ea-9c27-26a7676a0bb4.jpg) |
 
-| Connect | Done |
+| PassWord_Scan | ScanResult |
 |:-:|:-:|
-| ![Third](https://user-images.githubusercontent.com/33346331/53023922-780ce200-34a1-11e9-8961-fcdd25e1c413.jpg) | ![Fourth](https://user-images.githubusercontent.com/33346331/53023921-780ce200-34a1-11e9-9642-115b0fea2d9d.jpg) |
+| ![Third](https://user-images.githubusercontent.com/33346331/88458773-5cdea700-cecb-11ea-80ab-646e3e74eea8.jpg) | ![Fourth](https://user-images.githubusercontent.com/33346331/88458777-5ea86a80-cecb-11ea-9cda-6134b5fd6607.jpg) |
+
+| WIFI_Connect | WIFI_ConnectResult |
+|:-:|:-:|
+| ![Fifth](https://user-images.githubusercontent.com/33346331/88458774-5d773d80-cecb-11ea-93b7-9401e3089d2c.jpg) | ![Sixth](https://user-images.githubusercontent.com/33346331/88458775-5e0fd400-cecb-11ea-81fe-ecaf987c9e01.jpg) |
 
 # License
 This project is licensed under the Apache 2.0 License - see the [SNAP_WIFI/LICENSE](LICENSE)
