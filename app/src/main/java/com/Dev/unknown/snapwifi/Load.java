@@ -269,7 +269,7 @@ public class Load extends AppCompatActivity {
             // TODO Auto-generated method stub
             new SpotsDialog.Builder()
                     .setContext(Load.this)
-                    .setMessage("WIFI 연결중...")
+                    .setMessage("WIFI 연결 중...")
                     .setCancelable(false)
                     .build()
                     .show();
