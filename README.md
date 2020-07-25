@@ -5,9 +5,9 @@
       alt="Download from Google Play"
       height="80">](https://play.google.com/store/apps/details?id=com.Dev.unknown.snapwifi)
 # Prerequisites
-      Android studio 4.0.0
+      Android studio 4.0.1
 
-      Android API Lv. 23 ~ 29
+      Android API Lv. 23 ~
 # Open-source libraries & SDK
 https://github.com/abbyysdk/RTR-SDK.Android
       
@@ -15,7 +15,23 @@ https://github.com/abbyysdk/RTR-SDK.Android
 
 https://github.com/ParkSangGwon/TedPermission
 
-      about Permission library
+      about Permission
+      
+https://github.com/TutorialsAndroid/KAlertDialog
+
+      about AlertDialog
+      
+https://github.com/woxingxiao/BubbleSeekBar
+
+      about Seekbar
+
+https://github.com/dybarsky/spots-dialog
+
+      about Loading-dialog
+
+https://github.com/sjwall/MaterialTapTargetPrompt
+
+      about Onboarding
 
 <b>Thanks for again great help!</b>
 
