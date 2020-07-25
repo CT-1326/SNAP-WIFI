@@ -24,7 +24,7 @@
         android:text=""
         android:textColor="#FFFF0000"/>
 
-    <ImageButton
+    <Button
         android:id="@+id/reload_onboarding"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -51,6 +51,19 @@
         android:layout_centerInParent="true"
         android:background="@drawable/draw_rect"
         android:visibility="gone"/>
+
+    <com.uniquestudio.library.CircleCheckBox
+        android:id="@+id/check_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/seekBar1"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="70dp"
+        android:layout_marginBottom="100dp"
+        app:background_color="#86FF88"
+        app:border_color="#06A300"
+        android:visibility="gone"
+        app:animation_duration="@android:integer/config_longAnimTime"/>
 
     <com.xw.repo.BubbleSeekBar
         android:id="@+id/seekBar1"
@@ -160,7 +173,7 @@
                 android:id="@+id/edit_text"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:text="password">
+                android:text="@string/edit_text">
                 <requestFocus />
             </EditText>
         </LinearLayout>

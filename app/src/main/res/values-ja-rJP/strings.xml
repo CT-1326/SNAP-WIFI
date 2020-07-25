@@ -25,4 +25,21 @@
     <!-- Cam.java -->
     <string name="onGPS">GPSをオンにして実行する必要があります！</string>
     <string name="setting">設定</string>
+    <!-- OnBoarding.java -->
+    <string name="onboard_start_scan">スキャン開始</string>
+    <string name="ex_start_scan">このボタンを押すと、スキャンを開始および停止を行うことができます。アプリを起動する時に自動的にスキャンを開始します。</string>
+    <string name="onboard_scan_area">スキャン領域</string>
+    <string name="ex_scan_area">WIFIパスワードが書かれたところを矩形領域の中に含ませてください。自動的にスキャンされます。</string>
+    <string name="onboard_zoom_in_out">カメラのズーム・イン/アウト</string>
+    <string name="ex_zoom_in_out">カメラの画面を拡大縮小することができます。</string>
+    <string name="onboard_scan_result">パスワードのスキャン結果</string>
+    <string name="ex_scan_result">ここにWIFIパスワードがスキャンなってきます。パスワードの変更も可能です。</string>
+    <string name="onboard_start_connect">接続開始</string>
+    <string name="ex_start_connect">"OK"ボタンを押すと、Wi-Fi自動接続が開始されます。</string>
+    <string name="onboard_reload_ex">説明を再表示</string>
+    <string name="ex_reload_ex">ボタンを押すと、説明を再び見ることができます。</string>
+    <string name="onboard_not_reload_ex">説明実行しない</string>
+    <string name="ex_not_reload_ex">チェックすると、次回からの説明ウィンドウが出ません.</string>
+    <!-- onboarding_layout.xml -->
+    <string name="edit_text">Password</string>
 </resources>

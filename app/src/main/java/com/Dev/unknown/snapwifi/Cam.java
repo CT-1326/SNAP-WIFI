@@ -35,6 +35,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.abbyy.mobile.rtr.BuildConfig;
 import com.abbyy.mobile.rtr.Engine;
 import com.abbyy.mobile.rtr.ITextCaptureService;
@@ -44,12 +50,6 @@ import com.xw.repo.BubbleSeekBar;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 public class Cam extends AppCompatActivity {
 	//Adfit
@@ -670,7 +670,7 @@ public class Cam extends AppCompatActivity {
 		reloadOnboarding.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(Cam.this, OnBoarding.class);
+				Intent intent = new Intent(Cam.this, ShowOnBoarding.class);
 				startActivity(intent);
 				finish();
 			}

@@ -25,4 +25,21 @@
     <!-- Cam.java -->
     <string name="onGPS">Turn on the GPS to need execution!</string>
     <string name="setting">Setting</string>
+    <!-- OnBoarding.java -->
+    <string name="onboard_start_scan">Start scanning</string>
+    <string name="ex_start_scan">Press this button to start and stop scanning. Scanning starts automatically when the app is launched.</string>
+    <string name="onboard_scan_area">Scan area</string>
+    <string name="ex_scan_area">Include the WIFI password in the rectangular area. It is automatically scanned.</string>
+    <string name="onboard_zoom_in_out">Camera zoom in/out</string>
+    <string name="ex_zoom_in_out">You can enlarge and reduce the camera screen.</string>
+    <string name="onboard_scan_result">Password scan result</string>
+    <string name="ex_scan_result">The WIFI password is scanned here. You can also edit your password.</string>
+    <string name="onboard_start_connect">Start connection</string>
+    <string name="ex_start_connect">Press the "OK" button to start the Wi-Fi auto connection.</string>
+    <string name="onboard_reload_ex">Review description</string>
+    <string name="ex_reload_ex">Press the button to see the description again.</string>
+    <string name="onboard_not_reload_ex">No description</string>
+    <string name="ex_not_reload_ex">If checked, the description window will not appear from next.</string>
+    <!-- onboarding_layout.xml -->
+    <string name="edit_text">Password</string>
 </resources>

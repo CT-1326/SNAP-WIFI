@@ -25,4 +25,21 @@
     <!-- Cam.java -->
     <string name="onGPS">打开GPS需要执行！</string>
     <string name="setting">设置</string>
+    <!-- OnBoarding.java -->
+    <string name="onboard_start_scan">开始扫描</string>
+    <string name="ex_start_scan">按此按钮开始和停止扫描。启动应用程序后，扫描会自动开始。</string>
+    <string name="onboard_scan_area">扫描范围</string>
+    <string name="ex_scan_area">在矩形区域中包含WIFI密码。它会自动扫描。</string>
+    <string name="onboard_zoom_in_out">相机放大/缩小</string>
+    <string name="ex_zoom_in_out">您可以放大和缩小相机屏幕。</string>
+    <string name="onboard_scan_result">密码扫描结果</string>
+    <string name="ex_scan_result">此处扫描了WIFI密码。您也可以编辑密码。</string>
+    <string name="onboard_start_connect">开始连线</string>
+    <string name="ex_start_connect">按下“确定”按钮以启动Wi-Fi自动连接。</string>
+    <string name="onboard_reload_ex">评论说明</string>
+    <string name="ex_reload_ex">按下按钮再次查看说明。</string>
+    <string name="onboard_not_reload_ex">没有说明</string>
+    <string name="ex_not_reload_ex">如果选中，则说明窗口将不再显示。</string>
+    <!-- onboarding_layout.xml -->
+    <string name="edit_text">Password</string>
 </resources>

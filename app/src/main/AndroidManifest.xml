@@ -38,6 +38,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Load" />
         <activity android:name=".OnBoarding"/>
+        <activity android:name=".ShowOnBoarding"/>
     </application>
 
 </manifest>

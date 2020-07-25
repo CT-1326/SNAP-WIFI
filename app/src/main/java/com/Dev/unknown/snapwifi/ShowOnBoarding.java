@@ -1,9 +1,7 @@
 package com.Dev.unknown.snapwifi;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -18,18 +16,16 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground;
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal;
 
-public class OnBoarding extends AppCompatActivity {
+public class ShowOnBoarding extends AppCompatActivity {
 
     private MaterialTapTargetPrompt.Builder builder;
-    private LinearLayout scanResultDialog;
-    private EditText editText;
-    private View Rect;
-    private CircleCheckBox checkBox;
-    private SharedPreferences sp;
-    private Boolean isChecked;
+    LinearLayout scanResultDialog;
+    EditText editText;
+    View Rect;
+    CircleCheckBox checkBox;
     private String startScan, exStartScan, scanArea, exScanArea, zoomInOut,
-                    exZoomInOut, scanResult, exScanResult, startConnect, exStartConnect,
-                    Reload, exReload, notReload, exNotreload;
+            exZoomInOut, scanResult, exScanResult, startConnect, exStartConnect,
+            Reload, exReload, notReload, exNotreload;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,30 +52,7 @@ public class OnBoarding extends AppCompatActivity {
         notReload = getResources().getString(R.string.onboard_not_reload_ex);
         exNotreload = getResources().getString(R.string.ex_not_reload_ex);
 
-        sp = PreferenceManager.getDefaultSharedPreferences(OnBoarding.this);
-        isChecked = sp.getBoolean("save", false);
-        checkBox.setChecked(isChecked);
-
-        if(isChecked) {
-            StartActivity();
-        } else {
-            showButton();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        SharedPreferences.Editor editor = sp.edit();
-        //메소드 호출로 변경
-        editor.putBoolean("save", checkBox.isChecked());
-        editor.apply();
-    }
-
-    private void StartActivity() {
-        Intent intent = new Intent(OnBoarding.this, Cam.class);
-        startActivity(intent);
-        finish();
+        showButton();
     }
 
     private void showButton() {
@@ -196,7 +169,7 @@ public class OnBoarding extends AppCompatActivity {
                                 @Override
                                 public void onCheckedChanged(boolean isChecked) {
                                     if(isChecked) {
-                                        Intent intent = new Intent(OnBoarding.this, Cam.class);
+                                        Intent intent = new Intent(ShowOnBoarding.this, Cam.class);
                                         startActivity(intent);
                                         finish();
                                     }
