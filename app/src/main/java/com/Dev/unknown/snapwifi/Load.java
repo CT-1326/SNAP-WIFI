@@ -382,7 +382,7 @@ public class Load extends AppCompatActivity {
                 WIFI_Manger.saveConfiguration();
             }
 
-            KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.SUCCESS_TYPE);
+            KAlertDialog pDialog = new KAlertDialog(this, KAlertDialog.ERROR_TYPE);
             pDialog.setTitleText(wifiConnectFail);
             pDialog.setContentText(wifiConnectFail);
             pDialog.setConfirmText(wifiSetting);
