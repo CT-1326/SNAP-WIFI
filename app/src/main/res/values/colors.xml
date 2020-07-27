@@ -8,6 +8,5 @@
     <color name="color_red">#FF6A6E</color>
     <color name="color_red_light">#FFB4B6</color>
     <color name="color_blue">#03A9F4</color>
-    <color name="color_gray_light">#F5F5F5</color>
     <color name="transparent">#00000000</color>
 </resources>
