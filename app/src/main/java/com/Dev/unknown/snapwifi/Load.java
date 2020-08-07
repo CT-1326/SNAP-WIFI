@@ -23,6 +23,7 @@ import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import dmax.dialog.SpotsDialog;
 
@@ -219,7 +220,7 @@ public class Load extends AppCompatActivity {
             }
         }
         connectTask = new ConnectTask();
-        connectTask.execute();
+        connectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     //Fail scan
@@ -257,7 +258,7 @@ public class Load extends AppCompatActivity {
             }
         }
         connectTask = new ConnectTask();
-        connectTask.execute();
+        connectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private class ConnectTask extends AsyncTask<Void, Void, Void>
@@ -265,7 +266,7 @@ public class Load extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids)
         {
-            int Time = 30;
+            int Time = 10;
             // TODO Auto-generated method stub
             while (Time > 0)
             {
@@ -282,9 +283,9 @@ public class Load extends AppCompatActivity {
                 if(WIFI.isConnected())
                 {
                     Log.d(TAG,"wifi connect success!");
-                    connectTask.cancel(true);
-                    break;
-                    //return null;
+//                    connectTask.cancel(true);
+//                    break;
+                    return null;
                 }
                 else
                 {
@@ -318,6 +319,9 @@ public class Load extends AppCompatActivity {
             Log.d(TAG,"finish this work");
             connectTask.cancel(true);
             Show_Result();
+        }
+
+        public void executeOnExecutor(Executor threadPoolExecutor, int i) {
         }
     }
 
