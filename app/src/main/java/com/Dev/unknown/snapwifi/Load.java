@@ -15,14 +15,15 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.developer.kalert.KAlertDialog;
 import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import dmax.dialog.SpotsDialog;
 
 import static com.Dev.unknown.snapwifi.Cam.Result_Text;
@@ -281,11 +282,18 @@ public class Load extends AppCompatActivity {
                 if(WIFI.isConnected())
                 {
                     Log.d(TAG,"wifi connect success!");
-                    return null;
+                    connectTask.cancel(true);
+                    break;
+                    //return null;
                 }
                 else
                 {
                     Log.d(TAG,"working at wifi connect...");
+                }
+
+                if(isCancelled()) {
+                    connectTask.cancel(true);
+                    break;
                 }
             }
             return null;
@@ -308,6 +316,7 @@ public class Load extends AppCompatActivity {
         protected void onPostExecute(Void aVoid)
         {
             Log.d(TAG,"finish this work");
+            connectTask.cancel(true);
             Show_Result();
         }
     }
