@@ -6,19 +6,39 @@ android {
         applicationId "com.Dev.unknown.snapwifi"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 5
+        versionCode 7
         versionName "2.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+//    signingConfigs {
+//        release {
+//            storeFile file()
+//            storePassword ""
+//            keyAlias ""
+//            keyPassword ""
+//        }
+//    }
+
     buildTypes {
+        debug {
+            minifyEnabled false;
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+            proguardFile 'proguard-rules.pro'
+            proguardFile 'proguard-test.pro'
+        }
+
         release {
-            shrinkResources true
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            shrinkResources false
+            minifyEnabled false
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+            proguardFile 'proguard-rules.pro'
+//            signingConfig signingConfigs.release
         }
     }
 }
@@ -27,7 +47,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation (name:'abbyy-rtr-sdk-1.0', ext:'aar')
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'gun0912.ted:tedpermission:2.1.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72"

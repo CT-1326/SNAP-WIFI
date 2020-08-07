@@ -15,14 +15,15 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.developer.kalert.KAlertDialog;
 import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import dmax.dialog.SpotsDialog;
 
 import static com.Dev.unknown.snapwifi.Cam.Result_Text;
@@ -148,6 +149,7 @@ public class Load extends AppCompatActivity {
                         .build()
                         .show();
                 initWIFIScan();
+                Log.d(TAG, "initwifi()");
             }
         }
     }
@@ -159,8 +161,7 @@ public class Load extends AppCompatActivity {
         BroadcastReceiver wifiScanReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context c, Intent intent) {
-                boolean success = intent.getBooleanExtra(
-                        WifiManager.EXTRA_RESULTS_UPDATED, false);
+                boolean success = intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED, false);
                 if (success) {
                     Log.d(TAG,"success!");
                     scanSuccess();
@@ -184,6 +185,14 @@ public class Load extends AppCompatActivity {
             Log.d(TAG,"scan start failed... ");
             // scan failure handling
             scanFailure();
+        }
+    }
+
+    @Override
+    public void unregisterReceiver(BroadcastReceiver receiver) {
+        super.unregisterReceiver(receiver);
+        if(receiver != null) {
+            this.unregisterReceiver(receiver);
         }
     }
 

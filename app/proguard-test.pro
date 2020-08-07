@@ -1,0 +1,2 @@
+-dontobfuscate
+-keepattributes SoureFile,LineNumberTable
