@@ -394,6 +394,7 @@ public class Load extends AppCompatActivity {
                     android.os.Process.killProcess(android.os.Process.myPid());*/
                     Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
                     startActivity(intent);
+                    System.exit(0);
                 }
             });
             pDialog.setCancelText(backFirst);
