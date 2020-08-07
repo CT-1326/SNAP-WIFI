@@ -15,16 +15,14 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import com.developer.kalert.KAlertDialog;
 import com.kakao.adfit.ads.ba.BannerAdView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import dmax.dialog.SpotsDialog;
 
 import static com.Dev.unknown.snapwifi.Cam.Result_Text;
@@ -166,10 +164,12 @@ public class Load extends AppCompatActivity {
                 if (success) {
                     Log.d(TAG,"success!");
                     scanSuccess();
+                    getApplicationContext().unregisterReceiver(this);
                 } else {
                     // scan failure handling
                     Log.d(TAG,"fail...");
                     scanFailure();
+                    getApplicationContext().unregisterReceiver(this);
                 }
             }
         };
@@ -220,7 +220,7 @@ public class Load extends AppCompatActivity {
             }
         }
         connectTask = new ConnectTask();
-        connectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        connectTask.execute();
     }
 
     //Fail scan
@@ -258,11 +258,41 @@ public class Load extends AppCompatActivity {
             }
         }
         connectTask = new ConnectTask();
-        connectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        connectTask.execute();
     }
 
-    private class ConnectTask extends AsyncTask<Integer, Void, Boolean>
+    private class ConnectTask extends AsyncTask<Void, Void, Void>
     {
+        @Override
+        protected Void doInBackground(Void... voids)
+        {
+            int Time = 30;
+            // TODO Auto-generated method stub
+            while (Time > 0)
+            {
+                Log.d(TAG,"Time : " + Time);
+                try {
+                    Thread.sleep(1000);
+                    Time-=1;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+                WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+                if(WIFI.isConnected())
+                {
+                    Log.d(TAG,"wifi connect success!");
+                    break;
+                }
+                else
+                {
+                    Log.d(TAG,"working at wifi connect...");
+                }
+            }
+            return null;
+        }
         @Override
         protected void onPreExecute()
         {
@@ -276,59 +306,16 @@ public class Load extends AppCompatActivity {
             super.onPreExecute();
         }
         @Override
-        protected Boolean doInBackground(Integer... isConnected)
+        protected void onPostExecute(Void aVoid)
         {
-            int Time = 10;
-            // TODO Auto-generated method stub
-            while (Time > 0)
-            {
-                Log.d(TAG,"Time : " + Time);
-                try {
-                    Thread.sleep(1000);
-                    Time-=1;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
-                WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
-                if(WIFI.isConnected())
-                {
-                    Log.d(TAG,"wifi connect success!");
-//                    connectTask.cancel(true);
-//                    break;
-                    return null;
-                }
-                else
-                {
-                    Log.d(TAG,"working at wifi connect...");
-                }
-
-                if(isCancelled()) {
-                    connectTask.cancel(true);
-                    break;
-                }
-            }
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Boolean result)
-        {
-            // TODO Auto-generated method stub
             Log.d(TAG,"finish this work");
-            connectTask.cancel(true);
             Show_Result();
-        }
-
-        public void executeOnExecutor(Executor threadPoolExecutor, int i) {
         }
     }
 
     //Remove all AP except connected AP
     private void Show_Result()
     {
-        connectTask.cancel(true);
-
         connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
         WIFI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
