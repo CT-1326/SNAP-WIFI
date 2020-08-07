@@ -261,10 +261,22 @@ public class Load extends AppCompatActivity {
         connectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    private class ConnectTask extends AsyncTask<Void, Void, Void>
+    private class ConnectTask extends AsyncTask<Integer, Void, Boolean>
     {
         @Override
-        protected Void doInBackground(Void... voids)
+        protected void onPreExecute()
+        {
+            // TODO Auto-generated method stub
+            new SpotsDialog.Builder()
+                    .setContext(Load.this)
+                    .setMessage("WIFI 연결 중...")
+                    .setCancelable(false)
+                    .build()
+                    .show();
+            super.onPreExecute();
+        }
+        @Override
+        protected Boolean doInBackground(Integer... isConnected)
         {
             int Time = 10;
             // TODO Auto-generated method stub
@@ -299,23 +311,10 @@ public class Load extends AppCompatActivity {
             }
             return null;
         }
-
         @Override
-        protected void onPreExecute()
+        protected void onPostExecute(Boolean result)
         {
             // TODO Auto-generated method stub
-            new SpotsDialog.Builder()
-                    .setContext(Load.this)
-                    .setMessage("WIFI 연결 중...")
-                    .setCancelable(false)
-                    .build()
-                    .show();
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid)
-        {
             Log.d(TAG,"finish this work");
             connectTask.cancel(true);
             Show_Result();
